@@ -1,0 +1,39 @@
+@startuml
+
+entity User {
+
+}
+
+entity Træningsdata {
+
+}
+
+entity UserData {
+
+}
+
+entity FavoritTræningsprogrammer {
+
+}
+
+entity Server {
+
+}
+
+entity Træningsprogram {
+
+}
+
+entity Diæt {
+
+}
+
+User ||--|| Træningsdata
+User }|--|| UserData
+User ||--|| FavoritTræningsprogrammer
+FavoritTræningsprogrammer }|--|{ Træningsprogram
+Server }|--|| Træningsprogram
+Server }o--|| User
+Server }|--|| Diæt
+
+@enduml

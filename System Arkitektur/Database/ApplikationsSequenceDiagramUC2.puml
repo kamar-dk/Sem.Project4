@@ -1,0 +1,9 @@
+@startuml
+
+Actor Bruger
+
+Bruger --> UI: Klikker på menu knap
+UI --> UI: Viser menu
+Bruger --> UI: Klikker på indstillinger
+
+@enduml
