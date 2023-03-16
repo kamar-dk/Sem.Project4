@@ -1,16 +1,30 @@
 ```mermaid
+---
+title: SD Delete User UC2
+---
 sequenceDiagram
-    User ->> UI: Clicks on menu button
-    UI ->> Menu: Show menu
-    User ->> Menu: Clicks on "Indstillinger"
-    User ->> Menu: Chooses "Slet bruger"
-    Menu ->> UI: Show warning box
+
+    Actor User
+
+    User ->> UI: Clicks on Menu button
+    UI ->> FitnessApp: openMenu()
+    FitnessApp --) User: ShowsMenu
+    User ->> FitnessApp: Clicks on "Indstillinger"
+    FitnessApp ->> UI: RedirectPage(Indstillinger)
+    User ->> UI: Clicks on "Slet bruger"
+    UI ->> UI: ShowDeleteUserWarning()
     User ->> UI: User clicks "ja"
+
     alt user clicks "Nej"
         UI ->> UI: close box
         UI ->> User: Takes user "indstillinger" page
     end
-    UI ->> Server: delete user
-    Server ->> Server: logs user out
-    Server ->> Datebase: Delete user profile
+
+    UI ->> FitnessApp: DeleteUser(UserEmail)
+    FitnessApp ->> FitnessApp: LogUserOut(UserEmail)
+    FitnessApp ->> Datebase: RemoveUserProfile(UserEmail)
 ```
+
+* TODO - Ændre funktionskald
+  * Lav Klasse diagram med funktioner
+  * Lav Statemachine diagram
