@@ -1,4 +1,7 @@
 ```mermaid
+---
+title: FitnessApp Concept Er-diagram
+---
 erDiagram
 
 User {
