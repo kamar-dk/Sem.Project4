@@ -7,7 +7,7 @@ sequenceDiagram
     Actor User
 
     User ->> UI: Clicks on Menu button
-    UI ->> FitnessApp: openMenu()
+    UI ->> FitnessApp: OpenMenu()
     FitnessApp --) User: ShowsMenu
     User ->> FitnessApp: Clicks on "Indstillinger"
     FitnessApp ->> UI: RedirectPage(Indstillinger)

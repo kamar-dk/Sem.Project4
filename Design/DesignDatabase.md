@@ -45,3 +45,4 @@ Server }o--|| User : has
 Server }o--|| Diet : has
 
 ```
+* TODO - Change notion
