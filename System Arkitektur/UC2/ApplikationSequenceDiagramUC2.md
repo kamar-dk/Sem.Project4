@@ -24,7 +24,3 @@ sequenceDiagram
     FitnessApp ->> FitnessApp: LogUserOut(UserEmail)
     FitnessApp ->> Datebase: RemoveUserProfile(UserEmail)
 ```
-
-* TODO - Ændre funktionskald
-  * Lav Klasse diagram med funktioner
-  * Lav Statemachine diagram
