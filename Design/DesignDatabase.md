@@ -8,7 +8,7 @@ User {
     string password
 }
 
-TraningsData {
+TraningData {
     string Email PK, FK
 }
 
@@ -20,7 +20,7 @@ UserData {
     datetime dob
 }
 
-FavoriteTraningsPrograms {
+FavoriteTraningPrograms {
     string Email PK, FK
 }
 
@@ -28,7 +28,7 @@ Server {
 
 }
 
-TraningsPrograms {
+TraningPrograms {
 
 }
 
@@ -36,11 +36,11 @@ Diet {
 
 }
 
-User ||--|| TraningsData : has
+User ||--|| TraningData : has
 User ||--|{ UserData : contains
-User ||--|| FavoriteTraningsPrograms : has
-FavoriteTraningsPrograms }|--|{ TraningsPrograms : has
-Server ||--o{ TraningsPrograms : has
+User ||--|| FavoriteTraningPrograms : has
+FavoriteTraningPrograms }|--|{ TraningPrograms : has
+Server ||--o{ TraningPrograms : has
 Server ||--o{ User : has
 Server ||--o{ Diet : has
 
