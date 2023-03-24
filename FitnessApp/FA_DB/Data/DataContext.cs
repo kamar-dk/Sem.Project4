@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace FA_DB.Data
 {
-    internal class DataContext
+    public class DataContext
     {
+        
     }
 }
