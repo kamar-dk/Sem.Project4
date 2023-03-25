@@ -1,9 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FA_DB.Models;
 using FA_DB.Models.TraningTypes;
 
@@ -19,6 +14,10 @@ namespace FA_DB.Data
         // TraningSessions
         public DbSet<RunningSession> runningSessions { get; set; } = default;
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer("Data Source=sql.bsite.net\\MSSQL2016;Initial Catalog=kaspermartensen_Prj4;User ID=kaspermartensen_Prj4;Password=Bed2Fed2;Encrypt=False; Trust Server Certificate=False;Persist Security Info = True;");
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
