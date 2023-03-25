@@ -8,5 +8,10 @@ namespace FA_DB
         {
 
         }
+
+        public static void DropData()
+        {
+            //TODO: Make function to drop all data in the database
+        }
     }
 }
