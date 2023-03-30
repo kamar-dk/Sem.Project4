@@ -12,8 +12,7 @@ namespace FA_DB.Data
         public DbSet<TraningData> trantingData { get; set; }
         public DbSet<FavoriteTraningPrograms> favoriteTraningPrograms { get; set; }
         public DbSet<TraningProgram> traningPrograms { get; set; }
-
-        
+                
         // TraningSessions
         public DbSet<RunningSession> runningSessions { get; set; }
 
