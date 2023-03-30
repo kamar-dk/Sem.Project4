@@ -3,9 +3,9 @@ erDiagram
 
 User {
     string Email PK
-    string name
-    string lastname
-    string password
+    string Name
+    string Lastname
+    string Password
 }
 
 TraningData {
@@ -16,19 +16,23 @@ UserData {
     string Email PK, FK
     float weight
     float height
-    string gende
+    string gender
     datetime dob
 }
 
 FavoriteTraningPrograms {
     string Email PK, FK
+    List ProgramIDs
 }
 
 Server {
 
+
 }
 
 TraningPrograms {
+    int TraningProgramID PK
+    File File
 
 }
 
@@ -38,7 +42,7 @@ Diet {
 
 User ||--|| TraningData : has
 User ||--|{ UserData : contains
-User ||--|| FavoriteTraningPrograms : has
+User ||--|| FavoriteTraningPrograms : Contains
 FavoriteTraningPrograms }|--|{ TraningPrograms : has
 Server ||--o{ TraningPrograms : has
 Server ||--o{ User : has
