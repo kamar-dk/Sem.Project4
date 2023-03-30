@@ -7,12 +7,12 @@ namespace FA_DB.Data
     public class DataContext : DbContext
     {
         // Main Tables
-        public DbSet<User> users { get; set; } = default;
-        public DbSet<UserData> userDatas { get; set; } = default;
-        public DbSet<TraningData> trantingData { get; set; } = default;
+        public DbSet<User> users { get; set; }
+        public DbSet<UserData> userDatas { get; set; }
+        public DbSet<TraningData> trantingData { get; set; }
         
         // TraningSessions
-        public DbSet<RunningSession> runningSessions { get; set; } = default;
+        public DbSet<RunningSession> runningSessions { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -21,7 +21,15 @@ namespace FA_DB.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.TraningData)
+                .WithOne(td => td.User)
+                .HasForeignKey<TraningData>(td => td.Email);
+
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.UserData)
+                .WithOne(ud => ud.User)
+                .HasForeignKey<UserData>(ud => ud.Email);
             
         }
 
