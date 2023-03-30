@@ -13,6 +13,7 @@ namespace FA_DB.Models
     {
         [Key]
         public string Email { get; set; }
-        public List<RunningSession> RunningSessions { get; set; } = null;
+        public User User { get; set; }
+        public List<RunningSession>? RunningSessions { get; set; }
     }
 }
