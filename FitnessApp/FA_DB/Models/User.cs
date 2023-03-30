@@ -12,6 +12,8 @@ namespace FA_DB.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
-        //public UserData UserData { get; set; } = new();
+        public TraningData TraningData { get; set; }
+        public UserData UserData { get; set; }
+        public FavoriteTraningPrograms FavoriteTraningPrograms { get; set; }
     }
 }
