@@ -14,10 +14,10 @@ TraningData {
 
 UserData {
     string Email PK, FK
-    float weight
-    float height
-    string gender
-    datetime dob
+    float Weight
+    float Height
+    string Gender
+    datetime DoB
 }
 
 FavoriteTraningPrograms {
@@ -37,12 +37,23 @@ Diet {
 
 }
 
+RunningSession{
+    int SessionID PK
+    DateTime Date
+    float Durration
+    float Distance
+    float AvgSpeed
+    string Note "Null able"
+}
+
 User ||--|| TraningData : has
 User ||--|{ UserData : has
 User ||--|| FavoriteTraningPrograms : has
-FavoriteTraningPrograms }|--|{ TraningPrograms : has
+FavoriteTraningPrograms }o--o{ TraningPrograms : has
 Server ||--o{ TraningPrograms : has
 Server ||--o{ User : has
 Server ||--o{ Diet : has
+
+TraningData }o--o{ RunningSession : has
 
 ```
