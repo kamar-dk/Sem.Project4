@@ -11,12 +11,12 @@ namespace FA_DB.Models.TraningTypes
     public class RunningSession
     {
         [Key]
-        public int SessionId { get; set; }
+        public int SessionID { get; set; }
         public DateTime Date { get; set; }
         public float Durration { get; set; }
         public float Distance { get; set; }
         public float AvgSpeed { get; set; }
-        public string Note { get; set; }
+        public string? Note { get; set; }
 
         public TraningData traningData { get; set; }
     }
