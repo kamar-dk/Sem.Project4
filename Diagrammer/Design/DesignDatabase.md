@@ -22,7 +22,6 @@ UserData {
 
 FavoriteTraningPrograms {
     string Email PK, FK
-    List ProgramIDs
 }
 
 Server {
@@ -32,8 +31,6 @@ Server {
 
 TraningPrograms {
     int TraningProgramID PK
-    File File
-
 }
 
 Diet {
@@ -41,8 +38,8 @@ Diet {
 }
 
 User ||--|| TraningData : has
-User ||--|{ UserData : contains
-User ||--|| FavoriteTraningPrograms : Contains
+User ||--|{ UserData : has
+User ||--|| FavoriteTraningPrograms : has
 FavoriteTraningPrograms }|--|{ TraningPrograms : has
 Server ||--o{ TraningPrograms : has
 Server ||--o{ User : has
