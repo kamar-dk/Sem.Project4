@@ -14,6 +14,7 @@ namespace FA_DB.Models
         [Key]
         public string Email { get; set; }
         public User User { get; set; }
-        public List<RunningSession>? RunningSessions { get; set; }
+        public ICollection<RunningSession>? RunningSessions { get; set; }
+        public ICollection<BikeSession>? BikeSessions { get; set; }
     }
 }
