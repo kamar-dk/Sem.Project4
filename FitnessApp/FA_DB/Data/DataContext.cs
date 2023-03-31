@@ -15,6 +15,7 @@ namespace FA_DB.Data
                 
         // TraningSessions
         public DbSet<RunningSession> runningSessions { get; set; }
+        public DbSet<BikeSession> bikeSessions { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -36,6 +37,8 @@ namespace FA_DB.Data
                 .HasKey(tp => tp.TraningProgramID);
             modelBuilder.Entity<RunningSession>()
                 .HasKey(rs => rs.SessionID);
+            modelBuilder.Entity<BikeSession>()
+                .HasKey(bs => bs.SessionID);
 
 
             // Define User Relationships
