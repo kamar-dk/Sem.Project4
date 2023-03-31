@@ -46,6 +46,15 @@ RunningSession{
     string Note "Null able"
 }
 
+BikeSession{
+    int SessionID PK
+    DataTime Date
+    float Durration
+    float Distance
+    float AvgSpeed
+    string Note "Nullable"
+}
+
 User ||--|| TraningData : has
 User ||--|{ UserData : has
 User ||--|| FavoriteTraningPrograms : has
@@ -54,6 +63,7 @@ Server ||--o{ TraningPrograms : has
 Server ||--o{ User : has
 Server ||--o{ Diet : has
 
-TraningData }o--o{ RunningSession : has
+TraningData }|--o{ RunningSession : has
+TraningData }|--o{ BikeSession : has
 
 ```
