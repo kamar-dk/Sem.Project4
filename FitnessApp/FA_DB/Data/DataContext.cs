@@ -43,6 +43,8 @@ namespace FA_DB.Data
                 .HasKey(rs => rs.SessionID);
             modelBuilder.Entity<BikeSession>()
                 .HasKey(bs => bs.SessionID);
+            modelBuilder.Entity<Server>()
+                .HasKey(s => s.ServerID);
 
 
             // Define User Relationships

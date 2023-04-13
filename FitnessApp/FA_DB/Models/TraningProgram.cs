@@ -10,6 +10,6 @@ namespace FA_DB.Models
     {
         public int TraningProgramID { get; set; }
         public string Name { get; set; }
-        public object FavoriteTraningPrograms { get; internal set; }
+        //public object FavoriteTraningPrograms { get; internal set; }
     }
 }
