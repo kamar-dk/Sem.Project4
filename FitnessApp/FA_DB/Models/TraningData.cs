@@ -11,7 +11,6 @@ namespace FA_DB.Models
 {
     public class TraningData
     {
-        [Key]
         public string Email { get; set; }
         public User User { get; set; }
         public ICollection<RunningSession>? RunningSessions { get; set; }

@@ -12,6 +12,7 @@ namespace FA_DB.Data
         public DbSet<TraningData> trantingData { get; set; }
         public DbSet<FavoriteTraningPrograms> favoriteTraningPrograms { get; set; }
         public DbSet<TraningProgram> traningPrograms { get; set; }
+        public DbSet<Server> server { get; set; }
                 
         // TraningSessions
         public DbSet<RunningSession> runningSessions { get; set; }
@@ -24,6 +25,9 @@ namespace FA_DB.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            base.OnModelCreating(modelBuilder);
+
             // Define keys
             modelBuilder.Entity<User>()
                 .HasKey(u => u.Email);
@@ -54,6 +58,31 @@ namespace FA_DB.Data
                 .HasOne(u => u.FavoriteTraningPrograms)
                 .WithOne(ftp => ftp.User)
                 .HasForeignKey<FavoriteTraningPrograms>(ftp => ftp.Email);
+
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.TraningData)
+                .WithOne(td => td.User)
+                .HasForeignKey<TraningData>(td => td.Email);
+
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.UserData)
+                .WithOne(ud => ud.User)
+                .HasForeignKey<UserData>(ud => ud.Email);
+
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.FavoriteTraningPrograms)
+                .WithOne(ft => ft.User)
+                .HasForeignKey<FavoriteTraningPrograms>(ft => ft.Email);
+
+            modelBuilder.Entity<FavoriteTraningPrograms>()
+                .HasMany(ft => ft.TraningPrograms);
+
+            modelBuilder.Entity<Server>()
+                .HasMany(s => s.Users);
+
+
+            modelBuilder.Entity<Server>()
+                .HasMany(s => s.TraningPrograms);
         }
 
     }
