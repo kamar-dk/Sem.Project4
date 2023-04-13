@@ -1,0 +1,22 @@
+nav {
+    background-color: bisque;
+    height: 60px;
+    
+}
+
+nav li {
+    list-style: none;
+    float: left;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-right: 10px;
+}
+li a {
+    text-decoration: none;
+    color: rgb(59, 146, 187);
+    line-height: 40px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 30px;
+    
+}
