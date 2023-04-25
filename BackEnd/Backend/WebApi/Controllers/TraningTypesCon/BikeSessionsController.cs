@@ -8,12 +8,16 @@ using Microsoft.EntityFrameworkCore;
 using WebApi.Data;
 using WebApi.Models.TraningTypes;
 using Mapster;
+using WebApi.DTO;
+using WebApi.Models;
+using Microsoft.AspNetCore.Authorization;
+
 
 
 namespace WebApi.Controllers.TraningTypesCon
 {
     [Route("api/[controller]")]
-    [ApiController]
+    [ApiController, Authorize]
     public class BikeSessionsController : ControllerBase
     {
         private readonly DataContext _context;
@@ -86,12 +90,13 @@ namespace WebApi.Controllers.TraningTypesCon
         // POST: api/BikeSessions
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<BikeSession>> PostBikeSession(BikeSession bikeSession)
+        public async Task<ActionResult<BikeSession>> PostBikeSession(BikeSessionDto bikeSession)
         {
           if (_context.bikeSessions == null)
           {
               return Problem("Entity set 'DataContext.bikeSessions'  is null.");
           }
+
             Ok(_context.bikeSessions.Add(bikeSession.Adapt<BikeSession>()));
             await _context.SaveChangesAsync();
 

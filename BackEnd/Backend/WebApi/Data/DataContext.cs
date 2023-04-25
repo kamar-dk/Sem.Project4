@@ -1,6 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WebApi.Models.TraningTypes;
 using WebApi.Models;
+using WebApi.Data;
+using WebApi.DTO;
+using Microsoft.AspNetCore.SignalR;
+using Microsoft.AspNetCore.Localization;
+using System.Security.Cryptography.X509Certificates;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using System.Security.Cryptography;
 
 namespace WebApi.Data
 {
@@ -16,7 +23,7 @@ namespace WebApi.Data
         public DbSet<Server> server { get; set; }
 
         // TraningSessions
-        public DbSet<RunningSession> runningSessions { get; set; }
+        public DbSet<RunningSession> runningSessions { get; set; } 
         public DbSet<BikeSession> bikeSessions { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -25,10 +32,9 @@ namespace WebApi.Data
             optionsBuilder.UseSqlServer("Data Source=localhost;User ID=sa;Password=<YourStrong@Passw0rd>;Initial Catalog=BED2;Encrypt=False; Trust Server Certificate=False;");
         }
 
-        
+              
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
             base.OnModelCreating(modelBuilder);
 
             // Define keys
@@ -85,13 +91,13 @@ namespace WebApi.Data
             modelBuilder.Entity<Server>()
                 .HasMany(s => s.Users);
 
-
             modelBuilder.Entity<Server>()
                 .HasMany(s => s.TraningPrograms);
+
+
+            modelBuilder.Entity<User>()
+                .Property(u => u.PasswordHash)
+                .IsRequired();  
         }
-        
-        
-
-    }
-
+    }    
 }
