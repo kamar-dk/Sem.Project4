@@ -8,7 +8,7 @@ namespace WebApi.Models
 {
     public class Server
     {
-        public int ServerID { get; set; }
+        public int ServerId { get; set; }
         public ICollection<User> Users { get; set; }
         public ICollection<TraningProgram> TraningPrograms { get; set; }
     }

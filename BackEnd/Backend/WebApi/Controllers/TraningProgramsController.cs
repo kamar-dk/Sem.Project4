@@ -55,7 +55,7 @@ namespace WebApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutTraningProgram(int id, TraningProgram traningProgram)
         {
-            if (id != traningProgram.TraningProgramID)
+            if (id != traningProgram.TraningProgramId)
             {
                 return BadRequest();
             }
@@ -93,7 +93,7 @@ namespace WebApi.Controllers
             _context.traningPrograms.Add(traningProgram);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTraningProgram", new { id = traningProgram.TraningProgramID }, traningProgram);
+            return CreatedAtAction("GetTraningProgram", new { id = traningProgram.TraningProgramId }, traningProgram);
         }
 
         // DELETE: api/TraningPrograms/5
@@ -118,7 +118,7 @@ namespace WebApi.Controllers
 
         private bool TraningProgramExists(int id)
         {
-            return (_context.traningPrograms?.Any(e => e.TraningProgramID == id)).GetValueOrDefault();
+            return (_context.traningPrograms?.Any(e => e.TraningProgramId == id)).GetValueOrDefault();
         }
     }
 }

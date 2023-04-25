@@ -6,10 +6,11 @@ namespace WebApi.Data
 {
     public class DataContext : DbContext
     {
+        public DataContext(DbContextOptions<DataContext> options) : base(options) { }
         // Main Tables
         public DbSet<User> users { get; set; }
         public DbSet<UserData> userDatas { get; set; }
-        public DbSet<TraningData> trantingData { get; set; }
+        public DbSet<TraningData> traningData { get; set; }
         public DbSet<FavoriteTraningPrograms> favoriteTraningPrograms { get; set; }
         public DbSet<TraningProgram> traningPrograms { get; set; }
         public DbSet<Server> server { get; set; }
@@ -20,9 +21,11 @@ namespace WebApi.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=sql.bsite.net\\MSSQL2016;Initial Catalog=kaspermartensen_Prj4;User ID=kaspermartensen_Prj4;Password=Bed2Fed2;Encrypt=False; Trust Server Certificate=False;Persist Security Info = True;");
+            //optionsBuilder.UseSqlServer("Data Source=sql.bsite.net\\MSSQL2016;Initial Catalog=kaspermartensen_Prj4;User ID=kaspermartensen_Prj4;Password=Bed2Fed2;Encrypt=False; Trust Server Certificate=False;Persist Security Info = True;");
+            optionsBuilder.UseSqlServer("Data Source=localhost;User ID=sa;Password=<YourStrong@Passw0rd>;Initial Catalog=BED2;Encrypt=False; Trust Server Certificate=False;");
         }
 
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
@@ -38,13 +41,13 @@ namespace WebApi.Data
             modelBuilder.Entity<FavoriteTraningPrograms>()
                 .HasKey(ftp => ftp.Email);
             modelBuilder.Entity<TraningProgram>()
-                .HasKey(tp => tp.TraningProgramID);
+                .HasKey(tp => tp.TraningProgramId);
             modelBuilder.Entity<RunningSession>()
-                .HasKey(rs => rs.SessionID);
+                .HasKey(rs => rs.RunningSessionId);
             modelBuilder.Entity<BikeSession>()
-                .HasKey(bs => bs.SessionID);
+                .HasKey(bs => bs.BikeSessionId);
             modelBuilder.Entity<Server>()
-                .HasKey(s => s.ServerID);
+                .HasKey(s => s.ServerId);
 
 
             // Define User Relationships
@@ -86,7 +89,9 @@ namespace WebApi.Data
             modelBuilder.Entity<Server>()
                 .HasMany(s => s.TraningPrograms);
         }
-
+        
+        
 
     }
+
 }

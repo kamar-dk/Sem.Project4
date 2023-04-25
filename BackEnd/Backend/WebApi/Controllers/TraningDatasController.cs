@@ -25,22 +25,22 @@ namespace WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TraningData>>> GettrantingData()
         {
-          if (_context.trantingData == null)
+          if (_context.traningData == null)
           {
               return NotFound();
           }
-            return await _context.trantingData.ToListAsync();
+            return await _context.traningData.ToListAsync();
         }
 
         // GET: api/TraningDatas/5
         [HttpGet("{id}")]
         public async Task<ActionResult<TraningData>> GetTraningData(string id)
         {
-          if (_context.trantingData == null)
+          if (_context.traningData == null)
           {
               return NotFound();
           }
-            var traningData = await _context.trantingData.FindAsync(id);
+            var traningData = await _context.traningData.FindAsync(id);
 
             if (traningData == null)
             {
@@ -86,11 +86,11 @@ namespace WebApi.Controllers
         [HttpPost]
         public async Task<ActionResult<TraningData>> PostTraningData(TraningData traningData)
         {
-          if (_context.trantingData == null)
+          if (_context.traningData == null)
           {
               return Problem("Entity set 'DataContext.trantingData'  is null.");
           }
-            _context.trantingData.Add(traningData);
+            _context.traningData.Add(traningData);
             try
             {
                 await _context.SaveChangesAsync();
@@ -114,17 +114,17 @@ namespace WebApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTraningData(string id)
         {
-            if (_context.trantingData == null)
+            if (_context.traningData == null)
             {
                 return NotFound();
             }
-            var traningData = await _context.trantingData.FindAsync(id);
+            var traningData = await _context.traningData.FindAsync(id);
             if (traningData == null)
             {
                 return NotFound();
             }
 
-            _context.trantingData.Remove(traningData);
+            _context.traningData.Remove(traningData);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -132,7 +132,7 @@ namespace WebApi.Controllers
 
         private bool TraningDataExists(string id)
         {
-            return (_context.trantingData?.Any(e => e.Email == id)).GetValueOrDefault();
+            return (_context.traningData?.Any(e => e.Email == id)).GetValueOrDefault();
         }
     }
 }

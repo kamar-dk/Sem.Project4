@@ -55,7 +55,7 @@ namespace WebApi.Controllers.TraningTypesCon
         [HttpPut("{id}")]
         public async Task<IActionResult> PutRunningSession(int id, RunningSession runningSession)
         {
-            if (id != runningSession.SessionID)
+            if (id != runningSession.RunningSessionId)
             {
                 return BadRequest();
             }
@@ -93,7 +93,7 @@ namespace WebApi.Controllers.TraningTypesCon
             _context.runningSessions.Add(runningSession);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetRunningSession", new { id = runningSession.SessionID }, runningSession);
+            return CreatedAtAction("GetRunningSession", new { id = runningSession.RunningSessionId }, runningSession);
         }
 
         // DELETE: api/RunningSessions/5
@@ -118,7 +118,7 @@ namespace WebApi.Controllers.TraningTypesCon
 
         private bool RunningSessionExists(int id)
         {
-            return (_context.runningSessions?.Any(e => e.SessionID == id)).GetValueOrDefault();
+            return (_context.runningSessions?.Any(e => e.RunningSessionId == id)).GetValueOrDefault();
         }
     }
 }

@@ -11,7 +11,7 @@ namespace WebApi.Models.TraningTypes
     public class RunningSession
     {
         [Key]
-        public int SessionID { get; set; }
+        public int RunningSessionId { get; set; }
         public DateTime Date { get; set; }
         public float Durration { get; set; }
         public float Distance { get; set; }

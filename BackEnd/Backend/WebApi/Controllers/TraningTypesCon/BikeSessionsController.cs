@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Data;
 using WebApi.Models.TraningTypes;
+using Mapster;
+
 
 namespace WebApi.Controllers.TraningTypesCon
 {
@@ -55,7 +57,7 @@ namespace WebApi.Controllers.TraningTypesCon
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBikeSession(int id, BikeSession bikeSession)
         {
-            if (id != bikeSession.SessionID)
+            if (id != bikeSession.BikeSessionId)
             {
                 return BadRequest();
             }
@@ -90,10 +92,10 @@ namespace WebApi.Controllers.TraningTypesCon
           {
               return Problem("Entity set 'DataContext.bikeSessions'  is null.");
           }
-            _context.bikeSessions.Add(bikeSession);
+            Ok(_context.bikeSessions.Add(bikeSession.Adapt<BikeSession>()));
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetBikeSession", new { id = bikeSession.SessionID }, bikeSession);
+            return CreatedAtAction("GetBikeSession", new { id = bikeSession.BikeSessionId }, bikeSession);
         }
 
         // DELETE: api/BikeSessions/5
@@ -118,7 +120,7 @@ namespace WebApi.Controllers.TraningTypesCon
 
         private bool BikeSessionExists(int id)
         {
-            return (_context.bikeSessions?.Any(e => e.SessionID == id)).GetValueOrDefault();
+            return (_context.bikeSessions?.Any(e => e.BikeSessionId == id)).GetValueOrDefault();
         }
     }
 }

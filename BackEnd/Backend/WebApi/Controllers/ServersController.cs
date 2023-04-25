@@ -50,7 +50,7 @@ namespace WebApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutServer(int id, Server server)
         {
-            if (id != server.ServerID)
+            if (id != server.ServerId)
             {
                 return BadRequest();
             }
@@ -88,7 +88,7 @@ namespace WebApi.Controllers
             _context.server.Add(server);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetServer", new { id = server.ServerID }, server);
+            return CreatedAtAction("GetServer", new { id = server.ServerId }, server);
         }
 
         // DELETE: api/Servers/5
@@ -113,7 +113,7 @@ namespace WebApi.Controllers
 
         private bool ServerExists(int id)
         {
-            return (_context.server?.Any(e => e.ServerID == id)).GetValueOrDefault();
+            return (_context.server?.Any(e => e.ServerId == id)).GetValueOrDefault();
         }
     }
 }
