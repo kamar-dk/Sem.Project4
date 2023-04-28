@@ -54,7 +54,7 @@ namespace FA_DB.Data
                         Email = "Alan@mail.dk",
                         //Password = "1234",
                         FirstName = "Alan",
-                        LastName = "Kharmo",
+                        LastName = "Khamo",
                         PasswordHash = new byte[4] { 1, 2, 3, 4 },
                         Salt = new byte[4] { 1, 2, 3, 4 }
                     },

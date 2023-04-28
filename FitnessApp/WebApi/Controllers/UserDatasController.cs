@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FA_DB.Data;
 using FA_DB.Models;
+using WebApi.DTO;
+using AutoMapper;
 
 namespace WebApi.Controllers
 {
@@ -84,13 +86,17 @@ namespace WebApi.Controllers
         // POST: api/UserDatas
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<UserData>> PostUserData(UserData userData)
+        public async Task<ActionResult<UserData>> PostUserData(UserDatasDto userData)
         {
           if (_context.userDatas == null)
           {
               return Problem("Entity set 'DataContext.userDatas'  is null.");
           }
-            _context.userDatas.Add(userData);
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<UserDatasDto, UserData>());
+            var mapper = new Mapper(config);
+            var userData_ = mapper.Map<UserData>(userData);
+
+            _context.userDatas.Add(userData_);
             try
             {
                 await _context.SaveChangesAsync();

@@ -57,14 +57,14 @@ namespace WebApi.Controllers
         // PUT: api/Users/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(string id, User user)
+        public async Task<IActionResult> PutUser(string id, UserDto userDto)
         {
-            if (id != user.Email)
+            if (id != userDto.Email)
             {
                 return BadRequest();
             }
 
-            _context.Entry(user).State = EntityState.Modified;
+            _context.Entry(userDto).State = EntityState.Modified;
 
             try
             {
@@ -83,6 +83,7 @@ namespace WebApi.Controllers
             }
 
             return NoContent();
+
         }
 
         // POST: api/Users

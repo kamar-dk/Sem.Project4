@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FA_DB.Data;
 using FA_DB.Models;
+using WebApi.DTO;
+using AutoMapper;
 
 namespace WebApi.Controllers
 {
@@ -84,13 +86,17 @@ namespace WebApi.Controllers
         // POST: api/TraningPrograms
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<TraningProgram>> PostTraningProgram(TraningProgram traningProgram)
+        public async Task<ActionResult<TraningProgram>> PostTraningProgram(TraningProgramsDto traningProgram)
         {
           if (_context.traningPrograms == null)
           {
               return Problem("Entity set 'DataContext.traningPrograms'  is null.");
           }
-            _context.traningPrograms.Add(traningProgram);
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<TraningProgramsDto, TraningProgram>());
+            var mapper = new Mapper(config);
+            var user_ = mapper.Map<TraningProgram>(traningProgram);
+
+            _context.traningPrograms.Add(user_);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetTraningProgram", new { id = traningProgram.TraningProgramID }, traningProgram);
