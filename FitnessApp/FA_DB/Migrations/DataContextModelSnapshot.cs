@@ -52,7 +52,7 @@ namespace FA_DB.Migrations
 
                     b.HasKey("Email");
 
-                    b.ToTable("trantingData");
+                    b.ToTable("traningData");
                 });
 
             modelBuilder.Entity("FA_DB.Models.TraningProgram", b =>
@@ -196,12 +196,34 @@ namespace FA_DB.Migrations
                     b.Property<float>("Height")
                         .HasColumnType("real");
 
-                    b.Property<float>("Weight")
-                        .HasColumnType("real");
-
                     b.HasKey("Email");
 
                     b.ToTable("userDatas");
+                });
+
+            modelBuilder.Entity("FA_DB.Models.UserWeight", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("UserDataEmail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<float>("Weight")
+                        .HasColumnType("real");
+
+                    b.Property<DateTime>("date")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("UserDataEmail");
+
+                    b.ToTable("UserWeights");
                 });
 
             modelBuilder.Entity("FA_DB.Models.FavoriteTraningPrograms", b =>
@@ -277,6 +299,17 @@ namespace FA_DB.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("FA_DB.Models.UserWeight", b =>
+                {
+                    b.HasOne("FA_DB.Models.UserData", "UserData")
+                        .WithMany("UserWeights")
+                        .HasForeignKey("UserDataEmail")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UserData");
+                });
+
             modelBuilder.Entity("FA_DB.Models.FavoriteTraningPrograms", b =>
                 {
                     b.Navigation("TraningPrograms");
@@ -306,6 +339,11 @@ namespace FA_DB.Migrations
 
                     b.Navigation("UserData")
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("FA_DB.Models.UserData", b =>
+                {
+                    b.Navigation("UserWeights");
                 });
 #pragma warning restore 612, 618
         }

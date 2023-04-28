@@ -6,8 +6,8 @@ namespace FA_DB.Data
 {
     public class DataContext : DbContext
     {
-        public DataContext(DbContextOptions<DataContext> options)
-                : base(options) { }
+        /*public DataContext(DbContextOptions<DataContext> options)
+                : base(options) { }*/
 
         // Main Tables
         public DbSet<User> users { get; set; }
@@ -16,16 +16,18 @@ namespace FA_DB.Data
         public DbSet<FavoriteTraningPrograms> favoriteTraningPrograms { get; set; }
         public DbSet<TraningProgram> traningPrograms { get; set; }
         public DbSet<Server> server { get; set; }
+
+        public DbSet<UserWeight> UserWeights { get; set; }
                 
         // TraningSessions
         public DbSet<RunningSession> runningSessions { get; set; }
         public DbSet<BikeSession> bikeSessions { get; set; }
 
-        /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Data Source=sql.bsite.net\\MSSQL2016;Initial Catalog=kaspermartensen_Prj4;User ID=kaspermartensen_Prj4;Password=Bed2Fed2;Encrypt=False; Trust Server Certificate=False;Persist Security Info = True;");
 
-        }*/
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -49,6 +51,8 @@ namespace FA_DB.Data
                 .HasKey(bs => bs.SessionID);
             modelBuilder.Entity<Server>()
                 .HasKey(s => s.ServerID);
+            modelBuilder.Entity<UserWeight>()
+                .HasKey(uw => uw.ID);
 
 
             // Define User Relationships
@@ -79,6 +83,14 @@ namespace FA_DB.Data
                 .HasOne(u => u.FavoriteTraningPrograms)
                 .WithOne(ft => ft.User)
                 .HasForeignKey<FavoriteTraningPrograms>(ft => ft.Email);
+
+            modelBuilder.Entity<UserWeight>()
+                .HasOne(w => w.UserData)
+                .WithMany(uw => uw.UserWeights);
+
+            modelBuilder.Entity<UserData>()
+                .HasMany(uw => uw.UserWeights);
+
 
             modelBuilder.Entity<FavoriteTraningPrograms>()
                 .HasMany(ft => ft.TraningPrograms);
