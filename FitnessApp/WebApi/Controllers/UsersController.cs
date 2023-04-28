@@ -6,9 +6,11 @@ using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using WebApi.Data;
+using FA_DB.Data;
 using WebApi.DTO;
-using WebApi.Models;
+//using WebApi.Models;
+using FA_DB.Models;
+
 
 namespace WebApi.Controllers
 {
