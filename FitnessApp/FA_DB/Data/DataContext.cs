@@ -6,8 +6,8 @@ namespace FA_DB.Data
 {
     public class DataContext : DbContext
     {
-        //public DataContext(DbContextOptions<DataContext> options)
-        //        : base(options) { }
+        public DataContext(DbContextOptions<DataContext> options)
+                : base(options) { }
 
         // Main Tables
         public DbSet<User> users { get; set; }
