@@ -1,20 +1,24 @@
 nav {
-    background-color: bisque;
-    height: 42px;
+    background-color: rgb(163, 172, 248);
+    display: flex;
+    justify-content: space-between;
+    height: 70px;
+    align-items: left;
 }
 
 nav li {
     list-style: none;
     float: left;
     padding-left: 8px;
-    padding-top: 10px;
-    padding-right: 8px;
+    padding-top: 20px;
+    padding-right: 10px;
 }
 li a {
+    display: flex;
     text-decoration: none;
-    color: rgb(59, 146, 187);
+    color: rgb(255, 255, 255);
     line-height: 1em;
     text-align: center;
     font-weight: bold;
-    font-size: 1em;
+    font-size: 1.3em;
 }

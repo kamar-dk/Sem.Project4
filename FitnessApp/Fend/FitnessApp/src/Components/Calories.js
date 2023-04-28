@@ -4,7 +4,7 @@ import { useState } from 'react';
 function Calories(param){
     return(
         <React.Fragment>
-                  <div> Tilføj job</div> 
+                  <div> Your Calories Caluclator, add your info below to calculate your prefered Calories intake</div> 
                   <br></br>  
                 <MyForm></MyForm>
                 <br></br>    
