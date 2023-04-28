@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using WebApi.Data;
-using WebApi.Models.TraningTypes;
+using FA_DB.Data;
+using FA_DB.Models.TraningTypes;
 
 namespace WebApi.Controllers.TraningTypesCon
 {
@@ -55,7 +55,7 @@ namespace WebApi.Controllers.TraningTypesCon
         [HttpPut("{id}")]
         public async Task<IActionResult> PutRunningSession(int id, RunningSession runningSession)
         {
-            if (id != runningSession.RunningSessionId)
+            if (id != runningSession.SessionID)
             {
                 return BadRequest();
             }
@@ -93,7 +93,7 @@ namespace WebApi.Controllers.TraningTypesCon
             _context.runningSessions.Add(runningSession);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetRunningSession", new { id = runningSession.RunningSessionId }, runningSession);
+            return CreatedAtAction("GetRunningSession", new { id = runningSession.SessionID }, runningSession);
         }
 
         // DELETE: api/RunningSessions/5
@@ -118,7 +118,7 @@ namespace WebApi.Controllers.TraningTypesCon
 
         private bool RunningSessionExists(int id)
         {
-            return (_context.runningSessions?.Any(e => e.RunningSessionId == id)).GetValueOrDefault();
+            return (_context.runningSessions?.Any(e => e.SessionID == id)).GetValueOrDefault();
         }
     }
 }

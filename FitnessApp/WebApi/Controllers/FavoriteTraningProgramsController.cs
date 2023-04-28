@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using WebApi.Data;
-using WebApi.Models;
+using FA_DB.Data;
+using FA_DB.Models;
 
 namespace WebApi.Controllers
 {
