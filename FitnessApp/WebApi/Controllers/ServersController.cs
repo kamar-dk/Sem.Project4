@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using WebApi.Data;
-using WebApi.Models;
+using FA_DB.Data;
+using FA_DB.Models;
 
 namespace WebApi.Controllers
 {
@@ -50,7 +50,7 @@ namespace WebApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutServer(int id, Server server)
         {
-            if (id != server.ServerId)
+            if (id != server.ServerID)
             {
                 return BadRequest();
             }
@@ -88,7 +88,7 @@ namespace WebApi.Controllers
             _context.server.Add(server);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetServer", new { id = server.ServerId }, server);
+            return CreatedAtAction("GetServer", new { id = server.ServerID }, server);
         }
 
         // DELETE: api/Servers/5
@@ -113,7 +113,7 @@ namespace WebApi.Controllers
 
         private bool ServerExists(int id)
         {
-            return (_context.server?.Any(e => e.ServerId == id)).GetValueOrDefault();
+            return (_context.server?.Any(e => e.ServerID == id)).GetValueOrDefault();
         }
     }
 }

@@ -1,7 +1,7 @@
-﻿using WebApi.Models;
+﻿using FA_DB.Models;
 
 
-namespace WebApi.Data
+namespace FA_DB.Data
 {
     public class AppDbInitializer
     {
