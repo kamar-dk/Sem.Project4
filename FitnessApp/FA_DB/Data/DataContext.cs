@@ -6,10 +6,13 @@ namespace FA_DB.Data
 {
     public class DataContext : DbContext
     {
+        public DataContext(DbContextOptions<DataContext> options)
+                : base(options) { }
+
         // Main Tables
         public DbSet<User> users { get; set; }
         public DbSet<UserData> userDatas { get; set; }
-        public DbSet<TraningData> trantingData { get; set; }
+        public DbSet<TraningData> traningData { get; set; }
         public DbSet<FavoriteTraningPrograms> favoriteTraningPrograms { get; set; }
         public DbSet<TraningProgram> traningPrograms { get; set; }
         public DbSet<Server> server { get; set; }
@@ -18,10 +21,11 @@ namespace FA_DB.Data
         public DbSet<RunningSession> runningSessions { get; set; }
         public DbSet<BikeSession> bikeSessions { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Data Source=sql.bsite.net\\MSSQL2016;Initial Catalog=kaspermartensen_Prj4;User ID=kaspermartensen_Prj4;Password=Bed2Fed2;Encrypt=False; Trust Server Certificate=False;Persist Security Info = True;");
-        }
+
+        }*/
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

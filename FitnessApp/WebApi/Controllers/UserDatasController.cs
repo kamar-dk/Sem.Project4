@@ -5,62 +5,62 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using WebApi.Data;
-using WebApi.Models;
+using FA_DB.Data;
+using FA_DB.Models;
 
 namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TraningDatasController : ControllerBase
+    public class UserDatasController : ControllerBase
     {
         private readonly DataContext _context;
 
-        public TraningDatasController(DataContext context)
+        public UserDatasController(DataContext context)
         {
             _context = context;
         }
 
-        // GET: api/TraningDatas
+        // GET: api/UserDatas
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TraningData>>> GettrantingData()
+        public async Task<ActionResult<IEnumerable<UserData>>> GetuserDatas()
         {
-          if (_context.traningData == null)
+          if (_context.userDatas == null)
           {
               return NotFound();
           }
-            return await _context.traningData.ToListAsync();
+            return await _context.userDatas.ToListAsync();
         }
 
-        // GET: api/TraningDatas/5
+        // GET: api/UserDatas/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<TraningData>> GetTraningData(string id)
+        public async Task<ActionResult<UserData>> GetUserData(string id)
         {
-          if (_context.traningData == null)
+          if (_context.userDatas == null)
           {
               return NotFound();
           }
-            var traningData = await _context.traningData.FindAsync(id);
+            var userData = await _context.userDatas.FindAsync(id);
 
-            if (traningData == null)
+            if (userData == null)
             {
                 return NotFound();
             }
 
-            return traningData;
+            return userData;
         }
 
-        // PUT: api/TraningDatas/5
+        // PUT: api/UserDatas/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTraningData(string id, TraningData traningData)
+        public async Task<IActionResult> PutUserData(string id, UserData userData)
         {
-            if (id != traningData.Email)
+            if (id != userData.Email)
             {
                 return BadRequest();
             }
 
-            _context.Entry(traningData).State = EntityState.Modified;
+            _context.Entry(userData).State = EntityState.Modified;
 
             try
             {
@@ -68,7 +68,7 @@ namespace WebApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TraningDataExists(id))
+                if (!UserDataExists(id))
                 {
                     return NotFound();
                 }
@@ -81,23 +81,23 @@ namespace WebApi.Controllers
             return NoContent();
         }
 
-        // POST: api/TraningDatas
+        // POST: api/UserDatas
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<TraningData>> PostTraningData(TraningData traningData)
+        public async Task<ActionResult<UserData>> PostUserData(UserData userData)
         {
-          if (_context.traningData == null)
+          if (_context.userDatas == null)
           {
-              return Problem("Entity set 'DataContext.trantingData'  is null.");
+              return Problem("Entity set 'DataContext.userDatas'  is null.");
           }
-            _context.traningData.Add(traningData);
+            _context.userDatas.Add(userData);
             try
             {
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateException)
             {
-                if (TraningDataExists(traningData.Email))
+                if (UserDataExists(userData.Email))
                 {
                     return Conflict();
                 }
@@ -107,32 +107,32 @@ namespace WebApi.Controllers
                 }
             }
 
-            return CreatedAtAction("GetTraningData", new { id = traningData.Email }, traningData);
+            return CreatedAtAction("GetUserData", new { id = userData.Email }, userData);
         }
 
-        // DELETE: api/TraningDatas/5
+        // DELETE: api/UserDatas/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTraningData(string id)
+        public async Task<IActionResult> DeleteUserData(string id)
         {
-            if (_context.traningData == null)
+            if (_context.userDatas == null)
             {
                 return NotFound();
             }
-            var traningData = await _context.traningData.FindAsync(id);
-            if (traningData == null)
+            var userData = await _context.userDatas.FindAsync(id);
+            if (userData == null)
             {
                 return NotFound();
             }
 
-            _context.traningData.Remove(traningData);
+            _context.userDatas.Remove(userData);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool TraningDataExists(string id)
+        private bool UserDataExists(string id)
         {
-            return (_context.traningData?.Any(e => e.Email == id)).GetValueOrDefault();
+            return (_context.userDatas?.Any(e => e.Email == id)).GetValueOrDefault();
         }
     }
 }

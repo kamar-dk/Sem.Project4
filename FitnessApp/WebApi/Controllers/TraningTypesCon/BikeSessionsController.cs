@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using WebApi.Data;
-using WebApi.Models.TraningTypes;
+using FA_DB.Data;
+using FA_DB.Models.TraningTypes;
 using Mapster;
 using WebApi.DTO;
-using WebApi.Models;
+using FA_DB.Models;
 using Microsoft.AspNetCore.Authorization;
 
 
@@ -61,7 +61,7 @@ namespace WebApi.Controllers.TraningTypesCon
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBikeSession(int id, BikeSession bikeSession)
         {
-            if (id != bikeSession.BikeSessionId)
+            if (id != bikeSession.SessionID)
             {
                 return BadRequest();
             }
@@ -125,7 +125,7 @@ namespace WebApi.Controllers.TraningTypesCon
 
         private bool BikeSessionExists(int id)
         {
-            return (_context.bikeSessions?.Any(e => e.BikeSessionId == id)).GetValueOrDefault();
+            return (_context.bikeSessions?.Any(e => e.SessionID == id)).GetValueOrDefault();
         }
     }
 }

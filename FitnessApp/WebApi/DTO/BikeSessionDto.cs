@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WebApi.Models.TraningTypes
+﻿namespace WebApi.DTO
 {
-    public class BikeSession
+    public class BikeSessionDto
     {
         public int BikeSessionId { get; set; }
         public DateTime Date { get; set; }
@@ -15,6 +9,5 @@ namespace WebApi.Models.TraningTypes
         public float AvgSpeed { get; set; }
         public string? Note { get; set; }
 
-        public TraningData traningData { get; set; }
     }
 }

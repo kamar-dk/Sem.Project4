@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Data;
+using WebApi.DTO;
 using WebApi.Models;
 
 namespace WebApi.Controllers
@@ -83,14 +85,47 @@ namespace WebApi.Controllers
 
         // POST: api/Users
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPost]
+        //public async Task<ActionResult<User>> PostUser(User user)
+        //{
+        //  if (_context.users == null)
+        //  {
+        //      return Problem("Entity set 'DataContext.users'  is null.");
+        //  }
+        //    _context.users.Add(user);
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateException)
+        //    {
+        //        if (UserExists(user.Email))
+        //        {
+        //            return Conflict();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
+
+        //    return CreatedAtAction("GetUser", new { id = user.Email }, user);
+        //}
+
+        // POST: api/Users
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+        public async Task<ActionResult<User>> PostUserDto(UserDto user)
         {
-          if (_context.users == null)
-          {
-              return Problem("Entity set 'DataContext.users'  is null.");
-          }
-            _context.users.Add(user);
+            if (_context.users == null)
+            {
+                return Problem("Entity set 'DataContext.users'  is null.");
+            }
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<UserDto, User>());
+            var mapper = new Mapper(config);
+            var user_ = mapper.Map<User>(user);
+
+            _context.users.Add(user_);
             try
             {
                 await _context.SaveChangesAsync();
@@ -109,6 +144,7 @@ namespace WebApi.Controllers
 
             return CreatedAtAction("GetUser", new { id = user.Email }, user);
         }
+
 
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
