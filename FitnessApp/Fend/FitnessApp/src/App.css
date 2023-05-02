@@ -1,4 +1,8 @@
 .App {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  grid-template-rows: 100vh;
+  padding: 10px;
   text-align: center;
 }
 
@@ -21,11 +25,72 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: rgb(197, 124, 21);
+  color: rgb(65, 43, 12);
+  grid-column: 1 / -1;
 }
 
 .App-link {
   color: #61dafb;
+}
+
+.left-container {
+  background-color: #eee;
+  grid-column: 1 / 2;
+  grid-row: 1 / -1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.right-container {
+  background-color: #ddd;
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: left;
+  padding : 15px;
+  overflow-y: scroll;
+  box-sizing: border-box;
+}
+
+.filter {
+  filter: grayscale(100%) blur(5px);
+}
+
+.button {
+  padding: 15px 25px;
+  font-size: 24px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #fff;
+  background-color: #0072c6;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+}
+
+.button:hover {background-color: #0072c6}
+
+.button:active {
+  background-color: #0072c6;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(
+    rgba(0, 0, 0, 0.5),
+    rgba(0, 0, 0, 0.5)
+  );
 }
 
 @keyframes App-logo-spin {

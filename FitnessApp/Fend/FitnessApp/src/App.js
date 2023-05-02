@@ -20,7 +20,7 @@ function App() {
   return (
     <>
     <nav>
-    <img src='/images/FA.png' alt='Arnold' height={42} ></img>
+    <img src='/images/FA.png' alt='FitnessApp' height={42} ></img>
       <u1>
         <li><Link to="/Main">Main</Link></li>
         <li><Link to="/Calories">Calories</Link></li>
