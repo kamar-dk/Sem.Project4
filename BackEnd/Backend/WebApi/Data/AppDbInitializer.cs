@@ -79,6 +79,17 @@ namespace WebApi.Data
                     context.SaveChanges();
                 }
 
+                if (!context.traningPrograms.Any())
+                {
+                    context.traningPrograms.AddRange(new TraningProgram()
+                    {
+                        TraningProgramId = 1,
+                        Name = "Program 1"
+                    });
+                    context.SaveChanges();
+                }
+
+
             }
         }
     }
