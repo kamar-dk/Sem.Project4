@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using FA_DB.Data;
 using FA_DB.Models;
 using AutoMapper;
+using WebApi.DTO;
 
 namespace WebApi.Controllers
 {
@@ -54,7 +55,7 @@ namespace WebApi.Controllers
         // PUT: api/TraningDatas/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTraningData(string id, TraningData traningData)
+        public async Task<IActionResult> PutTraningData(string id, TraningDatasDto traningData)
         {
             if (id != traningData.Email)
             {
