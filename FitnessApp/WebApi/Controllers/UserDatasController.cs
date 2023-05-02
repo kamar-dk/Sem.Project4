@@ -55,12 +55,17 @@ namespace WebApi.Controllers
         // PUT: api/UserDatas/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUserData(string id, UserDatasDto userData)
+        public async Task<IActionResult> PutUserData(string id, UserDatasDto userDataDto)
         {
-            if (id != userData.Email)
+            if (id != userDataDto.Email)
             {
                 return BadRequest();
             }
+            var userData = await _context.userDatas.FindAsync(id);
+            userData.Email = userDataDto.Email;
+            userData.Height = userDataDto.Height;
+            userData.Gender = userDataDto.Gender;
+            userData.DoB = userDataDto.DoB;
 
             _context.Entry(userData).State = EntityState.Modified;
 
