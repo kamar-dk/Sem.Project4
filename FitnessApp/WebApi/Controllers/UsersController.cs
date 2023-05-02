@@ -19,10 +19,12 @@ namespace WebApi.Controllers
     public class UsersController : ControllerBase
     {
         private readonly DataContext _context;
+        private readonly IMapper _mapper;
 
-        public UsersController(DataContext context)
+        public UsersController(DataContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/Users
@@ -54,6 +56,8 @@ namespace WebApi.Controllers
             return user;
         }
 
+
+
         // PUT: api/Users/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -64,7 +68,9 @@ namespace WebApi.Controllers
                 return BadRequest();
             }
 
+            var user = await _context.users.FindAsync(id);
             _context.Entry(userDto).State = EntityState.Modified;
+            _mapper.Map(userDto, user);
 
             try
             {
