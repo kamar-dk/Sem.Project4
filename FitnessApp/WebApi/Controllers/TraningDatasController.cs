@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FA_DB.Data;
 using FA_DB.Models;
-using WebApi.DTO;
 using AutoMapper;
 
 namespace WebApi.Controllers

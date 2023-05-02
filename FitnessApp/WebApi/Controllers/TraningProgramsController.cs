@@ -94,12 +94,26 @@ namespace WebApi.Controllers
           }
             var config = new MapperConfiguration(cfg => cfg.CreateMap<TraningProgramsDto, TraningProgram>());
             var mapper = new Mapper(config);
-            var user_ = mapper.Map<TraningProgram>(traningProgram);
+            var program = mapper.Map<TraningProgram>(traningProgram);
 
-            _context.traningPrograms.Add(user_);
-            await _context.SaveChangesAsync();
+            _context.traningPrograms.Add(program);
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (TraningProgramExists(traningProgram.TraningProgramID))
+                {
+                    return Conflict();
+                }
+                else    
+                {
+                    throw;
+                }
+            }
 
-            return CreatedAtAction("GetTraningProgram", new { id = traningProgram.TraningProgramID }, traningProgram);
+            return CreatedAtAction("GetUser", new { id = traningProgram.TraningProgramID }, traningProgram);
         }
 
         // DELETE: api/TraningPrograms/5
@@ -126,5 +140,6 @@ namespace WebApi.Controllers
         {
             return (_context.traningPrograms?.Any(e => e.TraningProgramID == id)).GetValueOrDefault();
         }
+
     }
 }
