@@ -8,6 +8,8 @@ import "./Components/NavBar.css"
 import Logout from './Components/Logout';
 import Tracking from './Components/Tracking';
 import PrivateRoutes from './Components/PrivateRoute';
+import SignUp from './SignUp';
+import TrainingsProgram from './TrainingsPrograms';
 
 
 function App() {
@@ -27,12 +29,13 @@ function App() {
         <li><Link to="/Activity">Activity</Link></li>
         <li><Link to="/Tracking">Tracking</Link></li>
         <li><Link to="/Logout">Logout</Link></li>
+        <li><Link to="/SignUp">SignUp</Link></li>
+        <li><Link to="/TrainingsPrograms">TrainingPrograms</Link></li>
         
       </u1>
     </nav>
     <Routes>
       <Route element={<PrivateRoutes/>}>
-    
       </Route>
       <Route path="/Activity" element={<Activity/>} ></Route>
       <Route path="/Calories" element={<Calories/>} ></Route>
@@ -40,6 +43,8 @@ function App() {
       <Route path="/Tracking" element={<Tracking/>} ></Route>
       <Route path="/Logout" element={<Logout/>} ></Route>
       <Route path="/Login" element={<Login/>} ></Route>
+      <Route path="/SignUp" element={<SignUp/>} ></Route>
+      <Route path="/TrainingsPrograms" element={<TrainingsProgram/>} ></Route>
     </Routes>
     </>
 
