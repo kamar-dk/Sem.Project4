@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import "../App.css";
 import { Grid, Paper, Typography } from "@material-ui/core";
+import { lightBlue } from "@material-ui/core/colors";
 
 function Calories() {
   const [result, setResult] = useState(null);
@@ -34,7 +35,7 @@ function Calories() {
           <Paper style={{ padding: 20 }}>
             {/* Add your calculator form here */}
             <div className="left-Container">
-              <h1>Calorie Calculator</h1>
+              <h1 style={{backgroundColor: "lightblue"}}>Calorie Calculator</h1>
               <form onSubmit={calculateCalories}>
                 <label htmlFor="gender">Gender:</label>
                 <select id="gender" name="gender">
@@ -75,14 +76,24 @@ function Calories() {
               {result && <p>Your daily calorie needs are: {result} calories</p>}
             </div>
           </Paper>
+          <Paper style={{ padding: 20 }}>
+            {/* Add your calculator form here */}
+            <div className="left-Container">
+              <h1 style={{backgroundColor: "lightblue"}}>Calorie Tracker</h1>
+              <h3>Your last Sessions calorie Tracker</h3>
+              <p>BikeSessions: {}</p>
+              <p>RunningSessions: {}</p>
+              </div>
+          </Paper>
         </Grid>
 
         {/* Right Container */}
         <Grid item xs={12} md={6}>
           <Paper
             style={{
-              padding: 20,
-              maxHeight: "70vh",
+              padding: 50,
+              maxHeight: "100vh",
+              width: "50vh",
               overflow: "auto",
               display: "flex",
               alignItems: "center",
@@ -114,6 +125,8 @@ function Calories() {
               </Typography>
             </div>
           </Paper>
+
+          
         </Grid>
       </Grid>
     </div>
