@@ -13,31 +13,33 @@ import PrivateRoutes from './Components/PrivateRoute';
 function App() {
   const token = localStorage.getItem("token")
 
-  // if(!token){
-  //   return <Login/>
-  // }
+   //if(!token){
+    // return <Login/>
+   // }
 
   return (
     <>
     <nav>
     <img src='/images/FA.png' alt='FitnessApp' height={42} ></img>
       <u1>
-        <li><Link to="/Main">Main</Link></li>
+        <li><Link to="/">Main</Link></li>
         <li><Link to="/Calories">Calories</Link></li>
         <li><Link to="/Activity">Activity</Link></li>
         <li><Link to="/Tracking">Tracking</Link></li>
         <li><Link to="/Logout">Logout</Link></li>
+        
       </u1>
     </nav>
     <Routes>
       <Route element={<PrivateRoutes/>}>
-
+    
       </Route>
       <Route path="/Activity" element={<Activity/>} ></Route>
       <Route path="/Calories" element={<Calories/>} ></Route>
-      <Route path="/Main" element={<Main/>} ></Route>
+      <Route path="/" element={<Main/>} ></Route>
       <Route path="/Tracking" element={<Tracking/>} ></Route>
       <Route path="/Logout" element={<Logout/>} ></Route>
+      <Route path="/Login" element={<Login/>} ></Route>
     </Routes>
     </>
 

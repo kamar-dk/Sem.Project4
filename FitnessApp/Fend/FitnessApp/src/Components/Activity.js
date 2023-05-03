@@ -1,38 +1,70 @@
 import React from 'react';
 import { useState } from 'react';
+import Dropdown from './Dropdown';
+import { Grid, Paper, Typography } from "@material-ui/core";
 function Activity(){
     return(
         <React.Fragment>
-                  <div> Tilføj Model </div> 
-                  <br></br>  
-                <MyForm></MyForm>
-                <br></br>    
+     <div style={{ padding: 20 }}>
+      <Grid container spacing={2}>
+        {/* Left Container */}
+        <Grid item xs={12} md={6}>
+          <Paper style={{ padding: 20 }}>
+            {/* Add your calculator form here */}
+            <div className="left-Container">
+              <h1 style={{backgroundColor: "lightblue"}}>Add Activity</h1>
+                <ActivityForm></ActivityForm>
+                <br/>
+            </div>
+          </Paper>
+          <Paper style={{ padding: 20 }}>
+            {/* Add your calculator form here */}
+            <div className="left-Container">
+              <h1 style={{backgroundColor: "lightblue"}}>Training Programs</h1>
+              <TrainingProgramForm></TrainingProgramForm>
+              </div>
+          </Paper>
+        </Grid>
+        {/* Right Container */}
+        <Grid item xs={12} md={6}>
+          <Paper
+            style={{
+              padding: 50,
+              maxHeight: "100vh",
+              width: "50vh",
+              overflow: "auto",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <div className="right-Container">
+              <Typography variant="h4">Understand Programs and Adding Activities</Typography>
+              <Typography variant="body1" style={{ whiteSpace: "pre-line" }}>
+                {/* Add your general information about calories here */}
+                he he hæ hæ hæ hø hø hø
+              </Typography>
+            </div>
+          </Paper>
+
+          
+        </Grid>
+      </Grid>
+    </div> 
         </React.Fragment>
     )
 }
 
-function PutModel(event){
+function PutActivity(event){
     event.preventDefault()
     console.log(event.target[0].value)
     console.log(event.target[1].value) 
     const  payload = {
-        "firstName": event.target[0].value,
-        "lastName": event.target[1].value,
-        "email": event.target[2].value,
-        "phoneNo": event.target[3].value,
-        "addresLine1": event.target[4].value,
-        "addresLine2": event.target[5].value,
-        "zip": event.target[6].value,
-        "city": event.target[7].value,
-        "country": event.target[8].value,
-        "birthDate": new Date(event.target[9].value).toISOString(),
-        "nationality": event.target[10].value,
-        "height": event.target[11].value,
-        "shoeSize": event.target[12].value,
-        "hairColor": event.target[13].value,
-        "eyeColor": event.target[14].value,
-        "comments": event.target[15].value,
-        "password": event.target[16].value,
+        "Activity": event.target[0].value,
+        "Duration": event.target[1].value,
+        "Distance": event.target[2].value,
+        "MaxHeartRate": event.target[3].value,
+        "AvgHeartRate": event.target[4].value,
+        "birthDate": new Date(event.target[5].value).toISOString(),
     }
     fetch('https://localhost:7181/api/Models', {
     method: 'POST', 
@@ -47,166 +79,130 @@ function PutModel(event){
     .catch(error => alert('Something bad happened: ' + error));
 }
 
-function MyForm() {
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [email, setEmail] = useState("");
-    const [phoneNo, setPhoneNo] = useState("");
-    const [addressLine1, setAddressLine1] = useState("");
-    const [addressLine2, setAddressLine2] = useState("");
-    const [zip, setZip] = useState("");
-    const [city, setCity] = useState("");
-    const [country, setCountry] = useState("");
-    const [birthday, setBirthday] = useState(new Date());
-    const [nationality, setNationality] = useState("");
-    const [height, setHeight] = useState("");
-    const [shoeSize, setShoeSize] = useState("");
-    const [hairColor, setHairColor] = useState("");
-    const [eyeColor, setEyeColor] = useState("");
-    const [comments, setComments] = useState("");
-    const [password, setPassword] = useState("");
+const options = [
+    { value: "1", label: "Running" },
+    { value: "2", label: "Swimming" },
+    { value: "3", label: "Cycling" },
+    { value: "4", label: "Walking" },
+];
+
+function ActivityForm() {
+    const [Activity, setActivity] = useState("");
+    const [Duration, setDuration] = useState("");
+    const [Distance, setDistance] = useState("");
+    const [MaxHeartRate, setMaxHeartRate] = useState("");
+    const [AvgHeartRate, setAvgHeartRate] = useState("");
 
     return (
-      <form onSubmit={PutModel}>
-        <label>Enter firstname:
+      <form onSubmit={PutActivity}>
+        <label>Enter Activity:
+           <Dropdown placeHolder="Select..." 
+           options={options} 
+           value={Activity}
+           onChange={(e) => setActivity(e.target.value)}
+           />
+        </label>
+        <label>Enter Duration:
           <input
             type="text" 
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
+            value={Duration}
+            onChange={(e) => setDuration(e.target.value)}
           />
         </label>
         <br></br>
-        <label>Enter lastname:
+        <label>Enter Distance:
           <input
             type="text"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-          />
-        <br></br>
-        </label>
-        <label>Enter email:
-          <input
-            type="text" 
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={Distance}
+            onChange={(e) => setDistance(e.target.value)}
           />
         </label>
         <br></br>
-        <label>Enter phone:
-          <input
-            type="text" 
-            value={phoneNo}
-            onChange={(e) => setPhoneNo(e.target.value)}
+        <label>Max Heart Rate:
+        <input
+            type="text"
+            value={MaxHeartRate}
+            onChange={(e) => setMaxHeartRate(e.target.value)}
           />
         </label>
         <br></br>
-        <label>Enter addressLine1:
-          <input
-            type="text" 
-            value={addressLine1}
-            onChange={(e) => setAddressLine1(e.target.value)}
+        <label>Average Heart Rate:
+        <input
+            type="text"
+            value={AvgHeartRate}
+            onChange={(e) => setAvgHeartRate(e.target.value)}
           />
         </label>
         <br></br>
-        <label>Enter addressLine2:
+
+        <label>Enter Date:
           <input
-            type="text" 
-            value={addressLine2}
-            onChange={(e) => setAddressLine2(e.target.value)}
+            type="date"
+            value={new Date().toISOString()}
           />
         </label>
         <br></br>
-        <label>Enter zip:
-          <input
-            type="text" 
-            value={zip}
-            onChange={(e) => setZip(e.target.value)}
-          />
-        </label>
-        <br></br>
-        <label>Enter city:
-          <input
-            type="text" 
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-          />
-        </label>
-        <br></br>
-        <label>Enter country:
-          <input
-            type="text" 
-            value={country}
-            onChange={(e) => setCountry(e.target.value)}
-          />
-        </label>
-        <br></br>
-        <label>Enter birthday:
-          <input
-            type={Date} 
-            value={birthday}
-            onChange={(e) => setBirthday(e.target.value)}
-          />
-        </label>
-        <br></br>
-        <label>Enter nationality:
-          <input
-            type="text" 
-            value={nationality}
-            onChange={(e) => setNationality(e.target.value)}
-          />
-        </label>
-        <br></br>
-        <label>Enter height:
-          <input
-            type="text" 
-            value={height}
-            onChange={(e) => setHeight(e.target.value)}
-          />
-        </label>
-        <br></br>
-        <label>Enter shoeSize:
-          <input
-            type="text" 
-            value={shoeSize}
-            onChange={(e) => setShoeSize(e.target.value)}
-          />
-        </label>
-        <br></br>
-        <label>Enter hairColor:
-          <input
-            type="text" 
-            value={hairColor}
-            onChange={(e) => setHairColor(e.target.value)}
-          />
-        </label>
-        <br></br>
-        <label>Enter eyeColor:
-          <input
-            type="text" 
-            value={eyeColor}
-            onChange={(e) => setEyeColor(e.target.value)}
-          />
-        </label>
-        <br></br>
-        <label>Enter comments:
-          <input
-            type="text" 
-            value={comments}
-            onChange={(e) => setComments(e.target.value)}
-          />
-        </label>
-        <br></br>
-        <label>Enter password:
-          <input
-            type="text" 
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </label>
         <div>
-          <button type="submit">Submit</button>
+          <button type="submit">Add</button>
         </div>
       </form>
     )
 }
+
+function PutProgram(event){
+  event.preventDefault()
+  console.log(event.target[0].value)
+  console.log(event.target[1].value) 
+  const  payload = {
+      "Activity": event.target[0].value,
+      "Duration": event.target[1].value,
+      "Distance": event.target[2].value,
+      "MaxHeartRate": event.target[3].value,
+      "AvgHeartRate": event.target[4].value,
+      "birthDate": new Date(event.target[5].value).toISOString(),
+  }
+  fetch('https://localhost:7181/api/Models', {
+  method: 'POST', 
+  headers: {
+      'Accept': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem("token"),
+      'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(payload)
+  })
+  .then(res => res.json())
+  .catch(error => alert('Something bad happened: ' + error));
+}
+
+const Programs = [
+  { value: "1", label: "Running" },
+  { value: "2", label: "Sprint/Intervals" },
+  { value: "3", label: "Marathon" },
+  { value: "4", label: "Swimming" },
+  { value: "5", label: "Swim Intervals" },
+  { value: "6", label: "swimming Long Distance" },
+  { value: "7", label: "Cycling" },
+  { value: "8", label: "Cycling Mountains" },
+  { value: "9", label: "Cycling Long distance" },
+  { value: "10", label: "Cycling Sprint" },
+
+];
+
+function TrainingProgramForm(){
+  const [Program, setProgram] = useState("");
+
+    return (
+      <form onSubmit={PutProgram}>
+        <form>Select Program:
+           <Dropdown placeHolder="Select..." 
+           options={Programs} 
+           value={Program}
+           onChange={(e) => setProgram(e.target.value)}
+           />
+           </form>
+
+        </form>
+    )
+}
+
 export default Activity;
