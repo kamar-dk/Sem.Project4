@@ -6,7 +6,7 @@ import { useTrail, animated } from 'react-spring';
 function Main() {
 
   function handleLoginClick() {
-    window.location.href = "/login";
+    window.location.href = "/Login";
   }
 
   return (
