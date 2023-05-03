@@ -6,5 +6,6 @@ namespace WebApi.DTO
     {
        public string Email { get; set; }
         //public User User { get; set; }
+        
     }
 }

@@ -22,7 +22,7 @@ function App() {
     <nav>
     <img src='/images/FA.png' alt='FitnessApp' height={42} ></img>
       <u1>
-        <li><Link to="/Main">Main</Link></li>
+        <li><Link to="/">Main</Link></li>
         <li><Link to="/Calories">Calories</Link></li>
         <li><Link to="/Activity">Activity</Link></li>
         <li><Link to="/Tracking">Tracking</Link></li>
@@ -31,11 +31,11 @@ function App() {
     </nav>
     <Routes>
       <Route element={<PrivateRoutes/>}>
-
+    
       </Route>
       <Route path="/Activity" element={<Activity/>} ></Route>
       <Route path="/Calories" element={<Calories/>} ></Route>
-      <Route path="/Main" element={<Main/>} ></Route>
+      <Route path="/" element={<Main/>} ></Route>
       <Route path="/Tracking" element={<Tracking/>} ></Route>
       <Route path="/Logout" element={<Logout/>} ></Route>
     </Routes>

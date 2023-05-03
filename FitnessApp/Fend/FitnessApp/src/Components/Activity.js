@@ -1,9 +1,10 @@
 import React from 'react';
 import { useState } from 'react';
+import Dropdown from './Dropdown';
 function Activity(){
     return(
         <React.Fragment>
-                  <div> Tilføj Model </div> 
+                  <div> Add Activity </div> 
                   <br></br>  
                 <MyForm></MyForm>
                 <br></br>    
@@ -11,12 +12,12 @@ function Activity(){
     )
 }
 
-function PutModel(event){
+function PutActivity(event){
     event.preventDefault()
     console.log(event.target[0].value)
     console.log(event.target[1].value) 
     const  payload = {
-        "firstName": event.target[0].value,
+        "Activity": event.target[0].value,
         "lastName": event.target[1].value,
         "email": event.target[2].value,
         "phoneNo": event.target[3].value,
@@ -47,161 +48,48 @@ function PutModel(event){
     .catch(error => alert('Something bad happened: ' + error));
 }
 
+const options = [
+    { value: "1", label: "Running" },
+    { value: "2", label: "Swimming" },
+    { value: "3", label: "Cycling" },
+    { value: "4", label: "Walking" },
+    { value: "5", label: "Hiking" },
+    { value: "6", label: "Yoga" },
+    { value: "7", label: "Pilates" },
+    { value: "8", label: "Dancing" },
+    { value: "9", label: "Weight Lifting" },
+    { value: "10", label: "Crossfit" },
+    { value: "11", label: "Martial Arts" },
+    { value: "12", label: "Boxing" },
+    { value: "13", label: "Tennis" },
+    { value: "14", label: "Soccer" },
+    { value: "15", label: "Basketball" },
+];
+
 function MyForm() {
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [email, setEmail] = useState("");
-    const [phoneNo, setPhoneNo] = useState("");
-    const [addressLine1, setAddressLine1] = useState("");
-    const [addressLine2, setAddressLine2] = useState("");
-    const [zip, setZip] = useState("");
-    const [city, setCity] = useState("");
-    const [country, setCountry] = useState("");
-    const [birthday, setBirthday] = useState(new Date());
-    const [nationality, setNationality] = useState("");
-    const [height, setHeight] = useState("");
-    const [shoeSize, setShoeSize] = useState("");
-    const [hairColor, setHairColor] = useState("");
-    const [eyeColor, setEyeColor] = useState("");
-    const [comments, setComments] = useState("");
-    const [password, setPassword] = useState("");
+    const [Activity, setActivity] = useState("");
+
 
     return (
-      <form onSubmit={PutModel}>
-        <label>Enter firstname:
+      <form onSubmit={PutActivity}>
+        <label>Enter Activity:
+           <Dropdown placeHolder="Select..." 
+           options={options} 
+           value={Activity}
+           onChange={(e) => setActivity(e.target.value)}
+           />
+        </label>
+        <br></br>
+        <label>Enter Activity:
           <input
             type="text" 
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
+            value={Activity}
+            onChange={(e) => setActivity(e.target.value)}
           />
         </label>
         <br></br>
-        <label>Enter lastname:
-          <input
-            type="text"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-          />
-        <br></br>
-        </label>
-        <label>Enter email:
-          <input
-            type="text" 
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </label>
-        <br></br>
-        <label>Enter phone:
-          <input
-            type="text" 
-            value={phoneNo}
-            onChange={(e) => setPhoneNo(e.target.value)}
-          />
-        </label>
-        <br></br>
-        <label>Enter addressLine1:
-          <input
-            type="text" 
-            value={addressLine1}
-            onChange={(e) => setAddressLine1(e.target.value)}
-          />
-        </label>
-        <br></br>
-        <label>Enter addressLine2:
-          <input
-            type="text" 
-            value={addressLine2}
-            onChange={(e) => setAddressLine2(e.target.value)}
-          />
-        </label>
-        <br></br>
-        <label>Enter zip:
-          <input
-            type="text" 
-            value={zip}
-            onChange={(e) => setZip(e.target.value)}
-          />
-        </label>
-        <br></br>
-        <label>Enter city:
-          <input
-            type="text" 
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-          />
-        </label>
-        <br></br>
-        <label>Enter country:
-          <input
-            type="text" 
-            value={country}
-            onChange={(e) => setCountry(e.target.value)}
-          />
-        </label>
-        <br></br>
-        <label>Enter birthday:
-          <input
-            type={Date} 
-            value={birthday}
-            onChange={(e) => setBirthday(e.target.value)}
-          />
-        </label>
-        <br></br>
-        <label>Enter nationality:
-          <input
-            type="text" 
-            value={nationality}
-            onChange={(e) => setNationality(e.target.value)}
-          />
-        </label>
-        <br></br>
-        <label>Enter height:
-          <input
-            type="text" 
-            value={height}
-            onChange={(e) => setHeight(e.target.value)}
-          />
-        </label>
-        <br></br>
-        <label>Enter shoeSize:
-          <input
-            type="text" 
-            value={shoeSize}
-            onChange={(e) => setShoeSize(e.target.value)}
-          />
-        </label>
-        <br></br>
-        <label>Enter hairColor:
-          <input
-            type="text" 
-            value={hairColor}
-            onChange={(e) => setHairColor(e.target.value)}
-          />
-        </label>
-        <br></br>
-        <label>Enter eyeColor:
-          <input
-            type="text" 
-            value={eyeColor}
-            onChange={(e) => setEyeColor(e.target.value)}
-          />
-        </label>
-        <br></br>
-        <label>Enter comments:
-          <input
-            type="text" 
-            value={comments}
-            onChange={(e) => setComments(e.target.value)}
-          />
-        </label>
-        <br></br>
-        <label>Enter password:
-          <input
-            type="text" 
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+        <label>Enter Duration:
+
         </label>
         <div>
           <button type="submit">Submit</button>

@@ -79,6 +79,16 @@ namespace FA_DB.Data
                     context.SaveChanges();
                 }
 
+                if (!context.traningPrograms.Any())
+                {
+                    context.traningPrograms.AddRange(new TraningProgram()
+                    {                        
+                        TraningProgramID = 1,
+                        Name = "Program 1"
+                    });
+                    context.SaveChanges();
+                }
+
             }
         }
     }
