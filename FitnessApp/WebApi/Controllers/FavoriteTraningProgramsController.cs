@@ -50,89 +50,89 @@ namespace WebApi.Controllers
             return favoriteTraningPrograms;
         }
 
-        // PUT: api/FavoriteTraningPrograms/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutFavoriteTraningPrograms(string id, FavoriteTraningPrograms favoriteTraningPrograms)
-        {
-            if (id != favoriteTraningPrograms.Email)
-            {
-                return BadRequest();
-            }
+        //    // PUT: api/FavoriteTraningPrograms/5
+        //    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //    [HttpPut("{id}")]
+        //    public async Task<IActionResult> PutFavoriteTraningPrograms(string id, FavoriteTraningPrograms favoriteTraningPrograms)
+        //    {
+        //        if (id != favoriteTraningPrograms.Email)
+        //        {
+        //            return BadRequest();
+        //        }
 
-            _context.Entry(favoriteTraningPrograms).State = EntityState.Modified;
+        //        _context.Entry(favoriteTraningPrograms).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!FavoriteTraningProgramsExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //        try
+        //        {
+        //            await _context.SaveChangesAsync();
+        //        }
+        //        catch (DbUpdateConcurrencyException)
+        //        {
+        //            if (!FavoriteTraningProgramsExists(id))
+        //            {
+        //                return NotFound();
+        //            }
+        //            else
+        //            {
+        //                throw;
+        //            }
+        //        }
 
-            return NoContent();
-        }
+        //        return NoContent();
+        //    }
 
-        // POST: api/FavoriteTraningPrograms
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<FavoriteTraningPrograms>> PostFavoriteTraningPrograms(FavoriteTraningPrograms favoriteTraningPrograms)
-        {
-          if (_context.favoriteTraningPrograms == null)
-          {
-              return Problem("Entity set 'DataContext.favoriteTraningPrograms'  is null.");
-          }
-            _context.favoriteTraningPrograms.Add(favoriteTraningPrograms);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (FavoriteTraningProgramsExists(favoriteTraningPrograms.Email))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    // POST: api/FavoriteTraningPrograms
+        //    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //    [HttpPost]
+        //    public async Task<ActionResult<FavoriteTraningPrograms>> PostFavoriteTraningPrograms(FavoriteTraningPrograms favoriteTraningPrograms)
+        //    {
+        //      if (_context.favoriteTraningPrograms == null)
+        //      {
+        //          return Problem("Entity set 'DataContext.favoriteTraningPrograms'  is null.");
+        //      }
+        //        _context.favoriteTraningPrograms.Add(favoriteTraningPrograms);
+        //        try
+        //        {
+        //            await _context.SaveChangesAsync();
+        //        }
+        //        catch (DbUpdateException)
+        //        {
+        //            if (FavoriteTraningProgramsExists(favoriteTraningPrograms.Email))
+        //            {
+        //                return Conflict();
+        //            }
+        //            else
+        //            {
+        //                throw;
+        //            }
+        //        }
 
-            return CreatedAtAction("GetFavoriteTraningPrograms", new { id = favoriteTraningPrograms.Email }, favoriteTraningPrograms);
-        }
+        //        return CreatedAtAction("GetFavoriteTraningPrograms", new { id = favoriteTraningPrograms.Email }, favoriteTraningPrograms);
+        //    }
 
-        // DELETE: api/FavoriteTraningPrograms/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteFavoriteTraningPrograms(string id)
-        {
-            if (_context.favoriteTraningPrograms == null)
-            {
-                return NotFound();
-            }
-            var favoriteTraningPrograms = await _context.favoriteTraningPrograms.FindAsync(id);
-            if (favoriteTraningPrograms == null)
-            {
-                return NotFound();
-            }
+        //    // DELETE: api/FavoriteTraningPrograms/5
+        //    [HttpDelete("{id}")]
+        //    public async Task<IActionResult> DeleteFavoriteTraningPrograms(string id)
+        //    {
+        //        if (_context.favoriteTraningPrograms == null)
+        //        {
+        //            return NotFound();
+        //        }
+        //        var favoriteTraningPrograms = await _context.favoriteTraningPrograms.FindAsync(id);
+        //        if (favoriteTraningPrograms == null)
+        //        {
+        //            return NotFound();
+        //        }
 
-            _context.favoriteTraningPrograms.Remove(favoriteTraningPrograms);
-            await _context.SaveChangesAsync();
+        //        _context.favoriteTraningPrograms.Remove(favoriteTraningPrograms);
+        //        await _context.SaveChangesAsync();
 
-            return NoContent();
-        }
+        //        return NoContent();
+        //    }
 
-        private bool FavoriteTraningProgramsExists(string id)
-        {
-            return (_context.favoriteTraningPrograms?.Any(e => e.Email == id)).GetValueOrDefault();
-        }
+        //    private bool FavoriteTraningProgramsExists(string id)
+        //    {
+        //        return (_context.favoriteTraningPrograms?.Any(e => e.Email == id)).GetValueOrDefault();
+        //    }
     }
 }
