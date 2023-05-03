@@ -23,13 +23,17 @@ namespace WebApi.Controllers
 
         // GET: api/FavoriteTraningPrograms
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<FavoriteTraningPrograms>>> GetfavoriteTraningPrograms()
+        public async Task<ActionResult<IEnumerable<string>>> GetfavoriteTraningPrograms()
         {
           if (_context.favoriteTraningPrograms == null)
           {
               return NotFound();
           }
-            return await _context.favoriteTraningPrograms.ToListAsync();
+
+          var programNames = _context.favoriteTraningPrograms.SelectMany(f => f.TraningPrograms).Select(p => p.Name);
+          
+          return await programNames.ToListAsync();
+          //return await _context.favoriteTraningPrograms.ToListAsync();
         }
 
         // GET: api/FavoriteTraningPrograms/5
