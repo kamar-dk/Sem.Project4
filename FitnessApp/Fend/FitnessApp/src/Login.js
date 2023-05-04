@@ -1,30 +1,71 @@
 
 import React, { Component, useState } from 'react';
-import {useNavigate, redirect} from 'react-router-dom';
+import {useNavigate, redirect, Navigate, NavLink, useNavigation} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './Login.css';
+import {TextField,Button,Container,Typography,} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+
+
+const useStyles = makeStyles((theme) => ({
+    form: {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      marginTop: theme.spacing(3),
+    },
+    input: {
+      margin: theme.spacing(1),
+      width: "100%",
+    },
+    button: {
+      margin: theme.spacing(3, 0, 2),
+    },
+  }));
+  
 
 export default function Login() {
-
+  const classes = useStyles();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   return(
-
+    <Container
+  maxWidth="sm">
     <div className="login-wrapper">
-      <h1>Please Log In</h1>
-      <form onSubmit={Sendlogin}>
-        <label>
-          <p>Username</p>
-          <input type="text"  id="Email"/> 
-        </label>
-        <label>
-          <p>Password</p>
-          <input type="password" id="Pass"/>
-        </label>
-        <div>
-          <button type="submit">Submit</button>
-        </div>
-      </form>
-    </div>
-  )
+    <h1>Please Log In</h1>
+    <form className={classes.form} onSubmit={Sendlogin}>
+      <TextField
+        id="email"
+        label="Email"
+        variant="outlined"
+        value={email}
+        onChange={(event) => setEmail(event.target.value)}
+      />
+      <TextField
+        id="password"
+        label="Password"
+        variant="outlined"
+        type="password"
+        value={password}
+        onChange={(event) => setPassword(event.target.value)}
+      />
+      <Button
+        type="submit"
+        variant="contained"
+        color="primary"
+        className={classes.submit}
+      >
+        Submit
+      </Button>
+    </form>
+    <p>
+      Don't have an account? <Link to="/SignUp">SignUp</Link>
+    </p>
+  </div>
+  </Container>
+);
 }
   function Sendlogin(event) {
     event.preventDefault()
@@ -82,3 +123,4 @@ function parseToJwt(token) {
   
   return JSON.parse(window.atob(base64));
 }
+

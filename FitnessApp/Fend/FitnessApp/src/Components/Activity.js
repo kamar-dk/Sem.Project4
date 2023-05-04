@@ -1,13 +1,45 @@
 import React from 'react';
 import { useState } from 'react';
 import Dropdown from './Dropdown';
+import { Grid, Paper, Typography } from "@material-ui/core";
 function Activity(){
     return(
         <React.Fragment>
-                  <div> Add Activity </div> 
-                  <br></br>  
-                <MyForm></MyForm>
-                <br></br>    
+     <div style={{ padding: 20 }}>
+      <Grid container spacing={2}>
+        {/* Left Container */}
+        <Grid item xs={12} md={6}>
+          <Paper style={{ padding: 20 }}>
+            <div className="left-Container">
+              <h1 style={{backgroundColor: "lightblue"}}>Add Activity</h1>
+                <ActivityForm></ActivityForm>
+                <br/>
+            </div>
+          </Paper>
+        </Grid>
+        {/* Right Container */}
+        <Grid item xs={12} md={6}>
+          <Paper
+            style={{
+              padding: 50,
+              maxHeight: "100vh",
+              width: "50vh",
+              overflow: "auto",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <div className="right-Container">
+              <Typography variant="h4">Understand Programs and Adding Activities</Typography>
+              <Typography variant="body1" style={{ whiteSpace: "pre-line" }}>
+                {/* General information about Training programs and activity*/}
+                he he hæ hæ hæ hø hø hø
+              </Typography>
+            </div>
+          </Paper>          
+        </Grid>
+      </Grid>
+    </div> 
         </React.Fragment>
     )
 }
@@ -18,25 +50,14 @@ function PutActivity(event){
     console.log(event.target[1].value) 
     const  payload = {
         "Activity": event.target[0].value,
-        "lastName": event.target[1].value,
-        "email": event.target[2].value,
-        "phoneNo": event.target[3].value,
-        "addresLine1": event.target[4].value,
-        "addresLine2": event.target[5].value,
-        "zip": event.target[6].value,
-        "city": event.target[7].value,
-        "country": event.target[8].value,
-        "birthDate": new Date(event.target[9].value).toISOString(),
-        "nationality": event.target[10].value,
-        "height": event.target[11].value,
-        "shoeSize": event.target[12].value,
-        "hairColor": event.target[13].value,
-        "eyeColor": event.target[14].value,
-        "comments": event.target[15].value,
-        "password": event.target[16].value,
+        "Duration": event.target[1].value,
+        "Distance": event.target[2].value,
+        "MaxHeartRate": event.target[3].value,
+        "AvgHeartRate": event.target[4].value,
+        "birthDate": new Date(event.target[5].value).toISOString(),
     }
     fetch('https://localhost:7181/api/Models', {
-    method: 'POST', 
+    method: 'POST',
     headers: {
         'Accept': 'application/json',
         'Authorization': 'Bearer ' + localStorage.getItem("token"),
@@ -53,22 +74,14 @@ const options = [
     { value: "2", label: "Swimming" },
     { value: "3", label: "Cycling" },
     { value: "4", label: "Walking" },
-    { value: "5", label: "Hiking" },
-    { value: "6", label: "Yoga" },
-    { value: "7", label: "Pilates" },
-    { value: "8", label: "Dancing" },
-    { value: "9", label: "Weight Lifting" },
-    { value: "10", label: "Crossfit" },
-    { value: "11", label: "Martial Arts" },
-    { value: "12", label: "Boxing" },
-    { value: "13", label: "Tennis" },
-    { value: "14", label: "Soccer" },
-    { value: "15", label: "Basketball" },
 ];
 
-function MyForm() {
+function ActivityForm() {
     const [Activity, setActivity] = useState("");
-
+    const [Duration, setDuration] = useState("");
+    const [Distance, setDistance] = useState("");
+    const [MaxHeartRate, setMaxHeartRate] = useState("");
+    const [AvgHeartRate, setAvgHeartRate] = useState("");
 
     return (
       <form onSubmit={PutActivity}>
@@ -79,22 +92,52 @@ function MyForm() {
            onChange={(e) => setActivity(e.target.value)}
            />
         </label>
-        <br></br>
-        <label>Enter Activity:
+        <label>Enter Duration:
           <input
             type="text" 
-            value={Activity}
-            onChange={(e) => setActivity(e.target.value)}
+            value={Duration}
+            onChange={(e) => setDuration(e.target.value)}
           />
         </label>
         <br></br>
-        <label>Enter Duration:
-
+        <label>Enter Distance:
+          <input
+            type="text"
+            value={Distance}
+            onChange={(e) => setDistance(e.target.value)}
+          />
         </label>
+        <br></br>
+        <label>Max Heart Rate:
+        <input
+            type="text"
+            value={MaxHeartRate}
+            onChange={(e) => setMaxHeartRate(e.target.value)}
+          />
+        </label>
+        <br></br>
+        <label>Average Heart Rate:
+        <input
+            type="text"
+            value={AvgHeartRate}
+            onChange={(e) => setAvgHeartRate(e.target.value)}
+          />
+        </label>
+        <br></br>
+
+        <label>Enter Date:
+          <input
+            type="date"
+            value={new Date().toISOString()}
+          />
+        </label>
+        <br></br>
         <div>
-          <button type="submit">Submit</button>
+          <button type="submit">Add</button>
         </div>
       </form>
     )
 }
+
+
 export default Activity;

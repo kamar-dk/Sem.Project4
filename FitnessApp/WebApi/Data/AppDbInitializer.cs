@@ -83,7 +83,7 @@ namespace FA_DB.Data
                 {
                     context.traningPrograms.AddRange(new TraningProgram()
                     {                        
-                        TraningProgramID = 1,
+                        
                         Name = "Program 1"
                     });
                     context.SaveChanges();

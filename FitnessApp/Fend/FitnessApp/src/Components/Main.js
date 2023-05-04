@@ -3,9 +3,12 @@ import { Parallax } from "react-parallax";
 import "../App.css";
 import { useTrail, animated } from 'react-spring';
 
-
-
 function Main() {
+
+  function handleLoginClick() {
+    window.location.href = "/Login";
+  }
+
   return (
     <div style={{ height: "100vh", position: "relative" }}>
       <Parallax bgImage="/images/1.jpg" strength={5}>
@@ -22,7 +25,9 @@ function Main() {
         >
           <h1>Move your body, free your mind.</h1>
           <h2>Get Fit Today</h2>
-          <button className="button">Sign Up/LogIn</button>
+          <button className="button" onClick={handleLoginClick}>
+            Sign Up/LogIn
+          </button>
         </div>
         
       </Parallax>
