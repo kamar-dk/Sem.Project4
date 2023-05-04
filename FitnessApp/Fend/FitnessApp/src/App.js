@@ -9,7 +9,7 @@ import Logout from './Components/Logout';
 import Tracking from './Components/Tracking';
 import PrivateRoutes from './Components/PrivateRoute';
 import SignUp from './SignUp';
-import TrainingsProgram from './TrainingsPrograms';
+import TrainingsProgram from './Components/TrainingsPrograms';
 
 
 function App() {
@@ -31,7 +31,6 @@ function App() {
         <li><Link to="/Logout">Logout</Link></li>
         <li><Link to="/SignUp">SignUp</Link></li>
         <li><Link to="/TrainingsPrograms">TrainingPrograms</Link></li>
-        
       </u1>
     </nav>
     <Routes>

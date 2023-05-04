@@ -10,19 +10,11 @@ function Activity(){
         {/* Left Container */}
         <Grid item xs={12} md={6}>
           <Paper style={{ padding: 20 }}>
-            {/* Add your calculator form here */}
             <div className="left-Container">
               <h1 style={{backgroundColor: "lightblue"}}>Add Activity</h1>
                 <ActivityForm></ActivityForm>
                 <br/>
             </div>
-          </Paper>
-          <Paper style={{ padding: 20 }}>
-            {/* Add your calculator form here */}
-            <div className="left-Container">
-              <h1 style={{backgroundColor: "lightblue"}}>Training Programs</h1>
-              <TrainingProgramForm></TrainingProgramForm>
-              </div>
           </Paper>
         </Grid>
         {/* Right Container */}
@@ -40,13 +32,11 @@ function Activity(){
             <div className="right-Container">
               <Typography variant="h4">Understand Programs and Adding Activities</Typography>
               <Typography variant="body1" style={{ whiteSpace: "pre-line" }}>
-                {/* Add your general information about calories here */}
+                {/* General information about Training programs and activity*/}
                 he he hæ hæ hæ hø hø hø
               </Typography>
             </div>
-          </Paper>
-
-          
+          </Paper>          
         </Grid>
       </Grid>
     </div> 
@@ -67,7 +57,7 @@ function PutActivity(event){
         "birthDate": new Date(event.target[5].value).toISOString(),
     }
     fetch('https://localhost:7181/api/Models', {
-    method: 'POST', 
+    method: 'POST',
     headers: {
         'Accept': 'application/json',
         'Authorization': 'Bearer ' + localStorage.getItem("token"),
@@ -149,60 +139,5 @@ function ActivityForm() {
     )
 }
 
-function PutProgram(event){
-  event.preventDefault()
-  console.log(event.target[0].value)
-  console.log(event.target[1].value) 
-  const  payload = {
-      "Activity": event.target[0].value,
-      "Duration": event.target[1].value,
-      "Distance": event.target[2].value,
-      "MaxHeartRate": event.target[3].value,
-      "AvgHeartRate": event.target[4].value,
-      "birthDate": new Date(event.target[5].value).toISOString(),
-  }
-  fetch('https://localhost:7181/api/Models', {
-  method: 'POST', 
-  headers: {
-      'Accept': 'application/json',
-      'Authorization': 'Bearer ' + localStorage.getItem("token"),
-      'Content-Type': 'application/json',
-  },
-  body: JSON.stringify(payload)
-  })
-  .then(res => res.json())
-  .catch(error => alert('Something bad happened: ' + error));
-}
-
-const Programs = [
-  { value: "1", label: "Running" },
-  { value: "2", label: "Sprint/Intervals" },
-  { value: "3", label: "Marathon" },
-  { value: "4", label: "Swimming" },
-  { value: "5", label: "Swim Intervals" },
-  { value: "6", label: "swimming Long Distance" },
-  { value: "7", label: "Cycling" },
-  { value: "8", label: "Cycling Mountains" },
-  { value: "9", label: "Cycling Long distance" },
-  { value: "10", label: "Cycling Sprint" },
-
-];
-
-function TrainingProgramForm(){
-  const [Program, setProgram] = useState("");
-
-    return (
-      <form onSubmit={PutProgram}>
-        <form>Select Program:
-           <Dropdown placeHolder="Select..." 
-           options={Programs} 
-           value={Program}
-           onChange={(e) => setProgram(e.target.value)}
-           />
-           </form>
-
-        </form>
-    )
-}
 
 export default Activity;
