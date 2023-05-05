@@ -28,9 +28,9 @@ function App() {
         <li><Link to="/Calories">Calories</Link></li>
         <li><Link to="/Activity">Activity</Link></li>
         <li><Link to="/Tracking">Tracking</Link></li>
-        <li><Link to="/Logout">Logout</Link></li>
-        <li><Link to="/SignUp">SignUp</Link></li>
         <li><Link to="/TrainingsPrograms">TrainingPrograms</Link></li>
+        <li><Link to="/SignUp">SignUp</Link></li>
+        <li><Link to="/Logout">Logout</Link></li>
       </u1>
     </nav>
     <Routes>
