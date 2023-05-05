@@ -7,7 +7,7 @@ namespace WebApi.DTO
         public float Weight { get; set; }
         public DateTime Date { get; set; }
 
-        public UserData UserData { get; set; }
+        public UserData? UserData { get; set; }
     }
 
 }
