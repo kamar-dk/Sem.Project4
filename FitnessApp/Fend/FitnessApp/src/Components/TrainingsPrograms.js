@@ -5,11 +5,13 @@ import Dropdown from './Dropdown';
 function TrainingProgram(){
 const [data, setData] = useState([]);
     const [id, setId] = useState([])
+    
     const fetchData = () => {
-        var url = "https://localhost:7221/api/TrainingPrograms";
+        var url = "https://localhost:7221/api/TraningPrograms";
         return fetch(url, {
             method: 'GET',
-            credentials: 'include',
+            mode: 'cors',
+            //credentials: 'include',
             headers: {
               'Authorization': 'Bearer ' + localStorage.getItem("token"),
               'Content-Type': 'application/json'
@@ -25,27 +27,16 @@ const [data, setData] = useState([]);
     }, [id]);
 
     return(
-      <React.Fragment>
-              <h1>Jobs</h1>
-              <h3>
-                  {data.map}
-                {data.map(item => (
-                  <tr key={item.firstName}>
-                      <td>Customer:</td>
-                    <td>{item.customer}</td>
-                      <td>startDate:</td>
-                    <td>{item.startDate}</td>
-                      <td>days:</td>
-                    <td>{item.days}</td>
-                      <td>location:</td>
-                    <td>{item.location}</td>
-                      <td>comments:</td>
-                    <td>{item.comments}</td>
-                  </tr>
-                ))}
-              </h3>
-      </React.Fragment>
-  )
+      <div>
+      <h1>TrainingProgram</h1>
+      <ul>
+        {data.map(item => (
+          <li key={item.trainingProgramID}>{item.name}</li>
+        ))}
+      </ul>
+    </div>
+
+      );
                 }
 // function PutProgram(event){
 //   event.preventDefault()
