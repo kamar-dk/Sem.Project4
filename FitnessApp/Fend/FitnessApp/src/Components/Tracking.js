@@ -3,10 +3,13 @@ import "../App.css";
 import { useTrail, animated } from 'react-spring';
 import { Parallax } from "react-parallax";
 import { Calendar } from "react-calendar";
+import { Grid, Paper, Typography } from "@material-ui/core";
+
 
 function Tracking(){
     const [data, setData] = useState([]);
     const [id, setId] = useState([])
+    const [selectedDate, setSelectedDate] = useState(new Date());
     const fetchData = () => {
         var url = "https://localhost:7181/api/Jobs";
         return fetch(url, {
@@ -20,8 +23,9 @@ function Tracking(){
               .then((response) => response.json())
               .then((data) => setData(data));
         }
-    
-
+        const onClickDay = date => {
+          setSelectedDate(date);
+        };
     useEffect(() => {
         fetchData();
     }, [id]);
@@ -39,8 +43,27 @@ function Tracking(){
         textShadow: '2px 2px 4px #000000',
       }}
     >
-      <Calendar
-      />
+      <React.Fragment>
+      <div style={{ padding: 100 }}>
+      <Grid container spacing={2}>
+        <Grid item xs={1} md={8}>
+        <Calendar
+          onClickDay={onClickDay}
+          value={selectedDate}
+        />
+        </Grid>
+        <Grid item xs={1} md={8}>
+        <Paper style={{ padding: 20 }}>
+            <div className="left-Container">
+              <h1 style={{backgroundColor: "lightblue"}}>Sessions Selected</h1>
+              <p>BikeSessions: {displayday(selectedDate)}</p>
+              <p>RunningSessions: {}</p>
+              </div>
+          </Paper>
+        </Grid>
+        </Grid>
+        </div>
+      </React.Fragment>
     </div>
   </Parallax>
       <Parallax bgImage="/images/Running.jpg" strength={2} style={{ backgroundSize: "100%" }}>
@@ -58,8 +81,12 @@ function Tracking(){
               <div>
       <h1>Calorie Counter</h1>
       <CalorieCounter />
-      <button>Previous Week</button>
-      <button>Next Week</button>
+      <button onClick={handleNextWeek}>
+        Previous Week
+      </button>
+      <button onClick={handleNextWeek}>
+        Next Week
+      </button>
     </div>
         </div>
         
@@ -83,6 +110,21 @@ function Tracking(){
     </div>
   );
 
+}
+
+function displayday({selectedDate}) {
+  const activityData = selectedDate;
+
+  return alert("day",activityData);
+
+}
+
+function handleLastWeek(){
+  alert("clicked last week")
+}
+
+function handleNextWeek(){
+  alert("clicked next week")
 }
 
 function CalorieCounter() {
@@ -113,6 +155,7 @@ function CalorieCounter() {
       ctx.fillStyle = '#000';
       ctx.font = '12px Arial';
       ctx.textAlign = 'center';
+      ctx.fillText( calories, x +barWidth/2,chartHeight-75);
       ctx.fillText(` ${index + 1}`, x + barWidth / 2, chartHeight - 5);
 
       x += barWidth;
