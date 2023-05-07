@@ -90,7 +90,7 @@ namespace WebApi.Controllers
         {
           if (_context.traningData == null)
           {
-              return Problem("Entity set 'DataContext.trantingData'  is null.");
+              return Problem("Entity set 'DataContext.trainingData'  is null.");
           }
             var config = new MapperConfiguration(cfg => cfg.CreateMap<TraningDatasDto, TraningData>());
             var mapper = new Mapper(config);
