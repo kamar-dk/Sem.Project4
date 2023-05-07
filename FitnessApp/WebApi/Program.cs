@@ -31,8 +31,11 @@ builder.Services.AddAuthorization(options =>
             .RequireClaim("FAUser"));
 });
 
-
 builder.Services.AddControllers();
+// Add to fix circular reference problem with JSON serialization
+builder.Services.AddControllers().AddJsonOptions(x =>
+    x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
 
 builder.Services.AddAutoMapper(typeof(Program)); // Add this line
 
@@ -60,6 +63,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+
 
 app.UseCors();
 

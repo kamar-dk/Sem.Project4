@@ -3,6 +3,7 @@ using FA_DB.Data;
 using FA_DB.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Mapster;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,7 +22,13 @@ namespace WebApi.Controllers
         {
             _context = context;
             _mapper = mapper;
+            var config = new MapperConfiguration(cfg => {
+                cfg.CreateMap<FavoriteTraningPrograms, FavoriteTraningProgramsDto>();
+                cfg.CreateMap<FavoriteTraningProgramsDto, FavoriteTraningPrograms>();
+            });
+            _mapper = config.CreateMapper();
         }
+
 
         // GET: api/FavoriteTraningPrograms
         [HttpGet]
@@ -43,6 +50,7 @@ namespace WebApi.Controllers
         }
 
 
+
         // GET: api/FavoriteTraningPrograms/{email}
         [HttpGet("{email}")]
         public async Task<ActionResult<FavoriteTraningProgramsDto>> GetFavoriteTraningPrograms(string email)
@@ -57,8 +65,9 @@ namespace WebApi.Controllers
                 return NotFound();
             }
 
-            AutoMapper.Mapper.Map<>
+            //AutoMapper.Mapper.Map<>;
 
+            
             var programDto = _mapper.Map<FavoriteTraningProgramsDto>(program);
 
             return programDto;
@@ -80,6 +89,7 @@ namespace WebApi.Controllers
 
             return CreatedAtAction(nameof(GetFavoriteTraningPrograms), new { email = program.Email }, _mapper.Map<FavoriteTraningProgramsDto>(program));
         }
+
 
         [HttpPut("{email}")]
         public async Task<IActionResult> PutFavoriteTraningPrograms(string email, FavoriteTraningProgramsDto programDto)
@@ -116,6 +126,7 @@ namespace WebApi.Controllers
             return NoContent();
         }
 
+
         // DELETE: api/FavoriteTraningPrograms/{email}
         [HttpDelete("{email}")]
         public async Task<IActionResult> DeletefavoriteTraningPrograms(string email)
@@ -132,6 +143,7 @@ namespace WebApi.Controllers
             return NoContent();
         }
 
+
         private bool FavoriteTraningProgramsExists(string email)
         {
             return _context.favoriteTraningPrograms.Any(e => e.Email == email);
@@ -141,66 +153,4 @@ namespace WebApi.Controllers
 
 }
 
-//namespace WebApi.Controllers
-//{
-//    [Route("api/[controller]")]
-//    [ApiController]
-//    public class FavoriteTraningProgramsController : ControllerBase
-//    {
-//        private readonly DataContext _context;
 
-//        public FavoriteTraningProgramsController(DataContext context)
-//        {
-//            _context = context;
-//        }
-
-//        // GET: api/FavoriteTraningPrograms
-//        [HttpGet]
-//        public async Task<ActionResult<IEnumerable<string>>> GetfavoriteTraningPrograms()
-//        {
-//            var programNames = _context.favoriteTraningPrograms
-//                .SelectMany(f => f.TraningPrograms)
-//                .Select(p => p.Name);
-
-//            return await programNames.ToListAsync();
-//        }
-
-
-//        [HttpPost]
-//        public async Task<ActionResult<FavoriteTraningPrograms>> PostUserFavoriteProgram(FavoriteTraningProgramsDto userFTProgram)
-//        {
-//            if (_context.favoriteTraningPrograms == null)
-//            {
-//                return Problem("Entity set 'DataContext.userDatas'  is null.");
-//            }
-//            var config = new MapperConfiguration(cfg => cfg.CreateMap<FavoriteTraningProgramsDto, FavoriteTraningPrograms>());
-//            var mapper = new Mapper(config);
-//            var userFTProgram_ = mapper.Map<FavoriteTraningPrograms>(userFTProgram);
-
-//            _context.favoriteTraningPrograms.Add(userFTProgram_);
-//            try
-//            {
-//                await _context.SaveChangesAsync();
-//            }
-//            catch (DbUpdateException)
-//            {
-//                if (UserDataExists(userFTProgram.Email))
-//                {
-//                    return Conflict();
-//                }
-//                else
-//                {
-//                    throw;
-//                }
-//            }
-
-//            return CreatedAtAction("GetfavoriteTraningPrograms", new { id = userFTProgram.Email }, userFTProgram);
-//        }
-
-//        private bool UserDataExists(string id)
-//        {
-//            return (_context.favoriteTraningPrograms?.Any(e => e.Email == id)).GetValueOrDefault();
-//        }
-
-//    }
-//}
