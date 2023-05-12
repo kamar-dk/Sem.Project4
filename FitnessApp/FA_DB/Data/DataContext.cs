@@ -40,7 +40,7 @@ namespace FA_DB.Data
             modelBuilder.Entity<UserData>()
                 .HasKey(ud => ud.Email);
             modelBuilder.Entity<TraningData>()
-                .HasKey(td => td.Email);
+                .HasKey(td => td.UserId);
             modelBuilder.Entity<FavoriteTraningPrograms>()
                 .HasKey(ftp => ftp.Email);
             modelBuilder.Entity<TraningProgram>()
@@ -56,10 +56,10 @@ namespace FA_DB.Data
 
 
             // Define User Relationships
-            modelBuilder.Entity<User>()
-                .HasOne(u => u.TraningData)
-                .WithOne(td => td.User)
-                .HasForeignKey<TraningData>(td => td.Email);
+            //modelBuilder.Entity<User>()
+            //    .HasOne(u => u.TraningDatas);                
+                //.WithOne(td => td.User)
+                //.HasForeignKey<TraningData>(td => td.Email);
             modelBuilder.Entity<User>()
                 .HasOne(u => u.UserData)
                 .WithOne(ud => ud.User)
@@ -69,10 +69,10 @@ namespace FA_DB.Data
                 .WithOne(ftp => ftp.User)
                 .HasForeignKey<FavoriteTraningPrograms>(ftp => ftp.Email);
 
-            modelBuilder.Entity<User>()
-                .HasOne(u => u.TraningData)
-                .WithOne(td => td.User)
-                .HasForeignKey<TraningData>(td => td.Email);
+            //modelBuilder.Entity<User>()
+            //    .HasOne(u => u.TraningDatas);
+                //.WithOne(td => td.User)
+                //.HasForeignKey<TraningData>(td => td.Email);
 
             modelBuilder.Entity<User>()
                 .HasOne(u => u.UserData)

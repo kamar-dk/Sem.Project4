@@ -55,9 +55,9 @@ namespace WebApi.Controllers
         // PUT: api/TraningDatas/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTraningData(string id, TraningDatasDto traningData)
+        public async Task<IActionResult> PutTraningData(long id, TraningDatasDto traningData)
         {
-            if (id != traningData.Email)
+            if (id != traningData.Id)
             {
                 return BadRequest();
             }
@@ -103,7 +103,7 @@ namespace WebApi.Controllers
             }
             catch (DbUpdateException)
             {
-                if (TraningDataExists(traningData.Email))
+                if (TraningDataExists(traningData.Id))
                 {
                     return Conflict();
                 }
@@ -113,7 +113,7 @@ namespace WebApi.Controllers
                 }
             }
 
-            return CreatedAtAction("GetTraningData", new { id = traningData.Email }, traningData);
+            return CreatedAtAction("GetTraningData", new { id = traningData.Id }, traningData);
         }
 
         // DELETE: api/TraningDatas/5
@@ -136,9 +136,9 @@ namespace WebApi.Controllers
             return NoContent();
         }
 
-        private bool TraningDataExists(string id)
+        private bool TraningDataExists(long id)
         {
-            return (_context.traningData?.Any(e => e.Email == id)).GetValueOrDefault();
+            return (_context.traningData?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
