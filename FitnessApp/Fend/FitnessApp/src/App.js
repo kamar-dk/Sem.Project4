@@ -10,6 +10,7 @@ import Tracking from './Components/Tracking';
 import PrivateRoutes from './Components/PrivateRoute';
 import SignUp from './SignUp';
 import TrainingsProgram from './Components/TrainingsPrograms';
+import User from './Components/User';
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
     <img src='/images/FA.png' alt='FitnessApp' height={42} ></img>
       <u1>
         <li><Link to="/">Main</Link></li>
+        <li><Link to="/User">User</Link></li>
         <li><Link to="/Calories">Calories</Link></li>
         <li><Link to="/Activity">Activity</Link></li>
         <li><Link to="/Tracking">Tracking</Link></li>
@@ -36,6 +38,7 @@ function App() {
     <Routes>
       <Route element={<PrivateRoutes/>}>
       </Route>
+      <Route path="/User" element={<User/>} ></Route>
       <Route path="/Activity" element={<Activity/>} ></Route>
       <Route path="/Calories" element={<Calories/>} ></Route>
       <Route path="/" element={<Main/>} ></Route>
