@@ -1,15 +1,9 @@
-.login-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
 
-.pic-wrapper {
-    background-image :url('../public/Images/Signup.png');
-    background-repeat: no-repeat;
-    background-size: cover;
-  filter:blur();
+
+.login-wrapper, .pic-wrapper {
+  
+  background-image: linear-gradient(to bottom, #f17070, #d36464, #fafafa);
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
 }

@@ -26,7 +26,7 @@ const [data, setData] = useState([]);
     }, [id]);
 
     return(
-      <div>
+      <div style={{backgroundImage: "linear-gradient(to bottom, #f17070, #d36464, #fafafa)"}}>
       <h1>TrainingProgram</h1>
       <ul>
         {data.map(item => (

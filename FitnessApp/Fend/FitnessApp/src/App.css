@@ -1,4 +1,5 @@
 .App {
+  
   display: grid;
   grid-template-columns: 300px 1fr;
   grid-template-rows: 100vh;
@@ -44,6 +45,8 @@
 }
 
 .right-container {
+  
+  background-image: linear-gradient(to bottom, #f17070, #d36464, #fafafa);
   background-color: #ddd;
   grid-column: 2 / 3;
   grid-row: 1 / 2;

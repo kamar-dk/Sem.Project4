@@ -19,6 +19,14 @@ const useStyles = makeStyles((theme) => ({
       marginTop: theme.spacing(3),
     },
     input: {
+      color: "black",
+      "&::placeholder": {
+        color: "black",
+      },
+      "&:focus": {
+        color: "black",
+        borderColor: "#050505",
+      },
       margin: theme.spacing(1),
       width: "100%",
     },
@@ -68,8 +76,8 @@ export default function SignUp() {
 
   return (
     <div className="pic-wrapper">
-    <Container maxWidth="sm" >
-      <Typography variant="h4" align="center" gutterBottom>
+    <Container maxWidth="sm"  >
+      <Typography variant="h3" align="center" gutterBottom>
         Sign Up
       </Typography>
       <form className={classes.form} onSubmit={handleSignUp}>
