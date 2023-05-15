@@ -1,8 +1,8 @@
 import React from "react";
 import { useState } from "react";
 import "../App.css";
-import {Grid,Paper,Typography,Container,TextField,Button,
-  Select,MenuItem,FormControl,InputLabel,Box } from "@material-ui/core";
+import {Grid,Paper,Typography,Button,
+  Select,FormControl,InputLabel,Box } from "@material-ui/core";
 import { lightBlue } from "@material-ui/core/colors";
 import { OutlinedInput } from "@material-ui/core";
 
@@ -35,45 +35,45 @@ function Calories() {
         {/* Left Container */}
         <Grid item xs={12} md={6}>
           <Paper style={{ padding: 20 }} >
-          
-              <div>
-                <Box display="flex" flexDirection="column" alignItems="center" marginBottom={4}>
-                  <Typography variant="h4" align="center" gutterBottom>Calorie Calculator</Typography>
-                  <form onSubmit={calculateCalories} style={{ display: 'flex', flexDirection: 'column' }} >
-                    <FormControl variant="outlined" style={{ marginBottom: 20 , width: '100%' }}>
-                      <InputLabel>Gender</InputLabel>
-                      <Select native label="Gender" inputProps={{ name: 'gender' }}>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                      </Select>
-                    </FormControl>
-                    <FormControl variant="outlined" >
-                      <InputLabel>Weight (kg)</InputLabel>
-                      <OutlinedInput type="number" name="weight" label="Weight (kg)" />
-                    </FormControl>
-                    <FormControl variant="outlined" style={{ marginBottom: 20, width: '100%' }}>
-                      <InputLabel>Height (cm)</InputLabel>
-                      <OutlinedInput type="number" name="height" label="Height (cm)" />
-                    </FormControl>
-                    <FormControl variant="outlined" style={{ marginBottom: 20 }}>
-                      <InputLabel>Age</InputLabel>
-                      <OutlinedInput type="number" name="age" label="Age" />
-                    </FormControl>
-                    <FormControl variant="outlined" style={{ marginBottom: 20 }}>
-                      <InputLabel>Activity Level</InputLabel>
-                      <Select native label="Activity Level" inputProps={{ name: 'activity' }}>
-                        <option value="1.2">Sedentary (little or no exercise)</option>
-                        <option value="1.375">Lightly active (light exercise or sports 1-3 days a week)</option>
-                        <option value="1.55">Moderately active (moderate exercise or sports 3-5 days a week)</option>
-                        <option value="1.725">Very active (hard exercise or sports 6-7 days a week)</option>
-                        <option value="1.9">Super active (very hard exercise or sports, physical job or training twice a day)</option>
-                      </Select>
-                    </FormControl>
-                    <Button variant="contained" color="primary" type="submit" style={{ marginBottom: 20 }}>Calculate</Button>
-                  </form>
-                  {result && <Typography variant="body1" align="center" gutterBottom>Your daily calorie needs are: {result} calories</Typography>}
-                </Box>
-                </div>
+
+
+            <Box display="flex" flexDirection="column" alignItems="center" marginBottom={4}>
+              <Typography variant="h4" align="center" gutterBottom>Calorie Calculator</Typography>
+              <form onSubmit={calculateCalories} style={{ display: 'flex', flexDirection: 'column' }} >
+                <FormControl variant="outlined" style={{ marginBottom: 20, width: '100%' }}>
+                  <InputLabel>Gender</InputLabel>
+                  <Select native label="Gender" inputProps={{ name: 'gender' }}>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                  </Select>
+                </FormControl>
+                <FormControl variant="outlined" >
+                  <InputLabel>Weight (kg)</InputLabel>
+                  <OutlinedInput type="number" name="weight" label="Weight (kg)" />
+                </FormControl>
+                <FormControl variant="outlined" style={{ marginBottom: 20, width: '100%' }}>
+                  <InputLabel>Height (cm)</InputLabel>
+                  <OutlinedInput type="number" name="height" label="Height (cm)" />
+                </FormControl>
+                <FormControl variant="outlined" style={{ marginBottom: 20 }}>
+                  <InputLabel>Age</InputLabel>
+                  <OutlinedInput type="number" name="age" label="Age" />
+                </FormControl>
+                <FormControl variant="outlined" style={{ marginBottom: 20 }}>
+                  <InputLabel>Activity Level</InputLabel>
+                  <Select native label="Activity Level" inputProps={{ name: 'activity' }}>
+                    <option value="1.2">Sedentary (little or no exercise)</option>
+                    <option value="1.375">Lightly active (light exercise or sports 1-3 days a week)</option>
+                    <option value="1.55">Moderately active (moderate exercise or sports 3-5 days a week)</option>
+                    <option value="1.725">Very active (hard exercise or sports 6-7 days a week)</option>
+                    <option value="1.9">Super active (very hard exercise or sports, physical job or training twice a day)</option>
+                  </Select>
+                </FormControl>
+                <Button variant="contained" color="primary" type="submit" style={{ marginBottom: 20 }}>Calculate</Button>
+              </form>
+              {result && <Typography variant="body1" align="center" gutterBottom>Your daily calorie needs are: {result} calories</Typography>}
+            </Box>
+
 
             <Grid item xs={12} sm={6}>
               <Box display="flex" flexDirection="column" alignItems="center">
