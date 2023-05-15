@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using FA_DB.Data;
@@ -21,15 +21,18 @@ namespace WebApi.Controllers
         {
             _context = context;
             _mapper = mapper;
-            var config = new MapperConfiguration(cfg => {
+
+            var config = new MapperConfiguration(cfg =>
+            {
                 cfg.CreateMap<UserWeight, UserWeightDto>();
                 cfg.CreateMap<UserWeightDto, UserWeight>();
             });
+
             _mapper = config.CreateMapper();
         }
 
         [HttpGet]
-        public IEnumerable<UserWeightDto> GetUsers()
+        public IEnumerable<UserWeightDto> GetUser()
         {
             var userWeights = _context.UserWeights
                 .Include(uw => uw.UserData)
@@ -56,34 +59,6 @@ namespace WebApi.Controllers
             return userWeightDto;
         }
 
-        [HttpPost]
-        public async Task<ActionResult<UserWeightDto>> CreateUserWeight([FromBody] UserWeightDto userWeightDto)
-        {
-            if (userWeightDto == null)
-            {
-                return BadRequest("Invalid user weight data");
-            }
-
-            var userData = await _context.userDatas
-                .SingleOrDefaultAsync(ud => ud.Email == userWeightDto.UserData.Email);
-
-            if (userData == null)
-            {
-                return BadRequest("Invalid user data");
-            }
-
-            var newUserWeight = _mapper.Map<UserWeight>(userWeightDto);
-
-            _context.UserWeights.Add(newUserWeight);
-            await _context.SaveChangesAsync();
-
-            var createdUserWeightDto = _mapper.Map<UserWeightDto>(newUserWeight);
-
-            return CreatedAtAction(nameof(GetUserWeight), new { id = createdUserWeightDto.UserData.User.Email }, createdUserWeightDto);
-
-        }
-
-
         [HttpPut("{id}")]
         public async Task<ActionResult<UserWeightDto>> UpdateUserWeight(int id, [FromBody] UserWeightDto userWeightDto)
         {
@@ -93,10 +68,19 @@ namespace WebApi.Controllers
 
             if (userWeightToUpdate == null)
             {
-                return NotFound();
+                return NotFound("User weight not found");
             }
 
-            _mapper.Map(userWeightDto, userWeightToUpdate);
+            userWeightToUpdate.UserData.Weight = userWeightDto.Weight; // Update current weight
+
+            var newWeight = new UserWeight
+            {
+                Weight = userWeightDto.Weight,
+                date = userWeightDto.Date,
+                UserData = userWeightToUpdate.UserData
+            };
+
+            _context.UserWeights.Add(newWeight); // Add new weight to the list
 
             await _context.SaveChangesAsync();
 
@@ -104,7 +88,6 @@ namespace WebApi.Controllers
 
             return updatedUserWeightDto;
         }
-
 
 
         [HttpDelete("{id}")]
@@ -122,13 +105,5 @@ namespace WebApi.Controllers
 
             return NoContent();
         }
-    
-        
-
-        //private bool createdUserWeightDto(int id)
-        //{
-        //    return _context.UserWeights.Any(uw => uw.ID == id);
-        //}
-
     }
 }
