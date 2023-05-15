@@ -15,7 +15,7 @@ namespace FA_DB.Data
         public DbSet<TraningData> traningData { get; set; }
         public DbSet<FavoriteTraningPrograms> favoriteTraningPrograms { get; set; }
         public DbSet<TraningProgram> traningPrograms { get; set; }
-        public DbSet<Server> server { get; set; }
+        
 
         public DbSet<UserWeight> UserWeights { get; set; }
                 
@@ -49,8 +49,6 @@ namespace FA_DB.Data
                 .HasKey(rs => rs.SessionID);
             modelBuilder.Entity<BikeSession>()
                 .HasKey(bs => bs.SessionID);
-            modelBuilder.Entity<Server>()
-                .HasKey(s => s.ServerID);
             modelBuilder.Entity<UserWeight>()
                 .HasKey(uw => uw.ID);
 
@@ -94,13 +92,6 @@ namespace FA_DB.Data
 
             modelBuilder.Entity<FavoriteTraningPrograms>()
                 .HasMany(ft => ft.TraningPrograms);
-
-            modelBuilder.Entity<Server>()
-                .HasMany(s => s.Users);
-
-
-            modelBuilder.Entity<Server>()
-                .HasMany(s => s.TraningPrograms);
         }
 
     }
