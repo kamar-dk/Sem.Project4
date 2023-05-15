@@ -39,9 +39,9 @@ export default function Login() {
   const [password, setPassword] = useState('');
 
   return(
-    <div className="pic-wrapper">
-    <Container maxWidth="sm">
-    <Typography variant="h3" align="center" gutterBottom>
+    <div className="gradient-background">
+    <Container maxWidth="sm" style={{backgroundColor: "#ffffff"}} >
+    <Typography variant="h3" align="center" gutterBottom color='#ffffff'> 
       Please Log In
     </Typography>
 

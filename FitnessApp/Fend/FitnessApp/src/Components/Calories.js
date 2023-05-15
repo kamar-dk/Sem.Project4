@@ -1,8 +1,10 @@
 import React from "react";
 import { useState } from "react";
 import "../App.css";
-import { Grid, Paper, Typography } from "@material-ui/core";
+import {Grid,Paper,Typography,Container,TextField,Button,
+  Select,MenuItem,FormControl,InputLabel,Box } from "@material-ui/core";
 import { lightBlue } from "@material-ui/core/colors";
+import { OutlinedInput } from "@material-ui/core";
 
 function Calories() {
   const [result, setResult] = useState(null);
@@ -29,61 +31,58 @@ function Calories() {
 
   return (
     <div className="gradient-background">
-      <Grid container spacing={2}>
+      <Grid container spacing={2}  >
         {/* Left Container */}
         <Grid item xs={12} md={6}>
-          <Paper style={{ padding: 20 }}>
-            {/* Add your calculator form here */}
-            <div className="left-Container">
-              <h1 style={{backgroundColor: "lightblue"}}>Calorie Calculator</h1>
-              <form onSubmit={calculateCalories}>
-                <label htmlFor="gender">Gender:</label>
-                <select id="gender" name="gender">
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                </select>
-                <br />
-                <label htmlFor="weight">Weight (kg):</label>
-                <input id="weight" name="weight" type="number" />
-                <br />
-                <label htmlFor="height">Height (cm):</label>
-                <input id="height" name="height" type="number" />
-                <br />
-                <label htmlFor="age">Age:</label>
-                <input id="age" name="age" type="number" />
-                <br />
-                <label htmlFor="activity">Activity level:</label>
-                <select id="activity" name="activity">
-                  <option value="1.2">Sedentary (little or no exercise)</option>
-                  <option value="1.375">
-                    Lightly active (light exercise or sports 1-3 days a week)
-                  </option>
-                  <option value="1.55">
-                    Moderately active (moderate exercise or sports 3-5 days a
-                    week)
-                  </option>
-                  <option value="1.725">
-                    Very active (hard exercise or sports 6-7 days a week)
-                  </option>
-                  <option value="1.9">
-                    Super active (very hard exercise or sports, physical job or
-                    training twice a day)
-                  </option>
-                </select>
-                <br />
-                <button type="submit">Calculate</button>
-              </form>
-              {result && <p>Your daily calorie needs are: {result} calories</p>}
-            </div>
-          </Paper>
-          <Paper style={{ padding: 20 }}>
-            {/* Add your calculator form here */}
-            <div className="left-Container">
-              <h1 style={{backgroundColor: "lightblue"}}>Calorie Tracker</h1>
-              <h3>Your last Sessions calorie Tracker</h3>
-              <p>BikeSessions: {}</p>
-              <p>RunningSessions: {}</p>
-              </div>
+          <Paper style={{ padding: 20 }} >
+          
+              <div>
+                <Box display="flex" flexDirection="column" alignItems="center" marginBottom={4}>
+                  <Typography variant="h4" align="center" gutterBottom>Calorie Calculator</Typography>
+                  <form onSubmit={calculateCalories} style={{ display: 'flex', flexDirection: 'column' }} >
+                    <FormControl variant="outlined" style={{ marginBottom: 20 , width: '100%' }}>
+                      <InputLabel>Gender</InputLabel>
+                      <Select native label="Gender" inputProps={{ name: 'gender' }}>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                      </Select>
+                    </FormControl>
+                    <FormControl variant="outlined" >
+                      <InputLabel>Weight (kg)</InputLabel>
+                      <OutlinedInput type="number" name="weight" label="Weight (kg)" />
+                    </FormControl>
+                    <FormControl variant="outlined" style={{ marginBottom: 20, width: '100%' }}>
+                      <InputLabel>Height (cm)</InputLabel>
+                      <OutlinedInput type="number" name="height" label="Height (cm)" />
+                    </FormControl>
+                    <FormControl variant="outlined" style={{ marginBottom: 20 }}>
+                      <InputLabel>Age</InputLabel>
+                      <OutlinedInput type="number" name="age" label="Age" />
+                    </FormControl>
+                    <FormControl variant="outlined" style={{ marginBottom: 20 }}>
+                      <InputLabel>Activity Level</InputLabel>
+                      <Select native label="Activity Level" inputProps={{ name: 'activity' }}>
+                        <option value="1.2">Sedentary (little or no exercise)</option>
+                        <option value="1.375">Lightly active (light exercise or sports 1-3 days a week)</option>
+                        <option value="1.55">Moderately active (moderate exercise or sports 3-5 days a week)</option>
+                        <option value="1.725">Very active (hard exercise or sports 6-7 days a week)</option>
+                        <option value="1.9">Super active (very hard exercise or sports, physical job or training twice a day)</option>
+                      </Select>
+                    </FormControl>
+                    <Button variant="contained" color="primary" type="submit" style={{ marginBottom: 20 }}>Calculate</Button>
+                  </form>
+                  {result && <Typography variant="body1" align="center" gutterBottom>Your daily calorie needs are: {result} calories</Typography>}
+                </Box>
+                </div>
+
+            <Grid item xs={12} sm={6}>
+              <Box display="flex" flexDirection="column" alignItems="center">
+                <Typography variant="h4" align="center" gutterBottom>Calorie Tracker</Typography>
+                <Typography variant="h6" align="center" gutterBottom>Your last Sessions calorie Tracker</Typography>
+                <Typography variant="body1" align="center" gutterBottom>BikeSessions: { }</Typography>
+                <Typography variant="body1" align="center" gutterBottom>RunningSessions: { }</Typography>
+              </Box>
+            </Grid>
           </Paper>
         </Grid>
 
@@ -93,13 +92,16 @@ function Calories() {
             style={{
               padding: 50,
               maxHeight: "100vh",
-              width: "50vh",
+              width: "80vh",
               overflow: "auto",
               display: "flex",
               alignItems: "center",
+              backgroundSize: "cover",
+              backgroundRepeat: "no-repeat",
+
             }}
           >
-            <div className="right-Container">
+            <div className="right-Container" style={{ backgroundImage: "../public/Images/3.jpg" }}>
               <Typography variant="h4">Understand Calories</Typography>
               <Typography variant="body1" style={{ whiteSpace: "pre-line" }}>
                 {/* Add your general information about calories here */}
@@ -126,7 +128,7 @@ function Calories() {
             </div>
           </Paper>
 
-          
+
         </Grid>
       </Grid>
     </div>
@@ -134,92 +136,93 @@ function Calories() {
 }
 
 // need to be adjusted to be added to the database
-function PutJobs(event) {
-  event.preventDefault();
-  console.log(event.target[0].value);
-  console.log(new Date(event.target[1].value).toISOString());
-  console.log(event.target[2].value);
-  console.log(event.target[3].value);
-  console.log(event.target[4].value);
+// function GetSessionsCalories(event) {
+//   event.preventDefault();
+//   console.log(event.target[0].value);
+//   console.log(new Date(event.target[1].value).toISOString());
+//   console.log(event.target[2].value);
+//   console.log(event.target[3].value);
+//   console.log(event.target[4].value);
 
-  const payload = {
-    customer: event.target[0].value,
-    startDate: new Date(event.target[1].value).toISOString(),
-    days: parseInt(event.target[2].value),
-    location: event.target[3].value,
-    comments: event.target[4].value,
-  };
-  fetch("https://localhost:7181/api/Jobs", {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      Authorization: "Bearer " + localStorage.getItem("token"),
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(payload),
-  })
-    .then((res) => res.json())
-    .catch((error) => alert("Something bad happened: " + error));
-}
+//   const payload = {
+//     customer: event.target[0].value,
+//     startDate: new Date(event.target[1].value).toISOString(),
+//     days: parseInt(event.target[2].value),
+//     location: event.target[3].value,
+//     comments: event.target[4].value,
+//   };
+//   fetch("https://localhost:7181/api/Traningsdata", {
+//     method: "POST",
+//     headers: {
+//       Accept: "application/json",
+//       Authorization: "Bearer " + localStorage.getItem("token"),
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify(payload),
+//   })
+//     .then((res) => res.json())
+//     .catch((error) => alert("Something bad happened: " + error));
+// }
 
-function MyForm() {
-  const [customer, setCustomer] = useState("");
-  const [startDate, setStartDate] = useState(new Date());
-  const [days, setDays] = useState("");
-  const [location, setLocation] = useState("");
-  const [comments, setComments] = useState("");
+// function MyForm() {
+//   const [customer, setCustomer] = useState("");
+//   const [startDate, setStartDate] = useState(new Date());
+//   const [days, setDays] = useState("");
+//   const [location, setLocation] = useState("");
+//   const [comments, setComments] = useState("");
 
-  return (
-    <form onSubmit={PutJobs}>
-      <label>
-        Enter Customer:
-        <input
-          type="text"
-          value={customer}
-          onChange={(e) => setCustomer(e.target.value)}
-        />
-      </label>
-      <br></br>
-      <label>
-        Enter Startdate:
-        <input
-          type={Date}
-          value={startDate}
-          onChange={(e) => setStartDate(e.target.value)}
-        />
-        <br></br>
-      </label>
-      <label>
-        Enter Days:
-        <input
-          type="text"
-          value={days}
-          onChange={(e) => setDays(e.target.value)}
-        />
-      </label>
-      <br></br>
-      <label>
-        Enter Location:
-        <input
-          type="text"
-          value={location}
-          onChange={(e) => setLocation(e.target.value)}
-        />
-      </label>
-      <br></br>
-      <label>
-        Enter comments:
-        <input
-          type="text"
-          value={comments}
-          onChange={(e) => setComments(e.target.value)}
-        />
-      </label>
+//   return (
+//     <form onSubmit={PutJobs}>
+//       <label>
+//         Enter Customer:
+//         <input
+//           type="text"
+//           value={customer}
+//           onChange={(e) => setCustomer(e.target.value)}
+//         />
+//       </label>
+//       <br></br>
+//       <label>
+//         Enter Startdate:
+//         <input
+//           type={Date}
+//           value={startDate}
+//           onChange={(e) => setStartDate(e.target.value)}
+//         />
+//         <br></br>
+//       </label>
+//       <label>
+//         Enter Days:
+//         <input
+//           type="text"
+//           value={days}
+//           onChange={(e) => setDays(e.target.value)}
+//         />
+//       </label>
+//       <br></br>
+//       <label>
+//         Enter Location:
+//         <input
+//           type="text"
+//           value={location}
+//           onChange={(e) => setLocation(e.target.value)}
+//         />
+//       </label>
+//       <br></br>
+//       <label>
+//         Enter comments:
+//         <input
+//           type="text"
+//           value={comments}
+//           onChange={(e) => setComments(e.target.value)}
+//         />
+//       </label>
 
-      <div>
-        <button type="submit">Submit</button>
-      </div>
-    </form>
-  );
-}
+//       <div>
+//         <button type="submit">Submit</button>
+//       </div>
+//     </form>
+//   );
+// }
+
 export default Calories;
