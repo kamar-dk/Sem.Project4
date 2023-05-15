@@ -28,7 +28,7 @@ function Calories() {
   }
 
   return (
-    <div style={{ padding: 20 }}>
+    <div style={{backgroundImage: "linear-gradient(to bottom, #f17070, #d36464, #fafafa)", padding: 20 }}>
       <Grid container spacing={2}>
         {/* Left Container */}
         <Grid item xs={12} md={6}>
