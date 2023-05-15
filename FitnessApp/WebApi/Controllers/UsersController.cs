@@ -157,38 +157,38 @@ namespace WebApi.Controllers
 
         }
 
-        // POST: api/Users
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<User>> PostUserDto(UserDto user)
-        {
-            if (_context.users == null)
-            {
-                return Problem("Entity set 'DataContext.users'  is null.");
-            }
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<UserDto, User>());
-            var mapper = new Mapper(config);
-            var user_ = mapper.Map<User>(user);
+        //// POST: api/Users
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPost]
+        //public async Task<ActionResult<User>> PostUserDto(UserDto user)
+        //{
+        //    if (_context.users == null)
+        //    {
+        //        return Problem("Entity set 'DataContext.users'  is null.");
+        //    }
+        //    var config = new MapperConfiguration(cfg => cfg.CreateMap<UserDto, User>());
+        //    var mapper = new Mapper(config);
+        //    var user_ = mapper.Map<User>(user);
 
-            _context.users.Add(user_);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (UserExists(user.Email))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    _context.users.Add(user_);
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateException)
+        //    {
+        //        if (UserExists(user.Email))
+        //        {
+        //            return Conflict();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return CreatedAtAction("GetUser", new { id = user.Email }, user);
-        }
+        //    return CreatedAtAction("GetUser", new { id = user.Email }, user);
+        //}
 
 
         // DELETE: api/Users/5

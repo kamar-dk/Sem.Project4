@@ -54,34 +54,34 @@ namespace WebApi.Controllers
 
         // PUT: api/TraningDatas/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutTraningData(long id, TraningDatasDto traningData)
-        {
-            if (id != traningData.Id)
-            {
-                return BadRequest();
-            }
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> PutTraningData(long id, TraningDatasDto traningData)
+        //{
+        //    if (id != traningData.Id)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            _context.Entry(traningData).State = EntityState.Modified;
+        //    _context.Entry(traningData).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!TraningDataExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!TraningDataExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         // POST: api/TraningDatas
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754

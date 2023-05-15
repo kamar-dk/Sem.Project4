@@ -5,7 +5,7 @@ import { Grid, Paper, Typography } from "@material-ui/core";
 function Activity(){
     return(
         <React.Fragment>
-     <div style={{ padding: 20 }}>
+     <div className="gradient-background">
       <Grid container spacing={2}>
         {/* Left Container */}
         <Grid item xs={12} md={6}>
@@ -21,16 +21,16 @@ function Activity(){
         <Grid item xs={12} md={6}>
           <Paper
             style={{
-              padding: 50,
+              padding: 100,
               maxHeight: "100vh",
-              width: "50vh",
+              width: "70vh",
               overflow: "auto",
               display: "flex",
               alignItems: "center",
             }}
           >
             <div className="right-Container">
-              <Typography variant="h4">Understand Programs and Adding Activities</Typography>
+              <Typography variant="h4">How to add an activity</Typography>
               <Typography variant="body1" style={{ whiteSpace: "pre-line" }}>
                 {/* General information about Training programs and activity*/}
                 he he hæ hæ hæ hø hø hø
@@ -84,6 +84,7 @@ function ActivityForm() {
     const [AvgHeartRate, setAvgHeartRate] = useState("");
 
     return (
+      <div style={{ padding: 20 }}>
       <form onSubmit={PutActivity}>
         <label>Enter Activity:
            <Dropdown placeHolder="Select..." 
@@ -136,6 +137,7 @@ function ActivityForm() {
           <button type="submit">Add</button>
         </div>
       </form>
+      </div>
     )
 }
 

@@ -1,5 +1,5 @@
 nav {
-    background-color: #2d2d2d;
+    background-color: #161515;
     display: flex;
     justify-content: space-between;
     height: 70px;
@@ -10,15 +10,15 @@ nav li {
     list-style: none;
     float: left;
     padding-left: 8px;
-    padding-top: 20px;
+    padding-top: 35px;
     padding-right: 10px;
 }
 li a {
     display: flex;
     text-decoration: none;
     color: rgb(255, 255, 255);
-    line-height: 1em;
+    line-height: 1.5em;
     text-align: center;
     font-weight: bold;
-    font-size: 1.3em;
+    font-size: 1.1em;
 }

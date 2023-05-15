@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 
 
+namespace WebApi.Data
+{
 namespace WebApi.DTO.Data
 {
     public class WepApiDataContext : IdentityDbContext
