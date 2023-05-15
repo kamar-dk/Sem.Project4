@@ -9,8 +9,10 @@ using Microsoft.EntityFrameworkCore;
 using FA_DB.Data;
 using WebApi.DTO;
 //using WebApi.Models;
+using WebApi.Services;
 using FA_DB.Models;
-
+using System.Configuration;
+using Mapster;
 
 namespace WebApi.Controllers
 {
@@ -19,13 +21,71 @@ namespace WebApi.Controllers
     public class UsersController : ControllerBase
     {
         private readonly DataContext _context;
+        private readonly UserServices _accountServices;
+
         //private readonly IMapper _mapper;
 
-        public UsersController(DataContext context, IMapper mapper)
+        public UsersController(DataContext context, IMapper mapper, IConfiguration configuration)
         {
             _context = context;
-            //_mapper = mapper;
+            _accountServices = new UserServices(configuration);
+
         }
+
+
+        //[AllowAnonymous]
+        [HttpPost("register")]
+        public async Task<ActionResult<UserDto>> Register(UserRegisterDto register)
+        {
+            if (!_accountServices.IsVaildEmail(register.Email))
+            {
+                return BadRequest("Email is not valid");
+            }
+
+            if (await _context.users.AnyAsync(x => x.Email == register.Email))
+                return BadRequest("Email is already taken");
+
+            _accountServices.CreatePasswordHash(register.Password, out byte[] passwordHash, out byte[] passwordSalt);
+
+            var account = new User
+            {
+                Email = register.Email,
+                FirstName = register.FirstName,
+                LastName = register.LastName,
+                PasswordHash = passwordHash,
+                Salt = passwordSalt,
+            };
+            //_context.Calender.Add(Calender);
+            _context.users.Add(account);
+
+            await _context.SaveChangesAsync();
+
+            return Accepted(register.Email);
+        }
+
+
+        //[AllowAnonymous]
+        [HttpPost("login")]
+        public async Task<ActionResult<UserDto>> Login(UserLoginDto request)
+        {
+            var dbAccount = await _context.users.FirstOrDefaultAsync(x => x.Email == request.Email);
+            if (dbAccount == null)
+            {
+                return NotFound(request.Email);
+            }
+
+            if (!_accountServices.TryVerifyPasswordHash(request.Password, dbAccount.PasswordHash, dbAccount.Salt))
+            {
+                return BadRequest("Not a valid Password");
+            }
+
+            var token = _accountServices.CreateToken(dbAccount);
+            var account = dbAccount.Adapt<UserDto>();
+            account.Token = token;
+            return Ok(account);
+
+        }
+
 
         // GET: api/Users
         [HttpGet]
