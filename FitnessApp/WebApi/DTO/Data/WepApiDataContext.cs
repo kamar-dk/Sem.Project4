@@ -4,12 +4,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WebApi.Data
 {
-namespace WebApi.DTO.Data
-{
-    public class WepApiDataContext : IdentityDbContext
+    namespace WebApi.DTO.Data
     {
-        public WepApiDataContext(DbContextOptions<WepApiDataContext> options) : base(options)
+        public class WepApiDataContext : IdentityDbContext
         {
+            public WepApiDataContext(DbContextOptions<WepApiDataContext> options) : base(options)
+            {
+            }
         }
     }
 }

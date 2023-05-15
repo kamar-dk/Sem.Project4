@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 using FA_DB.Data;
 using Microsoft.AspNetCore.Identity;
-using WebApi.DTO.Data;
+using WebApi.DTO;
     
 
 var builder = WebApplication.CreateBuilder(args);
