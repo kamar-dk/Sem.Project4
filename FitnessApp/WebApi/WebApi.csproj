@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Data\DataContext.cs" />
+    <Compile Remove="DTO\Data\DataContext.cs" />
   </ItemGroup>
 
   <ItemGroup>
