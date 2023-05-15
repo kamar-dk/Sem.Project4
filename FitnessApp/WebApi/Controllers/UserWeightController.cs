@@ -46,7 +46,7 @@ namespace WebApi.Controllers
         public ActionResult<UserWeightDto> GetUserWeight(int id)
         {
             var userWeight = _context.UserWeights
-                .Include(uw => uw)
+                .Include(uw => uw.UserData)
                 .SingleOrDefault(uw => uw.ID == id);
 
             if (userWeight == null)
@@ -71,7 +71,16 @@ namespace WebApi.Controllers
                 return NotFound("User weight not found");
             }
 
-            _mapper.Map(userWeightDto, userWeightToUpdate);
+            userWeightToUpdate.UserData.Weight = userWeightDto.Weight; // Update current weight
+
+            var newWeight = new UserWeight
+            {
+                Weight = userWeightDto.Weight,
+                date = userWeightDto.Date,
+                UserData = userWeightToUpdate.UserData
+            };
+
+            _context.UserWeights.Add(newWeight); // Add new weight to the list
 
             await _context.SaveChangesAsync();
 
@@ -79,6 +88,7 @@ namespace WebApi.Controllers
 
             return updatedUserWeightDto;
         }
+
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteUserWeight(int id)

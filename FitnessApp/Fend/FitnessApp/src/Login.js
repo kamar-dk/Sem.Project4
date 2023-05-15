@@ -16,6 +16,14 @@ const useStyles = makeStyles((theme) => ({
       marginTop: theme.spacing(3),
     },
     input: {
+      color: "black",
+      "&::placeholder": {
+        color: "black",
+      },
+      "&:focus": {
+        color: "black",
+        borderColor: "#050505",
+      },
       margin: theme.spacing(1),
       width: "100%",
     },
@@ -31,10 +39,12 @@ export default function Login() {
   const [password, setPassword] = useState('');
 
   return(
-    <Container
-  maxWidth="sm">
-    <div className="login-wrapper">
-    <h1>Please Log In</h1>
+    <div className="pic-wrapper">
+    <Container maxWidth="sm">
+    <Typography variant="h3" align="center" gutterBottom>
+      Please Log In
+    </Typography>
+
     <form className={classes.form} onSubmit={Sendlogin}>
       <TextField
         id="email"
@@ -60,11 +70,12 @@ export default function Login() {
         Submit
       </Button>
     </form>
-    <p>
+    <p align ="center">
       Don't have an account? <Link to="/SignUp">SignUp</Link>
     </p>
+    </Container>
   </div>
-  </Container>
+  
 );
 }
   function Sendlogin(event) {
