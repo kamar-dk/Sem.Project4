@@ -1,6 +1,7 @@
 import { React, useState } from 'react';
 import { useEffect } from 'react';
 import Dropdown from './Dropdown';
+import {Button, Typography } from "@material-ui/core";
 
 function TrainingProgram(){
 const [data, setData] = useState([]);
@@ -21,13 +22,16 @@ const [data, setData] = useState([]);
         }
     
 
-    useEffect(() => {
-        fetchData();
-    }, [id]);
+    // useEffect(() => {
+    //     fetchData();
+    // }, [id]);
 
     return(
-      <div style={{backgroundImage: "linear-gradient(to bottom, #f17070, #d36464, #fafafa)"}}>
-      <h1>TrainingProgram</h1>
+      <div className="gradient-background">
+     <Typography variant="h3" component="h3">TrainingProgram</Typography>
+      <Button variant="contained" color="primary" onClick={fetchData}>
+        Get Programs
+      </Button>
       <ul>
         {data.map(item => (
           <li key={item.trainingProgramID}>{item.name}</li>

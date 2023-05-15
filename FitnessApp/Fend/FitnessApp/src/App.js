@@ -11,6 +11,7 @@ import PrivateRoutes from './Components/PrivateRoute';
 import SignUp from './SignUp';
 import TrainingsProgram from './Components/TrainingsPrograms';
 import User from './Components/User';
+import {Box, IconButton,usetheme} from '@material-ui/core';
 
 
 function App() {
@@ -19,12 +20,15 @@ function App() {
    //if(!token){
     // return <Login/>
    // }
-   
+
 
   return (
     <>
     <nav>
-    <img src='/images/FA.png' alt='FitnessApp' height={42} ></img>
+    <Box display="flex">
+      
+    <img src='/images/FA.png' alt='FitnessApp' height={70} ></img>
+    </Box>
       <u1>
         <li><Link to="/">Main</Link></li>
         <li><Link to="/User">User</Link></li>
@@ -35,6 +39,7 @@ function App() {
         <li><Link to="/SignUp">SignUp</Link></li>
         <li><Link to="/Logout">Logout</Link></li>
       </u1>
+     
     </nav>
     <Routes>
       <Route element={<PrivateRoutes/>}>
