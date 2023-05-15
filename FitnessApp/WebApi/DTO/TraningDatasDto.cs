@@ -4,8 +4,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace WebApi.DTO
 {
     public class TraningDatasDto
-    {      
+    {
         public long Id { get; set; }
+
+
         public string TrainingType { get; set; } = "";
         public DateTime SessionDate { get; set; }
         public float Distance { get; set; }        
@@ -27,4 +29,6 @@ namespace WebApi.DTO
         //public User User { get; set; }
         
     }
+
+
 }
