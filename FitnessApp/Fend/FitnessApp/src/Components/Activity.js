@@ -5,7 +5,7 @@ import { Grid, Paper, Typography } from "@material-ui/core";
 function Activity(){
     return(
         <React.Fragment>
-     <div style={{ padding: 20 }}>
+     <div style={{backgroundImage: "linear-gradient(to bottom, #f17070, #d36464, #fafafa)", padding: 20 }}>
       <Grid container spacing={2}>
         {/* Left Container */}
         <Grid item xs={12} md={6}>
@@ -84,6 +84,7 @@ function ActivityForm() {
     const [AvgHeartRate, setAvgHeartRate] = useState("");
 
     return (
+      <div style={{ padding: 20 }}>
       <form onSubmit={PutActivity}>
         <label>Enter Activity:
            <Dropdown placeHolder="Select..." 
@@ -136,6 +137,7 @@ function ActivityForm() {
           <button type="submit">Add</button>
         </div>
       </form>
+      </div>
     )
 }
 
