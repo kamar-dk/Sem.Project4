@@ -7,6 +7,7 @@ namespace WebApi.DTO
         //public User User { get; set; }
 
         public float Height { get; set; }
+        public float Weight { get; set; }
         public string Gender { get; set; }
         public DateTime DoB { get; set; }
     }

@@ -64,6 +64,7 @@ namespace WebApi.Controllers
             var userData = await _context.userDatas.FindAsync(id);
             userData.Email = userDataDto.Email;
             userData.Height = userDataDto.Height;
+            userData.Weight = userDataDto.Weight;
             userData.Gender = userDataDto.Gender;
             userData.DoB = userDataDto.DoB;
 
