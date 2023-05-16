@@ -8,6 +8,7 @@ namespace WebApi.DTO
     {
         public long Id { get; set; }
 
+        public string UserId { get; set; }
 
         public string TrainingType { get; set; } = "";
         public DateTime SessionDate { get; set; }
