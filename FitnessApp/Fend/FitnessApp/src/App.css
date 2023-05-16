@@ -113,13 +113,14 @@ body,
   overflow-y: scroll;
   box-sizing: border-box;
 }
-.gradient-background-2{
-  background-image: linear-gradient(to bottom, #ffffff, #919bd1, #6a73ac);
+.gradient-background2{
+  background-image: linear-gradient(to bottom, #0a0a0a, #6475d3, #8f8d8d);
   /* padding: 20px; */
   height: 100%;
   grid-column: 2 / 3;
   grid-row: 1 / 2;
   display: flex;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   overflow-y: scroll;

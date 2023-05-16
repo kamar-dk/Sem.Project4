@@ -15,6 +15,9 @@ using AutoMapper;
 using Microsoft.Extensions.Configuration;
 using WebApi.Services;
 using WebApi.DTO;
+using NSubstitute;
+using Moq;
+using NSubstitute.ReceivedExtensions;
 
 namespace WebApi.Controllers.Tests
 {
@@ -22,46 +25,63 @@ namespace WebApi.Controllers.Tests
     public class UsersControllerTests
     {
         DataContext mockedDbContext = new DataContext();
-        UsersController uut;
-        IConfiguration configuration;
-        IMapper mapper;
+        
+        public IUserServices _userServices;
+        public DataContext _context;
+        public UsersController uut;
 
-        [SetUp] 
-        public void SetUp() 
+        [SetUp]
+        public void SetUp()
         {
+            _userServices = Substitute.For<IUserServices>();
+            _context = Substitute.For<DataContext>();
+            uut = new UsersController(mockedDbContext, _userServices);
+        }
+
+        [TestCase("Email is not valid")]
+        public async Task RegisterTest_Assert_InvalidEmailAsync(string Expected)
+        {
+            //Arrange
             
-            uut = new UsersController(mockedDbContext, mapper, configuration);
+            var register = new UserRegisterDto
+            { 
+                Email = "test",
+                FirstName = "Test",
+                LastName = "Test",
+                Password = "Test"
+            };
+
+            uut._accountServices.IsVaildEmail(register.Email).Returns(false);
+            await uut.Register(register);
+            NUnit.Framework.Assert.AreEqual("Email is not valid", Expected);
         }
 
-        [Test()]
-        public void UsersControllerTest()
-        {
-            throw new NotImplementedException();
-        }
-
-        [Test]
-        public void RegisterTest_Assert_InvalidEmail()
+        [TestCase("Email is already taken")]
+        public void RegisterTest_Assert_EmailAlreadyTaken(string Expected)
         {
             
             //Arrange
             var register = new UserRegisterDto
             {
                 Email = "test",
-                FirstName = "test",
-                LastName = "test",
-                Password = "test"
+                FirstName = "Test",
+                LastName = "Test",
+                Password = "Test"
             };
-            //Act
-            var result = uut.Register(register);
-            //Assert
-            NUnit.Framework.Assert.AreEqual("Email is not valid", result);
-            
+
+            uut._accountServices.IsVaildEmail(register.Email).Returns(true);
+
+            uut._context.users.AnyAsync(x => x.Email == register.Email).Returns(true);
+
+            uut.Register(register);
+            NUnit.Framework.Assert.AreEqual("Email is already taken", Expected);
+
         }
 
         [Test()]
-        public void LoginTest()
+        public void LoginTest_assert_ok()
         {
-            
+
         }
 
         [Test()]
