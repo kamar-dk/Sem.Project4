@@ -7,7 +7,7 @@ import { Grid, Paper, Typography } from "@material-ui/core";
 
 
 function Tracking(){
-    const [data, setData] = useState([]);
+    const [date, setData] = useState(new Date());
     const [id, setId] = useState([])
     const [selectedDate, setSelectedDate] = useState(new Date());
     const fetchData = () => {
@@ -47,17 +47,15 @@ function Tracking(){
       <div style={{ padding: 100 }}>
       <Grid container spacing={2}>
         <Grid item xs={1} md={8}>
-        <Calendar
-          onClickDay={onClickDay}
-          value={selectedDate}
+        <Calendar onChange={setData} value={date}
         />
         </Grid>
         <Grid item xs={1} md={8}>
         <Paper style={{ padding: 20 }}>
             <div className="left-Container">
               <h1 style={{backgroundColor: "lightblue"}}>Sessions Selected</h1>
-              <p>BikeSessions: {displayday(selectedDate)}</p>
-              <p>RunningSessions: {}</p>
+              <p>BikeSessions: { <div className="text-center"> Selected date: {date.toDateString()} </div>}</p>
+              <p>RunningSessions: {<div className="text-center"> Selected date: {date.toDateString()} </div>}</p>
               </div>
           </Paper>
         </Grid>
@@ -81,7 +79,7 @@ function Tracking(){
               <div>
       <h1>Calorie Counter</h1>
       <CalorieCounter />
-      <button onClick={handleNextWeek}>
+      <button onClick={handleLastWeek}>
         Previous Week
       </button>
       <button onClick={handleNextWeek}>
@@ -112,12 +110,6 @@ function Tracking(){
 
 }
 
-function displayday({selectedDate}) {
-  const activityData = selectedDate;
-
-  return alert("day",activityData);
-
-}
 
 function handleLastWeek(){
   alert("clicked last week")
