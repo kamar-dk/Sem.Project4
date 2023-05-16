@@ -7,7 +7,7 @@ using WebApi.Models;
 
 namespace WebApi.Services
 {
-    public class UserServices
+    public class UserServices : IUserServices
     {
         private readonly IConfiguration _configuration;
 
