@@ -26,4 +26,10 @@ function User()
         
 }
 
+//Delete user function
+function deleteUser(){
+    return alert("Delete User");
+}
+
+
 export default User

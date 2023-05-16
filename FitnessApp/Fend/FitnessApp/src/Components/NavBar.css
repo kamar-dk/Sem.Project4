@@ -10,7 +10,7 @@ nav li {
     list-style: none;
     float: left;
     padding-left: 8px;
-    padding-top: 35px;
+    padding-top: 17px;
     padding-right: 10px;
 }
 li a {
@@ -20,5 +20,5 @@ li a {
     line-height: 1.5em;
     text-align: center;
     font-weight: bold;
-    font-size: 1.1em;
+    font-size: 1.2em;
 }

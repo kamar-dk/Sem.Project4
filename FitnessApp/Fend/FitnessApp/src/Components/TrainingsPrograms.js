@@ -28,7 +28,7 @@ const [data, setData] = useState([]);
 
     return(
       <div className="gradient-background">
-     <Typography variant="h3" component="h3">TrainingProgram</Typography>
+     <Typography variant="h3" component="h3" style={{ color: 'white' ,align :'center'}}>TrainingProgram</Typography>
       <Button variant="contained" color="primary" onClick={fetchData}>
         Get Programs
       </Button>

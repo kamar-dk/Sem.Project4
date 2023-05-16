@@ -75,8 +75,8 @@ export default function SignUp() {
   };
 
   return (
-    <div className="pic-wrapper">
-    <Container maxWidth="sm"  >
+    <div className="gradient-background">
+    <Container maxWidth="sm" style={{backgroundColor: "#ffffff"}} >
       <Typography variant="h3" align="center" gutterBottom>
         Sign Up
       </Typography>

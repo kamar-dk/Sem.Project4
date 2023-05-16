@@ -1,5 +1,6 @@
-﻿using FA_DB.Models;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using WebApi.Models;
+using WebApi.Data;
 
 namespace WebApi.DTO
 {

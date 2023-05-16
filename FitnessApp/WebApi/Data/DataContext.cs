@@ -1,24 +1,26 @@
-﻿using Microsoft.EntityFrameworkCore;
-using FA_DB.Models;
-using FA_DB.Models.TraningTypes;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using WebApi.Models;
+using WebApi.Models.TraningTypes;
 
-namespace FA_DB.Data
+
+namespace WebApi.Data
 {
     public class DataContext : DbContext
     {
-        public DataContext(DbContextOptions<DataContext> options)
+        /*public DataContext(DbContextOptions<DataContext> options)
                 : base(options) { }
-
+        */
         // Main Tables
         public DbSet<User> users { get; set; }
         public DbSet<UserData> userDatas { get; set; }
         public DbSet<TraningData> traningData { get; set; }
         public DbSet<FavoriteTraningPrograms> favoriteTraningPrograms { get; set; }
         public DbSet<TraningProgram> traningPrograms { get; set; }
-        
+
 
         public DbSet<UserWeight> UserWeights { get; set; }
-                
+
         // TraningSessions
         public DbSet<RunningSession> runningSessions { get; set; }
         public DbSet<BikeSession> bikeSessions { get; set; }
@@ -56,8 +58,8 @@ namespace FA_DB.Data
             // Define User Relationships
             //modelBuilder.Entity<User>()
             //    .HasOne(u => u.TraningDatas);                
-                //.WithOne(td => td.User)
-                //.HasForeignKey<TraningData>(td => td.Email);
+            //.WithOne(td => td.User)
+            //.HasForeignKey<TraningData>(td => td.Email);
             modelBuilder.Entity<User>()
                 .HasOne(u => u.UserData)
                 .WithOne(ud => ud.User)
@@ -69,8 +71,8 @@ namespace FA_DB.Data
 
             //modelBuilder.Entity<User>()
             //    .HasOne(u => u.TraningDatas);
-                //.WithOne(td => td.User)
-                //.HasForeignKey<TraningData>(td => td.Email);
+            //.WithOne(td => td.User)
+            //.HasForeignKey<TraningData>(td => td.Email);
 
             modelBuilder.Entity<User>()
                 .HasOne(u => u.UserData)
@@ -89,10 +91,11 @@ namespace FA_DB.Data
             modelBuilder.Entity<UserData>()
                 .HasMany(uw => uw.UserWeights);
 
-
             modelBuilder.Entity<FavoriteTraningPrograms>()
                 .HasMany(ft => ft.TraningPrograms);
-        }
 
+            modelBuilder.Entity<BikeSession>()
+                .HasOne(bs => bs.traningData);
+        }
     }
 }

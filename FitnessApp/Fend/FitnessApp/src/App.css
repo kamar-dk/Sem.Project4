@@ -1,3 +1,9 @@
+html,
+body,
+#root {
+  height: 100%;
+}
+
 .App {
   
   display: grid;
@@ -45,9 +51,7 @@
 }
 
 .right-container {
-  
-  background-image: linear-gradient(to bottom, #f17070, #d36464, #fafafa);
-  background-color: #ddd;
+  /* background-color: #ddd; */
   grid-column: 2 / 3;
   grid-row: 1 / 2;
   display: flex;
@@ -57,6 +61,7 @@
   padding : 15px;
   overflow-y: scroll;
   box-sizing: border-box;
+  
 }
 
 .filter {
@@ -98,7 +103,27 @@
 
 .gradient-background{
   background-image: linear-gradient(to bottom, #0a0a0a, #6475d3, #8f8d8d);
-  padding: 20px;
+  /* padding: 20px; */
+  height: 100%;
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-y: scroll;
+  box-sizing: border-box;
+}
+.gradient-background-2{
+  background-image: linear-gradient(to bottom, #ffffff, #919bd1, #6a73ac);
+  /* padding: 20px; */
+  height: 100%;
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-y: scroll;
+  box-sizing: border-box;
 }
 
 @keyframes App-logo-spin {

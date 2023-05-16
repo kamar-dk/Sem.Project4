@@ -66,7 +66,7 @@ function Tracking(){
       </React.Fragment>
     </div>
   </Parallax>
-      <Parallax bgImage="/images/Running.jpg" strength={2} style={{ backgroundSize: "100%" }}>
+      <Parallax bgImage="/images/Running.jpg" strength={20} style={{ backgroundSize: "100%" }}>
         <div
           style={{
             height: "100vh",

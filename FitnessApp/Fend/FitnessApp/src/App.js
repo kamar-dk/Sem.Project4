@@ -13,7 +13,6 @@ import TrainingsProgram from './Components/TrainingsPrograms';
 import User from './Components/User';
 import {Box, IconButton,usetheme} from '@material-ui/core';
 
-
 function App() {
   const token = localStorage.getItem("token")
 
@@ -24,22 +23,23 @@ function App() {
 
   return (
     <>
-    <nav>
-    <Box display="flex">
+      <nav>
+        <Box  justifyContent="space-between" alignItems="center">
+          <img src='/images/FA.png' alt='FitnessApp' height={60} />
+        </Box>
+      <Box display="flex">
       
-    <img src='/images/FA.png' alt='FitnessApp' height={70} ></img>
-    </Box>
-      <u1>
         <li><Link to="/">Main</Link></li>
-        <li><Link to="/User">User</Link></li>
+       
         <li><Link to="/Calories">Calories</Link></li>
         <li><Link to="/Activity">Activity</Link></li>
         <li><Link to="/Tracking">Tracking</Link></li>
         <li><Link to="/TrainingsPrograms">TrainingPrograms</Link></li>
         <li><Link to="/SignUp">SignUp</Link></li>
         <li><Link to="/Logout">Logout</Link></li>
-      </u1>
-     
+        <li><Link to="/User">User</Link></li>
+        </Box>
+    
     </nav>
     <Routes>
       <Route element={<PrivateRoutes/>}>
