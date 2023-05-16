@@ -56,7 +56,15 @@ namespace WebApi.Controllers
                 Salt = passwordSalt,
             };
             //_context.Calender.Add(Calender);
+
+            var userData = new UserData
+            {
+                Email = register.Email
+            };
+
+
             _context.users.Add(account);
+            _context.userDatas.Add(userData);
 
             await _context.SaveChangesAsync();
 

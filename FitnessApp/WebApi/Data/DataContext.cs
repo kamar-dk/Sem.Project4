@@ -6,12 +6,11 @@ using WebApi.Models.TraningTypes;
 
 namespace WebApi.Data
 {
-    public class DataContext : IdentityDbContext
+    public class DataContext : DbContext
     {
-        public DataContext(DbContextOptions<DataContext> options) : base(options)
-        {
-        }
-        
+        /*public DataContext(DbContextOptions<DataContext> options)
+                : base(options) { }
+        */
         // Main Tables
         public DbSet<User> users { get; set; }
         public DbSet<UserData> userDatas { get; set; }
