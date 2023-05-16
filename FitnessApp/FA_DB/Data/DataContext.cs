@@ -6,19 +6,19 @@ namespace FA_DB.Data
 {
     public class DataContext : DbContext
     {
-        /*public DataContext(DbContextOptions<DataContext> options)
+        public DataContext(DbContextOptions<DataContext> options)
                 : base(options) { }
-        */
+
         // Main Tables
         public DbSet<User> users { get; set; }
         public DbSet<UserData> userDatas { get; set; }
         public DbSet<TraningData> traningData { get; set; }
         public DbSet<FavoriteTraningPrograms> favoriteTraningPrograms { get; set; }
         public DbSet<TraningProgram> traningPrograms { get; set; }
-        
+
 
         public DbSet<UserWeight> UserWeights { get; set; }
-                
+
         // TraningSessions
         public DbSet<RunningSession> runningSessions { get; set; }
         public DbSet<BikeSession> bikeSessions { get; set; }
@@ -55,7 +55,7 @@ namespace FA_DB.Data
 
             // Define User Relationships
             //modelBuilder.Entity<User>()
-            //    .HasOne(u => u.TraningDatas);                
+            //    .HasOne(u => u.TraningDatas);
                 //.WithOne(td => td.User)
                 //.HasForeignKey<TraningData>(td => td.Email);
             modelBuilder.Entity<User>()
