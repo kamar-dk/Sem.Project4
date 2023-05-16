@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FA_DB.Models
+namespace WebApi.Models
 {
     public class UserWeight
     {

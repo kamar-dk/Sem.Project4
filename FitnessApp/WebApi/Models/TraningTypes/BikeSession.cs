@@ -8,7 +8,7 @@ namespace WebApi.Models.TraningTypes
 {
     public class BikeSession
     {
-        public int BikeSessionId { get; set; }
+        public int SessionID { get; set; }
         public DateTime Date { get; set; }
         public float Durration { get; set; }
         public float Distance { get; set; }

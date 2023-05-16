@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using FA_DB.Data;
-using FA_DB.Models;
 using AutoMapper;
 using WebApi.DTO;
+using WebApi.Models;
+using WebApi.Data;
 
 namespace WebApi.Controllers
 {

@@ -11,6 +11,7 @@ using FA_DB.Models;
 using Moq;
 using AutoMapper;
 using WebApi.DTO;
+using WebApi.Models;
 
 namespace WebApi.Controllers.Tests
 {

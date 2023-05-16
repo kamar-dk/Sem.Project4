@@ -1,4 +1,4 @@
-﻿using FA_DB.Models;
+﻿using WebApi.Models;
 
 namespace WebApi.DTO
 {

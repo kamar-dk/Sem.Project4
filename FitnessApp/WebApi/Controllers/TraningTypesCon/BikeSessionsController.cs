@@ -5,14 +5,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using FA_DB.Data;
-using FA_DB.Models.TraningTypes;
 using Mapster;
 using WebApi.DTO;
-using FA_DB.Models;
 using Microsoft.AspNetCore.Authorization;
-
-
+using WebApi.Models.TraningTypes;
+using WebApi.Data;
 
 namespace WebApi.Controllers.TraningTypesCon
 {
