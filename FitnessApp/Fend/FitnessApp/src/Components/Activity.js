@@ -72,7 +72,7 @@ function PutActivity(event){
 const options = [
     { value: "1", label: "Running" },
     { value: "2", label: "Swimming" },
-    { value: "3", label: "Cycling" },
+    { value: "3", label: "Bike" },
     { value: "4", label: "Walking" },
 ];
 
