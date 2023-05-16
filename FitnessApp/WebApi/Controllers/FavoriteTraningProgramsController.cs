@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using FA_DB.Data;
-using FA_DB.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Mapster;
@@ -8,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApi.DTO;
+using WebApi.Models;
+using WebApi.Data;
 
 namespace WebApi.Controllers
 {

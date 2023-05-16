@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using FA_DB.Data;
-using FA_DB.Models.TraningTypes;
+using WebApi.Models.TraningTypes;
+using WebApi.Data;
 
 namespace WebApi.Controllers.TraningTypesCon
 {

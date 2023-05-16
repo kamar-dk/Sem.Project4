@@ -6,13 +6,13 @@ using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using FA_DB.Data;
 using WebApi.DTO;
 //using WebApi.Models;
 using WebApi.Services;
-using FA_DB.Models;
 using System.Configuration;
 using Mapster;
+using WebApi.Models;
+using WebApi.Data;
 
 namespace WebApi.Controllers
 {

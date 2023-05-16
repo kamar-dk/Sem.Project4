@@ -1,17 +1,18 @@
-﻿using FA_DB.Models;
+﻿using WebApi.Models;
+using WebApi.Data;
 
 
-namespace FA_DB.Data
+namespace WebApi.Data
 {
     public class AppDbInitializer
     {
-        public static void Seed(IApplicationBuilder applicationBuilder) 
+        public static void Seed(IApplicationBuilder applicationBuilder)
         {
-            using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope()) 
+            using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetService<DataContext>();
 
-                if(!context.users.Any()) 
+                if (!context.users.Any())
                 {
                     context.users.AddRange(new User()
                     {
@@ -75,15 +76,15 @@ namespace FA_DB.Data
                         LastName = "Martensen",
                         PasswordHash = new byte[4] { 1, 2, 3, 4 },
                         Salt = new byte[4] { 1, 2, 3, 4 }
-                    });                    
+                    });
                     context.SaveChanges();
                 }
 
                 if (!context.traningPrograms.Any())
                 {
                     context.traningPrograms.AddRange(new TraningProgram()
-                    {                        
-                        
+                    {
+
                         Name = "Program 1"
                     });
                     context.SaveChanges();

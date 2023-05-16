@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FA_DB", "FA_DB\FA_DB.csproj", "{90F87262-2E43-46CA-A22A-B5DDF75979B5}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi", "WebApi\WebApi.csproj", "{81841987-E53C-418B-A840-AD4C02064A9C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{962BC67E-4214-4026-B797-AC222FCA488E}"
@@ -17,10 +15,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{90F87262-2E43-46CA-A22A-B5DDF75979B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{90F87262-2E43-46CA-A22A-B5DDF75979B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{90F87262-2E43-46CA-A22A-B5DDF75979B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{90F87262-2E43-46CA-A22A-B5DDF75979B5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{81841987-E53C-418B-A840-AD4C02064A9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{81841987-E53C-418B-A840-AD4C02064A9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81841987-E53C-418B-A840-AD4C02064A9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
