@@ -63,9 +63,9 @@ function Tracking() {
         </div>
       </React.Fragment>
       <div>
-        <div style={{ padding: 100}}>
+        <div style={{ padding: 100, textAlign: "center"}}>
         <h1> {date.toDateString()}</h1>
-        <div style={{ width: 75, height: 300, }}>
+        <div style={{ width: 75, height: 300, padding: 100, display: "flex", flexDirection: "column-reverse", alignItems: "center" }}>
           <div
             style={{
               height: `${cappedPercentage}%`,
