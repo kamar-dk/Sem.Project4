@@ -23,6 +23,7 @@ namespace WebApi.Controllers
             _context = context;
         }
 
+        
         // GET: api/UserDatas
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserData>>> GetuserDatas()

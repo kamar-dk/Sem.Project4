@@ -21,7 +21,7 @@ namespace WebApi.Services
         {
             List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, user.FirstName),
+                new Claim(ClaimTypes.Email,user.Email),
                 new Claim(ClaimTypes.Role, "admin")
 
             };
