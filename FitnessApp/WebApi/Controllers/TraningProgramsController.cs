@@ -25,7 +25,7 @@ namespace WebApi.Controllers
 
         // GET: api/TraningPrograms
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TraningProgram>>> GettraningPrograms()
+        public async Task<ActionResult<IEnumerable<TraningPrograms>>> GettraningPrograms()
         {
           if (_context.traningPrograms == null)
           {
@@ -36,7 +36,7 @@ namespace WebApi.Controllers
 
         // GET: api/TraningPrograms/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<TraningProgram>> GetTraningProgram(int id)
+        public async Task<ActionResult<TraningPrograms>> GetTraningProgram(int id)
         {
           if (_context.traningPrograms == null)
           {
@@ -55,7 +55,7 @@ namespace WebApi.Controllers
         // PUT: api/TraningPrograms/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTraningProgram(int id, TraningProgram traningProgram)
+        public async Task<IActionResult> PutTraningProgram(int id, TraningPrograms traningProgram)
         {
             if (id != traningProgram.TraningProgramID)
             {
@@ -86,15 +86,15 @@ namespace WebApi.Controllers
         // POST: api/TraningPrograms
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<TraningProgram>> PostTraningProgram(TraningProgramsDto traningProgram)
+        public async Task<ActionResult<TraningPrograms>> PostTraningProgram(TraningProgramsDto traningProgram)
         {
           if (_context.traningPrograms == null)
           {
               return Problem("Entity set 'DataContext.traningPrograms'  is null.");
           }
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<TraningProgramsDto, TraningProgram>());
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<TraningProgramsDto, TraningPrograms>());
             var mapper = new Mapper(config);
-            var program = mapper.Map<TraningProgram>(traningProgram);
+            var program = mapper.Map<TraningPrograms>(traningProgram);
 
             _context.traningPrograms.Add(program);
             try
