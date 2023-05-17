@@ -57,7 +57,7 @@ export default function SignUp() {
       weight: weight,
     };
     // Send the payload to the server to sign up the user
-    fetch("https://localhost:7181/api/Account/SignUp", {
+    fetch("https://localhost:7221/api/Users/register", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -69,7 +69,7 @@ export default function SignUp() {
       .then((data) => {
         // Handle successful sign-up, e.g. display a success message
         console.log(data);
-        navigate("/login");
+        navigate("/Login");
       })
       .catch((error) => console.error(error));
   };

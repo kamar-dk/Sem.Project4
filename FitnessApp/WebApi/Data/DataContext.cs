@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
 using WebApi.Models;
-using WebApi.Models.TraningTypes;
+//using WebApi.Models.TraningTypes;
 using Microsoft.EntityFrameworkCore.ValueGeneration;
 
 
@@ -23,8 +23,8 @@ namespace WebApi.Data
         public DbSet<UserWeight> UserWeights { get; set; }
 
         // TraningSessions
-        public DbSet<RunningSession> runningSessions { get; set; }
-        public DbSet<BikeSession> bikeSessions { get; set; }
+        //public DbSet<RunningSession> runningSessions { get; set; }
+        //public DbSet<BikeSession> bikeSessions { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -43,7 +43,7 @@ namespace WebApi.Data
             modelBuilder.Entity<UserData>()
                 .HasKey(ud => ud.Email);
             modelBuilder.Entity<TraningData>()
-                .HasKey(td => td.UserId);
+                .HasKey(td => td.Id);
             modelBuilder.Entity<FavoriteTraningPrograms>()
                 .HasKey(ftp => ftp.FavoriteTraningProgramsID);
             modelBuilder.Entity<FavoriteTraningPrograms>()
@@ -51,10 +51,10 @@ namespace WebApi.Data
                 .IsUnique();
             modelBuilder.Entity<TraningPrograms>()
                 .HasKey(tp => tp.TraningProgramID);
-            modelBuilder.Entity<RunningSession>()
-                .HasKey(rs => rs.SessionID);
-            modelBuilder.Entity<BikeSession>()
-                .HasKey(bs => bs.SessionID);
+            //modelBuilder.Entity<RunningSession>()
+            //    .HasKey(rs => rs.SessionID);
+            //modelBuilder.Entity<BikeSession>()
+            //    .HasKey(bs => bs.SessionID);
             modelBuilder.Entity<UserWeight>()
                 .HasKey(uw => uw.ID);
 

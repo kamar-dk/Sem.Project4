@@ -1,14 +1,17 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using WebApi.Models;
 using WebApi.Data;
+using Microsoft.EntityFrameworkCore;
+using Castle.Components.DictionaryAdapter;
 
 namespace WebApi.DTO
 {
     public class TraningDatasDto
-    {
+    {        
         public long Id { get; set; }
 
-        public string UserId { get; set; }
+        [ForeignKey("Email")]
+        public string? UserId { get; set; }
 
         public string TrainingType { get; set; } = "";
         public DateTime SessionDate { get; set; }
