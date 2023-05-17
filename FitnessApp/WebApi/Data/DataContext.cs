@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Models;
 using WebApi.Models.TraningTypes;
@@ -6,17 +6,16 @@ using WebApi.Models.TraningTypes;
 
 namespace WebApi.Data
 {
-    public class DataContext : DbContext
+    public class DataContext : IdentityDbContext
     {
-        public DataContext(DbContextOptions<DataContext> options)
-                : base(options) { }
-        
+        public DataContext(DbContextOptions<DataContext> options) : base(options) { }
+
         // Main Tables
         public DbSet<User> users { get; set; }
         public DbSet<UserData> userDatas { get; set; }
         public DbSet<TraningData> traningData { get; set; }
         public DbSet<FavoriteTraningPrograms> favoriteTraningPrograms { get; set; }
-        public DbSet<TraningProgram> traningPrograms { get; set; }
+        public DbSet<TraningPrograms> traningPrograms { get; set; }
 
 
         public DbSet<UserWeight> UserWeights { get; set; }
@@ -45,7 +44,7 @@ namespace WebApi.Data
                 .HasKey(td => td.UserId);
             modelBuilder.Entity<FavoriteTraningPrograms>()
                 .HasKey(ftp => ftp.Email);
-            modelBuilder.Entity<TraningProgram>()
+            modelBuilder.Entity<TraningPrograms>()
                 .HasKey(tp => tp.TraningProgramID);
             modelBuilder.Entity<RunningSession>()
                 .HasKey(rs => rs.SessionID);

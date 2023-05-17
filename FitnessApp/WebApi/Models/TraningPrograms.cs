@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace WebApi.Models
 {
-    public class TraningProgram
+    public class TraningPrograms
     {
         public int TraningProgramID { get; set; }
         public string Name { get; set; }
-        //public object FavoriteTraningPrograms { get; internal set; }
+        public ICollection<FavoriteTraningPrograms> FavoriteTraningPrograms { get; set; }
     }
 }
