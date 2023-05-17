@@ -108,7 +108,13 @@ namespace WebApi.Data
             modelBuilder.Entity<FavoriteTraningPrograms>()
                 .HasOne(u => u.User)
                 .WithMany(ftp => ftp.FavoriteTraningPrograms)
-                .HasForeignKey(ftp => ftp.Email);    
+                .HasForeignKey(ftp => ftp.Email);
+            
+            modelBuilder.Entity<TraningPrograms>()
+                .HasMany(tp => tp.FavoriteTraningPrograms)
+                .WithOne(ftp => ftp.TraningProgram)
+                .HasForeignKey(ftp => ftp.TraningProgramID)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

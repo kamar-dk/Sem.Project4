@@ -64,8 +64,8 @@ namespace WebApi.Controllers.Tests
             
         }
 
-        [TestCase("Email is not valid")]
-        public async Task RegisterTest_Assert_InvalidEmailAsync(string Expected)
+        [Test()]
+        public async Task RegisterTest_Assert_InvalidEmailAsync(/*string Expected*/)
         {
 
             //Arrange
@@ -78,12 +78,18 @@ namespace WebApi.Controllers.Tests
             };
             //uut._accountServices.IsVaildEmail(register.Email).Returns(true);
             //uut._context.users.AnyAsync(x => x.Email == register.Email).Returns(true);
-            await uut.Register(register);
-            NUnit.Framework.Assert.AreEqual("Email is not valid", Expected);
-        
+            var result = await uut.Register(register);
 
-            
+            //check that result is of type BadRequestObjectResult
+
+            NUnit.Framework.Assert.IsInstanceOf<BadRequestObjectResult>(result);
+
+
+
+
+
         }
+        /*NUnit.Framework.Assert.AreEqual("Email is not valid", Expected);*/
 
         [TestCase("Email is already taken")]
         public async Task RegisterTest_Assert_EmailAlreadyTakenAsync(string Expected)
@@ -157,7 +163,7 @@ namespace WebApi.Controllers.Tests
             /*_context.users.Add(user);
             _context.SaveChanges();*/
 
-            var result = await uut.GetUser(user.Email);
+        var result = await uut.GetUser(user.Email);
             NUnit.Framework.Assert.AreEqual(result.Value.Email, user.Email);
 
 
