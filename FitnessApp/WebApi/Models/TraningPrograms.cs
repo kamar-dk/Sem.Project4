@@ -10,6 +10,6 @@ namespace WebApi.Models
     {
         public int TraningProgramID { get; set; }
         public string Name { get; set; }
-        //public ICollection<FavoriteTraningPrograms> FavoriteTraningPrograms { get; set; }
+        public ICollection<FavoriteTraningPrograms> FavoriteTraningPrograms { get; set; }
     }
 }
