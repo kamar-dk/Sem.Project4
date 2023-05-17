@@ -21,26 +21,34 @@ using NSubstitute.ReceivedExtensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http.HttpResults;
 using NuGet.Common;
+using Microsoft.CodeAnalysis.Options;
 
 namespace WebApi.Controllers.Tests
 {
     [TestFixture()]
     public class UsersControllerTests
     {
-        DataContext mockedDbContext = new DataContext();
+        DataContext mockedDbContext;
         
         public IUserServices _userServices;
         public DataContext _context;
         public UsersController uut;
+        public IMapper _mapper;
+        IConfiguration _configuration;
 
         [SetUp]
         public void SetUp()
         {
-            // setup test class
-            mockedDbContext = new DataContext();
+            
+            // make Datacontext and use the Database connectionstring in appsettings don't use inmemory database
+
+            
+
+
+            //mockedDbContext = new DataContext(new DbContextOptionsBuilder<DataContext>().UseSqlite("Filename=:memory:").Options);
             _userServices = Substitute.For<IUserServices>();
             _context = Substitute.For<DataContext>();
-            uut = new UsersController(mockedDbContext, _userServices);
+            uut = new UsersController(mockedDbContext, _mapper, _configuration);
 
 
 
