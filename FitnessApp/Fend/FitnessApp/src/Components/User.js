@@ -12,33 +12,29 @@ import { OutlinedInput } from "@material-ui/core";
 
 
 function User() {
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
+  const [userData, setUserData] = useState({});
+  const fetchData = () => {
+    const email = localStorage.getItem('email'); // Assuming you store the user's email in localStorage
+    const encodedEmail = encodeURIComponent(email);
+    const url = `https://localhost:7221/api/UserDatas/`;
+    return fetch(url, {
+      method: 'GET',
+      mode: 'cors',
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem("token"),
+        'Content-Type': 'application/json'
+      }
+    })
+      .then((response) => response.json())
+      .then((data) =>{
+        console.log('User data:', data);
+        setUserData(data)})
+      .catch((error) => { console.error(error); });
+  }
+   useEffect(() => {
+    fetchData();
+  }, []);
 
-  // const fetchData = () => {
-  //   var url = "https://localhost:7221/api/Userdata";
-  //   return fetch(url, {
-  //     method: 'GET',
-  //     mode: 'cors',
-  //     headers: {
-  //       'Authorization': 'Bearer ' + localStorage.getItem("token"),
-  //       'Content-Type': 'application/json'
-  //     }
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) => setUserData(data));
-  // }
-  const [userData, setUserData] = useState([
-    {
-      id: 1,
-      name: "John Doe",
-      email: "john.doe@example.com",
-      age: 30,
-      weight: 70,
-      height: 175,
-    },
-  ]);
   const deleteUser = () => {
     // Implement your delete user functionality here
     alert("Delete User");
@@ -76,7 +72,7 @@ function User() {
   const saveUserData = (index) => {
     const updatedUser = userData[index];
 
-    fetch(`https://localhost:7221/api/User/${updatedUser.id}`, {
+    fetch(`https://localhost:7221/api/User/${updatedUser.email}`, {
       method: 'PUT',
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem("token"),
@@ -100,74 +96,74 @@ function User() {
 
 
   return (
-    <div className="gradient-background" style={{
-    
-    }}>
-
-      <Grid container spacing={2}  >
+    <div className="gradient-background">
+      <Grid container spacing={2}>
         {/* Left Container */}
         <Grid item xs={12} md={6}>
           <Paper style={{ padding: 20 }}>
-            <Box display="flex" flexDirection="column" alignItems="center" marginBottom={4} >
+            <Box display="flex" flexDirection="column" alignItems="center" marginBottom={4}>
               <h1 align="center" style={{ backgroundColor: "lightblue" }}>
                 UserData (to be deleted)
               </h1>
-              {userData.map((user, index) => (
-                <div key={user.id} style={{ display: "flex", flexDirection: "column" }}>
-                  <TextField
-                    label="Name"
-                    value={user.name}
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    onChange={(e) => handleInputChange(e, index, 'name')}
-                  />
-                  <TextField
-                    label="Email"
-                    value={user.email}
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    onChange={(e) => handleInputChange(e, index, 'email')}
-                  />
-                  <TextField
-                    label="Age"
-                    value={user.age}
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    onChange={(e) => handleInputChange(e, index, 'age')}
-                  />
-                  <TextField
-                    label="Weight"
-                    value={user.weight}
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    onChange={(e) => handleInputChange(e, index, 'weight')}
-                  />
-                  <TextField
-                    label="Height"
-                    value={user.height}
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    onChange={(e) => handleInputChange(e, index, 'height')}
-                  />
-                  {/* Render other user data fields */}
-                </div>
-              ))}
+              {userData.length > 0 ? (
+                userData.map((user, index) => (
+                  <div key={user.email} style={{ display: "flex", flexDirection: "column" }}>
+                    <TextField
+                      label="Name"
+                      value={user.name || ""}
+                      variant="outlined"
+                      fullWidth
+                      margin="normal"
+                      onChange={(e) => handleInputChange(e, index, 'name')}
+                    />
+                    <TextField
+                      label="Email"
+                      value={user.email || ""}
+                      variant="outlined"
+                      fullWidth
+                      margin="normal"
+                      onChange={(e) => handleInputChange(e, index, 'email')}
+                    />
+                    <TextField
+                      label="Age"
+                      value={user.age || ""}
+                      variant="outlined"
+                      fullWidth
+                      margin="normal"
+                      onChange={(e) => handleInputChange(e, index, 'age')}
+                    />
+                    <TextField
+                      label="Weight"
+                      value={user.weight || ""}
+                      variant="outlined"
+                      fullWidth
+                      margin="normal"
+                      onChange={(e) => handleInputChange(e, index, 'weight')}
+                    />
+                    <TextField
+                      label="Height"
+                      value={user.height || ""}
+                      variant="outlined"
+                      fullWidth
+                      margin="normal"
+                      onChange={(e) => handleInputChange(e, index, 'height')}
+                    />
+                    
+                  </div>
+                ))
+              ) : (
+                <div>Loading user data...</div>
+              )}
+              <Button variant="contained" color="secondary" onClick={deleteUser}>
+                Delete User
+              </Button>
+              <Button variant="contained" color="primary" onClick={saveUserData}>
+                Save/Update
+              </Button>
             </Box>
-            <Button variant="contained" color="secondary" onClick={deleteUser}>
-              Delete User
-            </Button>
-            <Button variant="contained" color="primary" onClick={saveUserData}>
-              Save/Update
-            </Button>
           </Paper>
-
         </Grid>
-
+  
         {/* Right Container */}
         <Grid item xs={12} md={6}>
           <Paper
@@ -175,34 +171,30 @@ function User() {
               padding: 50,
               maxHeight: "100vh",
               width: "80vh",
-              overflow: "auto", 
+              overflow: "auto",
             }}
           >
             <div className="right-Container">
-              <h1 align="center" style={{ backgroundColor: "lightblue" }}>Favorite Trainings programs</h1>
-
+              <h1 align="center" style={{ backgroundColor: "lightblue" }}>
+                Favorite Training programs
+              </h1>
             </div>
-
           </Paper>
-
-
         </Grid>
-
+  
         <Grid item xs={12} md={12}>
           <Paper style={{ padding: 20 }}>
-            <Box display="flex" flexDirection="row" alignItems="center" marginBottom={4} >
+            <Box display="flex" flexDirection="row" alignItems="center" marginBottom={4}>
               <h1 align="center" gutterBottom style={{ width: "100", backgroundColor: "lightblue" }}>
                 Last Activity:
               </h1>
-
             </Box>
           </Paper>
         </Grid>
       </Grid>
-
     </div>
   );
-
+  
 }
 
 
