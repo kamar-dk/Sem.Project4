@@ -100,6 +100,7 @@ export default function Login() {
   .then((token)=> {
     console.log(token.jwt);
     localStorage.setItem("token", token.jwt);
+    localStorage.setItem("email", payload.email);
     let RoleExtracted = parseToJwt(token.jwt);
     console.log(RoleExtracted);
     // Assuming line 105 is where the role is being accessed

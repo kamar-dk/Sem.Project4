@@ -11,34 +11,51 @@ import { OutlinedInput } from "@material-ui/core";
 
 
 
-function User() {
+function User({}) {
   const [userData, setUserData] = useState({});
-  const fetchData = () => {
-    const email = localStorage.getItem('email'); // Assuming you store the user's email in localStorage
-    const encodedEmail = encodeURIComponent(email);
-    const url = `https://localhost:7221/api/UserDatas/`;
-    return fetch(url, {
-      method: 'GET',
-      mode: 'cors',
-      headers: {
-        'Authorization': 'Bearer ' + localStorage.getItem("token"),
-        'Content-Type': 'application/json'
+  const [loading,setLoading] = useState(true);
+
+  useEffect(() => {
+   const fetchData= async()=>{
+
+    const email= localStorage.getItem("email");
+    const url = `https://localhost:7221/api/UserDatas/${email}`;
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        mode: 'cors',
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem("token"),
+          'Content-Type': 'application/json'
+        }
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setUserData(data);
+      } else {
+        console.error('Error fetching user data:', response.statusText);
       }
-    })
-      .then((response) => response.json())
-      .then((data) =>{
-        console.log('User data:', data);
-        setUserData(data)})
-      .catch((error) => { console.error(error); });
-  }
-   useEffect(() => {
-    fetchData();
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+
+    setLoading(false);
+  };
+  fetchData();
   }, []);
+ 
+  if (loading) {
+    return <p>Loading user data...</p>;
+  }
+
+  if (!userData) {
+    return <p>Error: User data not found.</p>;
+  }
 
   const deleteUser = () => {
     // Implement your delete user functionality here
     alert("Delete User");
-    const userId = User.id; // Assuming you have a user ID available
+    const userId = userData.id; // Assuming you have a user ID available
 
     fetch(`https://localhost:7221/api/User/${userId}`, {
       method: 'DELETE',
@@ -63,22 +80,20 @@ function User() {
       });
   };
 
-  const handleInputChange = (event, index, field) => {
-    const updatedUserData = [...userData];
-    updatedUserData[index][field] = event.target.value;
+  const handleInputChange = (event, field) => {
+    const updatedUserData = {...userData};
+    updatedUserData[field] = event.target.value;
     setUserData(updatedUserData);
   };
 
-  const saveUserData = (index) => {
-    const updatedUser = userData[index];
-
-    fetch(`https://localhost:7221/api/User/${updatedUser.email}`, {
+  const saveUserData = () => {
+    fetch(`https://localhost:7221/api/User/${userData.email}`, {
       method: 'PUT',
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem("token"),
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(updatedUser)
+      body: JSON.stringify(userData)
     })
       .then(response => {
         if (response.ok) {
@@ -105,55 +120,50 @@ function User() {
               <h1 align="center" style={{ backgroundColor: "lightblue" }}>
                 UserData (to be deleted)
               </h1>
-              {userData.length > 0 ? (
-                userData.map((user, index) => (
-                  <div key={user.email} style={{ display: "flex", flexDirection: "column" }}>
-                    <TextField
-                      label="Name"
-                      value={user.name || ""}
-                      variant="outlined"
-                      fullWidth
-                      margin="normal"
-                      onChange={(e) => handleInputChange(e, index, 'name')}
-                    />
-                    <TextField
-                      label="Email"
-                      value={user.email || ""}
-                      variant="outlined"
-                      fullWidth
-                      margin="normal"
-                      onChange={(e) => handleInputChange(e, index, 'email')}
-                    />
-                    <TextField
-                      label="Age"
-                      value={user.age || ""}
-                      variant="outlined"
-                      fullWidth
-                      margin="normal"
-                      onChange={(e) => handleInputChange(e, index, 'age')}
-                    />
-                    <TextField
-                      label="Weight"
-                      value={user.weight || ""}
-                      variant="outlined"
-                      fullWidth
-                      margin="normal"
-                      onChange={(e) => handleInputChange(e, index, 'weight')}
-                    />
-                    <TextField
-                      label="Height"
-                      value={user.height || ""}
-                      variant="outlined"
-                      fullWidth
-                      margin="normal"
-                      onChange={(e) => handleInputChange(e, index, 'height')}
-                    />
-                    
-                  </div>
-                ))
-              ) : (
-                <div>Loading user data...</div>
-              )}
+  
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                <TextField
+                  label="Name"
+                  value={userData.name || ""}
+                  variant="outlined"
+                  fullWidth
+                  margin="normal"
+                  onChange={(e) => handleInputChange(e, 'name')}
+                />
+                <TextField
+                  label="Email"
+                  value={userData.email || ""}
+                  variant="outlined"
+                  fullWidth
+                  margin="normal"
+                />
+                <TextField
+                  label="Age"
+                  value={userData.age || ""}
+                  variant="outlined"
+                  fullWidth
+                  margin="normal"
+                  onChange={(e) => handleInputChange(e, 'age')}
+                />
+                <TextField
+                  label="Weight"
+                  value={userData.weight || ""}
+                  variant="outlined"
+                  fullWidth
+                  margin="normal"
+                  onChange={(e) => handleInputChange(e, 'weight')}
+                />
+                <TextField
+                  label="Height"
+                  value={userData.height || ""}
+                  variant="outlined"
+                  fullWidth
+                  margin="normal"
+                  onChange={(e) => handleInputChange(e, 'height')}
+                />
+                {/* Render other user data fields */}
+              </div>
+  
               <Button variant="contained" color="secondary" onClick={deleteUser}>
                 Delete User
               </Button>
@@ -185,7 +195,7 @@ function User() {
         <Grid item xs={12} md={12}>
           <Paper style={{ padding: 20 }}>
             <Box display="flex" flexDirection="row" alignItems="center" marginBottom={4}>
-              <h1 align="center" gutterBottom style={{ width: "100", backgroundColor: "lightblue" }}>
+              <h1 align="center"  style={{ width: "100", backgroundColor: "lightblue" }}>
                 Last Activity:
               </h1>
             </Box>
@@ -194,6 +204,7 @@ function User() {
       </Grid>
     </div>
   );
+  
   
 }
 
