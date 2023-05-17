@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using WebApi.Models.TraningTypes;
+//using WebApi.Models.TraningTypes;
 
 namespace WebApi.Models
 {
