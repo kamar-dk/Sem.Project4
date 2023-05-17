@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Models;
 using WebApi.Models.TraningTypes;
@@ -44,6 +44,8 @@ namespace WebApi.Data
                 .HasKey(td => td.UserId);
             modelBuilder.Entity<FavoriteTraningPrograms>()
                 .HasKey(ftp => ftp.Email);
+            modelBuilder.Entity<FavoriteTraningPrograms>()
+                .HasKey(ftp => ftp.TraningProgramID);
             modelBuilder.Entity<TraningPrograms>()
                 .HasKey(tp => tp.TraningProgramID);
             modelBuilder.Entity<RunningSession>()
