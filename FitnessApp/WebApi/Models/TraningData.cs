@@ -26,7 +26,7 @@ namespace WebApi.Models
         public float Vo2Max { get; set; }
         [ForeignKey("Id")]
         public string UserId { get; set; }
-        public User User { get; set; } = new User();
+        public User User { get; set; }
 
         //public ICollection<RunningSession>? RunningSessions { get; set; }
         //public ICollection<BikeSession>? BikeSessions { get; set; }

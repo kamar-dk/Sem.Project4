@@ -20,8 +20,8 @@ namespace WebApi.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly DataContext _context;
-        private readonly UserServices _accountServices;
+        public DataContext _context;
+        public IUserServices _accountServices;
 
         //private readonly IMapper _mapper;
 
@@ -30,6 +30,12 @@ namespace WebApi.Controllers
             _context = context;
             _accountServices = new UserServices(configuration);
 
+        }
+
+        public UsersController(DataContext context, IUserServices userServices)
+        {
+            _context = context;
+            _accountServices = userServices;
         }
 
 

@@ -11,7 +11,7 @@ function Activity(){
         <Grid item xs={12} md={6}>
           <Paper style={{ padding: 20 }}>
             <div className="left-Container">
-              <h1 style={{backgroundColor: "lightblue"}}>Add Activity</h1>
+              <h1 align="center" style={{backgroundColor: "lightblue"}}>Add Activity</h1>
                 <ActivityForm></ActivityForm>
                 <br/>
             </div>
@@ -25,12 +25,11 @@ function Activity(){
               maxHeight: "100vh",
               width: "70vh",
               overflow: "auto",
-              display: "flex",
-              alignItems: "center",
+              
             }}
           >
             <div className="right-Container">
-              <Typography variant="h4">How to add an activity</Typography>
+              <h1  align="center" style={{backgroundColor: "lightblue"}}>How to add an activity</h1>
               <Typography variant="body1" style={{ whiteSpace: "pre-line" }}>
                 {/* General information about Training programs and activity*/}
                 he he hæ hæ hæ hø hø hø
