@@ -22,6 +22,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http.HttpResults;
 using NuGet.Common;
 using Microsoft.CodeAnalysis.Options;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
 
 namespace WebApi.Controllers.Tests
 {
@@ -35,14 +37,19 @@ namespace WebApi.Controllers.Tests
         public UsersController uut;
         public IMapper _mapper;
         IConfiguration _configuration;
+        IServiceCollection _services;
+
+        
 
         [SetUp]
         public void SetUp()
         {
-            
-            // make Datacontext and use the Database connectionstring in appsettings don't use inmemory database
 
-            
+            // make Datacontext and use the Database connectionstring in appsettings don't use inmemory database
+            mockedDbContext = new DataContext(_services.AddDbContext<DataContext>(options =>
+                options.UseSqlServer(_configuration.GetConnectionString("BloggingDatabase"))));
+
+
 
 
             //mockedDbContext = new DataContext(new DbContextOptionsBuilder<DataContext>().UseSqlite("Filename=:memory:").Options);
