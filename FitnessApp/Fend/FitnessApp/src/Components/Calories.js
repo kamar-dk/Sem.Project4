@@ -1,8 +1,10 @@
 import React from "react";
 import { useState } from "react";
 import "../App.css";
-import {Grid,Paper,Typography,Button,
-  Select,FormControl,InputLabel,Box } from "@material-ui/core";
+import {
+  Grid, Paper, Typography, Button,
+  Select, FormControl, InputLabel, Box
+} from "@material-ui/core";
 import { lightBlue } from "@material-ui/core/colors";
 import { OutlinedInput } from "@material-ui/core";
 
@@ -38,7 +40,7 @@ function Calories() {
 
 
             <Box display="flex" flexDirection="column" alignItems="center" marginBottom={4}>
-              <Typography variant="h4" align="center" gutterBottom>Calorie Calculator</Typography>
+              <h1 align="center" style={{ backgroundColor: "lightblue" }}>Calorie Calculator</h1>
               <form onSubmit={calculateCalories} style={{ display: 'flex', flexDirection: 'column' }} >
                 <FormControl variant="outlined" style={{ marginBottom: 20, width: '100%' }}>
                   <InputLabel>Gender</InputLabel>
@@ -71,18 +73,14 @@ function Calories() {
                 </FormControl>
                 <Button variant="contained" color="primary" type="submit" style={{ marginBottom: 20 }}>Calculate</Button>
               </form>
-              {result && <Typography variant="body1" align="center" gutterBottom>Your daily calorie needs are: {result} calories</Typography>}
+              {result && (
+                <Typography variant="h5" align="center" gutterBottom>
+                  Your daily calorie needs are: <strong>{result} calories</strong>
+                </Typography>
+              )}
             </Box>
 
 
-            <Grid item xs={12} sm={6}>
-              <Box display="flex" flexDirection="column" alignItems="center">
-                <Typography variant="h4" align="center" gutterBottom>Calorie Tracker</Typography>
-                <Typography variant="h6" align="center" gutterBottom>Your last Sessions calorie Tracker</Typography>
-                <Typography variant="body1" align="center" gutterBottom>BikeSessions: { }</Typography>
-                <Typography variant="body1" align="center" gutterBottom>RunningSessions: { }</Typography>
-              </Box>
-            </Grid>
           </Paper>
         </Grid>
 
@@ -101,8 +99,8 @@ function Calories() {
 
             }}
           >
-            <div className="right-Container" style={{ backgroundImage: "../public/Images/3.jpg" }}>
-              <Typography variant="h4">Understand Calories</Typography>
+            <div className="right-Container">
+              <h1 align="center" style={{ backgroundColor: "lightblue" }}>Understand Calories</h1>
               <Typography variant="body1" style={{ whiteSpace: "pre-line" }}>
                 {/* Add your general information about calories here */}
                 Calories are a unit of measurement used to quantify the amount

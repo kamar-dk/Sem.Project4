@@ -1,7 +1,7 @@
 import { React, useState } from 'react';
 import { useEffect } from 'react';
 import Dropdown from './Dropdown';
-import {Button, Typography } from "@material-ui/core";
+import {Grid, Button, Typography } from "@material-ui/core";
 
 function TrainingProgram(){
 const [data, setData] = useState([]);
@@ -27,16 +27,22 @@ const [data, setData] = useState([]);
     // }, [id]);
 
     return(
-      <div className="gradient-background">
-     <Typography variant="h3" component="h3" style={{ color: 'white' ,align :'center'}}>TrainingProgram</Typography>
-      <Button variant="contained" color="primary" onClick={fetchData}>
+      <div className="gradient-background2" justifyContent ="center" alignItems="center" >
+        
+        <Grid ms={12} style={{ padding: 10}}>
+      <Typography variant="h3" component="h3" style={{ color: 'white', align: 'center' }}>TrainingProgram</Typography>
+      <Grid container justifyContent="center" alignItems="center">
+     <Button variant="contained" color="primary" onClick={fetchData} >
         Get Programs
       </Button>
+      </Grid>
       <ul>
         {data.map(item => (
           <li key={item.trainingProgramID}>{item.name}</li>
         ))}
       </ul>
+      </Grid>
+      
     </div>
 
       );

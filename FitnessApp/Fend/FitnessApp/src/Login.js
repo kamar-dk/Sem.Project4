@@ -107,7 +107,7 @@ export default function Login() {
     localStorage.setItem("role", role);
     let ModelId = RoleExtracted["ModelId"];
     localStorage.setItem("ModelId", ModelId);
-    window.location.href = "/main";
+    window.location.href = "/User";
   },
   (error) => {
       console.log(error);

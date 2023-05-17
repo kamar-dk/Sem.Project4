@@ -96,6 +96,8 @@ namespace WebApi.Controllers
             var config = new MapperConfiguration(cfg => cfg.CreateMap<TraningDatasDto, TraningData>());
             var mapper = new Mapper(config);
             var user_ = mapper.Map<TraningData>(traningData);
+            var us = _context.users.Where(u => u.Email == traningData.UserId).FirstOrDefault();
+            user_.User = us;
 
             _context.traningData.Add(user_);
             try
