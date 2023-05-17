@@ -116,10 +116,10 @@ namespace WebApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(string id)
         {
-          if (_context.users == null)
-          {
-              return NotFound();
-          }
+            if (_context.users == null)
+            {
+                return NotFound();
+            }
             var user = await _context.users.FindAsync(id);
 
             if (user == null)

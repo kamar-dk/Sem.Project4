@@ -43,7 +43,7 @@ namespace WebApi.Data
             modelBuilder.Entity<TraningData>()
                 .HasKey(td => td.UserId);
             modelBuilder.Entity<FavoriteTraningPrograms>()
-                .HasKey(ftp => ftp.Email);
+                .HasKey(ftp => ftp.FavoriteTraningProgramsID);
             modelBuilder.Entity<FavoriteTraningPrograms>()
                 .HasKey(ftp => ftp.TraningProgramID);
             modelBuilder.Entity<TraningPrograms>()
@@ -101,16 +101,7 @@ namespace WebApi.Data
             modelBuilder.Entity<FavoriteTraningPrograms>()
                 .HasOne(u => u.User)
                 .WithMany(ftp => ftp.FavoriteTraningPrograms)
-                .HasForeignKey(ftp => ftp.Email);
-
-
-            /*modelBuilder.Entity<FavoriteTraningPrograms>()
-                .HasOne(ft => ft.TraningProgram)
-                .WithMany(tp => tp.FavoriteTraningPrograms)
-                .
-                ;*/
-                
-                
+                .HasForeignKey(ftp => ftp.Email);    
         }
     }
 }
