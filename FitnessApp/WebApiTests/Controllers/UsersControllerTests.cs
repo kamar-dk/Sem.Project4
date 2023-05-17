@@ -24,6 +24,7 @@ using NuGet.Common;
 using Microsoft.CodeAnalysis.Options;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore.InMemory;
 
 namespace WebApi.Controllers.Tests
 {
@@ -32,62 +33,62 @@ namespace WebApi.Controllers.Tests
     {
         DataContext mockedDbContext;
         
-        public IUserServices _userServices;
+        public IUserServices _userServices = Substitute.For<IUserServices>();
         public DataContext _context;
         public UsersController uut;
-        public IMapper _mapper;
-        IConfiguration _configuration;
+        public IMapper _mapper = Substitute.For<IMapper>();
+        IConfiguration _configuration = Substitute.For<IConfiguration>();
         IServiceCollection _services;
+        private IServiceProvider? serviceProvider;
 
         
-
+        
         [SetUp]
         public void SetUp()
         {
 
-            // make Datacontext and use the Database connectionstring in appsettings don't use inmemory database
-            mockedDbContext = new DataContext(_services.AddDbContext<DataContext>(options =>
-                options.UseSqlServer(_configuration.GetConnectionString("BloggingDatabase"))));
+            var contextOptions = new DbContextOptionsBuilder<DataContext>()
+                .UseSqlServer(@"Data Source=sql.bsite.net\\MSSQL2016;Initial Catalog=kaspermartensen_Prj4;User ID=kaspermartensen_Prj4;Password=Bed2Fed2;Encrypt=False; Trust Server Certificate=False;Persist Security Info = True;")
+                .Options;
 
-
-
-
-            //mockedDbContext = new DataContext(new DbContextOptionsBuilder<DataContext>().UseSqlite("Filename=:memory:").Options);
+            mockedDbContext = new DataContext(contextOptions);
+            _context = mockedDbContext;
             _userServices = Substitute.For<IUserServices>();
-            _context = Substitute.For<DataContext>();
-            uut = new UsersController(mockedDbContext, _mapper, _configuration);
+            _mapper = Substitute.For<IMapper>();
+            _configuration = Substitute.For<IConfiguration>();
+            _services = Substitute.For<IServiceCollection>();
+            serviceProvider = Substitute.For<IServiceProvider>();
+            _services.AddSingleton(serviceProvider);
+            uut = new UsersController(_context, _mapper, _configuration);
 
-
-
-            /*
-            _userServices = Substitute.For<IUserServices>();
-            _context = Substitute.For<DataContext>();
-            uut = new UsersController(mockedDbContext, _userServices);*/
-
+            
         }
 
         [TestCase("Email is not valid")]
         public async Task RegisterTest_Assert_InvalidEmailAsync(string Expected)
         {
+
             //Arrange
-            
             var register = new UserRegisterDto
-            { 
+            {
                 Email = "test",
                 FirstName = "Test",
                 LastName = "Test",
                 Password = "Test"
             };
-
-            uut._accountServices.IsVaildEmail(register.Email).Returns(false);
+            //uut._accountServices.IsVaildEmail(register.Email).Returns(true);
+            //uut._context.users.AnyAsync(x => x.Email == register.Email).Returns(true);
             await uut.Register(register);
             NUnit.Framework.Assert.AreEqual("Email is not valid", Expected);
+        
+
+            
         }
 
         [TestCase("Email is already taken")]
         public async Task RegisterTest_Assert_EmailAlreadyTakenAsync(string Expected)
         {
-            
+
             //Arrange
             var register = new UserRegisterDto
             {
@@ -98,12 +99,11 @@ namespace WebApi.Controllers.Tests
             };
 
             //uut._accountServices.IsVaildEmail(register.Email).Returns(true);
-            
-
-            uut._context.users.AnyAsync(x => x.Email == register.Email).Returns(true);
-
+            //uut._context.users.AnyAsync(x => x.Email == register.Email).Returns(true);
             await uut.Register(register);
             NUnit.Framework.Assert.AreEqual("Email is already taken", Expected);
+            
+            
 
         }
 
@@ -145,20 +145,29 @@ namespace WebApi.Controllers.Tests
         }
 
         [Test()]
-        public void GetusersTest()
+        public async Task GetuserTestAsync()
         {
-            throw new NotImplementedException();
-        }
+            //Arrange
+            User user = new User
+            {
+                Email = "test",
+                FirstName = "Test",
+                LastName = "Test"
+            };
+            /*_context.users.Add(user);
+            _context.SaveChanges();*/
 
-        [Test()]
-        public void GetUserTest()
-        {
-            throw new NotImplementedException();
+            var result = await uut.GetUser(user.Email);
+            NUnit.Framework.Assert.AreEqual(result.Value.Email, user.Email);
+
+
         }
 
         [Test()]
         public void PutUserTest()
         {
+
+
             throw new NotImplementedException();
         }
 
