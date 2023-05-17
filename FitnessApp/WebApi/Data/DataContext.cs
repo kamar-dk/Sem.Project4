@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 using WebApi.Models;
 using WebApi.Models.TraningTypes;
+using Microsoft.EntityFrameworkCore.ValueGeneration;
 
 
 namespace WebApi.Data
@@ -44,6 +46,11 @@ namespace WebApi.Data
                 .HasKey(td => td.UserId);
             modelBuilder.Entity<FavoriteTraningPrograms>()
                 .HasKey(ftp => ftp.FavoriteTraningProgramsID);
+            modelBuilder.Entity<FavoriteTraningPrograms>()
+                .HasIndex(ftp => ftp.FavoriteTraningProgramsID)
+                .IsUnique();
+            modelBuilder.Entity<FavoriteTraningPrograms>()
+                .Property(p => p.FavoriteTraningProgramsID);
             modelBuilder.Entity<FavoriteTraningPrograms>()
                 .HasKey(ftp => ftp.TraningProgramID);
             modelBuilder.Entity<TraningPrograms>()
