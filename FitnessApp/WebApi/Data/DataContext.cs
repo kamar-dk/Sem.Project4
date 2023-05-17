@@ -43,7 +43,7 @@ namespace WebApi.Data
             modelBuilder.Entity<UserData>()
                 .HasKey(ud => ud.Email);
             modelBuilder.Entity<TraningData>()
-                .HasKey(td => td.UserId);
+                .HasKey(td => td.Id);
             modelBuilder.Entity<FavoriteTraningPrograms>()
                 .HasKey(ftp => ftp.FavoriteTraningProgramsID);
             modelBuilder.Entity<FavoriteTraningPrograms>()

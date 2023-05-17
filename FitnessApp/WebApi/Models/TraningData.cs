@@ -24,8 +24,8 @@ namespace WebApi.Models
         public int MinHeartRate { get; set; }
         public int AvgHeartRate { get; set; }
         public float Vo2Max { get; set; }
-        [ForeignKey("Id")]
-        public string UserId { get; set; }
+        [ForeignKey("Email")]
+        public string? UserId { get; set; }
         public User User { get; set; }
 
         //public ICollection<RunningSession>? RunningSessions { get; set; }
