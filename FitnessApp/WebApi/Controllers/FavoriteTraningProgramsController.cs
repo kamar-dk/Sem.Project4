@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Mapster;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,31 +22,31 @@ namespace WebApi.Controllers
         {
             _context = context;
             _mapper = mapper;
-            var config = new MapperConfiguration(cfg => {
-                cfg.CreateMap<FavoriteTraningPrograms, FavoriteTraningProgramsDto>();
-                cfg.CreateMap<FavoriteTraningProgramsDto, FavoriteTraningPrograms>();
-            });
-            _mapper = config.CreateMapper();
+           
         }
+
+        public class MappingProfile : Profile
+{
+    public MappingProfile()
+    {
+        CreateMap<FavoriteTraningPrograms, FavoriteTraningProgramsDto>().ReverseMap();
+        CreateMap<TraningPrograms, TraningProgramsDto>().ReverseMap();
+    }
+}
+
 
 
         // GET: api/FavoriteTraningPrograms
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<FavoriteTraningProgramsDto>>> GetFavoriteTraningPrograms()
+        public async Task<ActionResult<IEnumerable<FavoriteTraningPrograms>>> GetFavoriteTraningPrograms()
         {
-            var programs = await _context.favoriteTraningPrograms
-                .Include(f => f.User)
-                .Include(f => f.TraningProgram)
-                .ToListAsync();
-
-            if (!programs.Any())
+            if (_context.favoriteTraningPrograms == null)
             {
                 return Ok(new List<FavoriteTraningProgramsDto>());
             }
+            return await _context.favoriteTraningPrograms.ToListAsync();
 
-            var programDtos = _mapper.Map<List<FavoriteTraningProgramsDto>>(programs);
-
-            return programDtos;
+            
         }
 
 
@@ -61,36 +60,49 @@ namespace WebApi.Controllers
             var programs = await _context.favoriteTraningPrograms
                 .Include(f => f.User)
                 .Include(f => f.TraningProgram)
-                .Where(f => f.User.Email == email)
+                .Where(f => f.Email== email)
                 .ToListAsync();
 
-            if (!programs.Any())
+            if (programs == null)
             {
                 return Ok(new List<FavoriteTraningProgramsDto>());
             }
 
-            var programDtos = _mapper.Map<List<FavoriteTraningProgramsDto>>(programs);
+            var programDtos = _mapper.Map<IEnumerable<FavoriteTraningProgramsDto>>(programs);
 
-            return programDtos;
+            return Ok(programDtos);
         }
 
 
-        // POST: api/FavoriteTraningPrograms
         [HttpPost]
         public async Task<ActionResult<FavoriteTraningProgramsDto>> PostFavoriteTraningPrograms(FavoriteTraningProgramsDto programDto)
         {
-            var program = _mapper.Map<FavoriteTraningPrograms>(programDto);
-
-            if (program == null)
+            // Retrieve the training program based on the provided ID
+            var trainingProgram = await _context.traningPrograms.FindAsync(programDto.TraningProgramID);
+            if (trainingProgram == null)
             {
-                return BadRequest();
+                return BadRequest("Invalid training program ID.");
             }
 
-            _context.favoriteTraningPrograms.Add(program);
+            // Create a new favorite training program object
+            var favoriteProgram = new FavoriteTraningPrograms
+            {
+                Email = programDto.Email,
+                TraningProgramID = programDto.TraningProgramID
+            };
+
+            // Add the favorite training program to the context
+            _context.favoriteTraningPrograms.Add(favoriteProgram);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetFavoriteTraningPrograms), new { email = program.Email }, _mapper.Map<FavoriteTraningProgramsDto>(program));
+            // Map the created favorite training program to a DTO and return it
+            var createdDto = _mapper.Map<FavoriteTraningProgramsDto>(favoriteProgram);
+            return CreatedAtAction(nameof(GetFavoriteTraningPrograms), new { email = favoriteProgram.Email }, createdDto);
         }
+
+
+
+
 
 
         [HttpPut("{email}")]
@@ -127,6 +139,8 @@ namespace WebApi.Controllers
 
             return NoContent();
         }
+
+        
 
 
         // DELETE: api/FavoriteTraningPrograms/{email}
