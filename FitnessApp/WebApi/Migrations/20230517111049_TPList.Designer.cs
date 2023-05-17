@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApi.Data;
 
@@ -11,9 +12,11 @@ using WebApi.Data;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230517111049_TPList")]
+    partial class TPList
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -243,7 +246,7 @@ namespace WebApi.Migrations
                     b.HasIndex("FavoriteTraningProgramsID")
                         .IsUnique();
 
-                    b.ToTable("favoriteTraningPrograms", (string)null);
+                    b.ToTable("favoriteTraningPrograms");
                 });
 
             modelBuilder.Entity("WebApi.Models.TraningData", b =>
@@ -296,7 +299,7 @@ namespace WebApi.Migrations
 
                     b.HasIndex("UserEmail");
 
-                    b.ToTable("traningData", (string)null);
+                    b.ToTable("traningData");
                 });
 
             modelBuilder.Entity("WebApi.Models.TraningPrograms", b =>
@@ -313,7 +316,7 @@ namespace WebApi.Migrations
 
                     b.HasKey("TraningProgramID");
 
-                    b.ToTable("traningPrograms", (string)null);
+                    b.ToTable("traningPrograms");
                 });
 
             modelBuilder.Entity("WebApi.Models.TraningTypes.BikeSession", b =>
@@ -347,7 +350,7 @@ namespace WebApi.Migrations
 
                     b.HasIndex("traningDataUserId");
 
-                    b.ToTable("bikeSessions", (string)null);
+                    b.ToTable("bikeSessions");
                 });
 
             modelBuilder.Entity("WebApi.Models.TraningTypes.RunningSession", b =>
@@ -381,7 +384,7 @@ namespace WebApi.Migrations
 
                     b.HasIndex("traningDataUserId");
 
-                    b.ToTable("runningSessions", (string)null);
+                    b.ToTable("runningSessions");
                 });
 
             modelBuilder.Entity("WebApi.Models.User", b =>
@@ -406,7 +409,7 @@ namespace WebApi.Migrations
 
                     b.HasKey("Email");
 
-                    b.ToTable("users", (string)null);
+                    b.ToTable("users");
                 });
 
             modelBuilder.Entity("WebApi.Models.UserData", b =>
@@ -429,7 +432,7 @@ namespace WebApi.Migrations
 
                     b.HasKey("Email");
 
-                    b.ToTable("userDatas", (string)null);
+                    b.ToTable("userDatas");
                 });
 
             modelBuilder.Entity("WebApi.Models.UserWeight", b =>
@@ -454,7 +457,7 @@ namespace WebApi.Migrations
 
                     b.HasIndex("UserDataEmail");
 
-                    b.ToTable("UserWeights", (string)null);
+                    b.ToTable("UserWeights");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

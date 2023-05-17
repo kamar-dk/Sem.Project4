@@ -14,7 +14,7 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FavoriteTraningProgramsController : ControllerBase, IFavoriteTraningProgramsController
+    public class FavoriteTraningProgramsController : ControllerBase
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
@@ -42,7 +42,7 @@ namespace WebApi.Controllers
 
             if (!programs.Any())
             {
-                return NotFound();
+                return Ok(new List<FavoriteTraningProgramsDto>());
             }
 
             var programDtos = _mapper.Map<List<FavoriteTraningProgramsDto>>(programs);
@@ -52,27 +52,28 @@ namespace WebApi.Controllers
 
 
 
+
+
         // GET: api/FavoriteTraningPrograms/{email}
         [HttpGet("{email}")]
-        public async Task<ActionResult<FavoriteTraningProgramsDto>> GetFavoriteTraningPrograms(string email)
+        public async Task<ActionResult<IEnumerable<FavoriteTraningProgramsDto>>> GetFavoriteTraningPrograms(string email)
         {
-            var program = await _context.favoriteTraningPrograms
+            var programs = await _context.favoriteTraningPrograms
                 .Include(f => f.User)
                 .Include(f => f.TraningProgram)
-                .FirstOrDefaultAsync(f => f.Email == email);
+                .Where(f => f.User.Email == email)
+                .ToListAsync();
 
-            if (program == null)
+            if (!programs.Any())
             {
-                return NotFound();
+                return Ok(new List<FavoriteTraningProgramsDto>());
             }
 
-            //AutoMapper.Mapper.Map<>;
+            var programDtos = _mapper.Map<List<FavoriteTraningProgramsDto>>(programs);
 
-            
-            var programDto = _mapper.Map<FavoriteTraningProgramsDto>(program);
-
-            return programDto;
+            return programDtos;
         }
+
 
         // POST: api/FavoriteTraningPrograms
         [HttpPost]
