@@ -69,6 +69,7 @@ export default function SignUp() {
       .then((data) => {
         // Handle successful sign-up, e.g. display a success message
         console.log(data);
+        
         navigate("/Login");
       })
       .catch((error) => console.error(error));
@@ -76,7 +77,7 @@ export default function SignUp() {
 
   return (
     <div className="gradient-background">
-    <Container maxWidth="sm" style={{backgroundColor: "#ffffff"}} >
+    <Container maxWidth="sm" style={{backgroundColor: "white"}} >
       <Typography variant="h3" align="center" gutterBottom>
         Sign Up
       </Typography>
