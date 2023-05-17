@@ -88,7 +88,7 @@ export default function Login() {
     }
     
 
-    fetch('https://localhost:7181/api/Account/Login', {
+    fetch('https://localhost:7221/api/Users/login', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -102,11 +102,8 @@ export default function Login() {
     localStorage.setItem("token", token.jwt);
     let RoleExtracted = parseToJwt(token.jwt);
     console.log(RoleExtracted);
-    let role =
-    RoleExtracted["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
-    localStorage.setItem("role", role);
-    let ModelId = RoleExtracted["ModelId"];
-    localStorage.setItem("ModelId", ModelId);
+    // Assuming line 105 is where the role is being accessed
+
     window.location.href = "/User";
   },
   (error) => {
@@ -121,6 +118,10 @@ export default function Login() {
 }
 
 function parseToJwt(token) {
+  if (!token) {
+    console.error('Token is undefined or null');
+    return null; // or handle the error as per your requirements
+  }
   var base64Url = token.split('.')[1];
   var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
   var jsonPayload = decodeURIComponent(
