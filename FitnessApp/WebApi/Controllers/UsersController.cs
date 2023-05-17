@@ -88,7 +88,7 @@ namespace WebApi.Controllers
                 return NotFound(request.Email);
             }
 
-            if (_accountServices.TryVerifyPasswordHash(request.Password, dbAccount.PasswordHash, dbAccount.Salt))
+            if (!_accountServices.TryVerifyPasswordHash(request.Password, dbAccount.PasswordHash, dbAccount.Salt))
             {
                 return BadRequest("Not a valid Password");
             }
@@ -116,10 +116,10 @@ namespace WebApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(string id)
         {
-          if (_context.users == null)
-          {
-              return NotFound();
-          }
+            if (_context.users == null)
+            {
+                return NotFound();
+            }
             var user = await _context.users.FindAsync(id);
 
             if (user == null)

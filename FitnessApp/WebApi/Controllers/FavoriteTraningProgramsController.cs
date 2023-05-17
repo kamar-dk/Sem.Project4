@@ -42,12 +42,14 @@ namespace WebApi.Controllers
         {
             if (_context.favoriteTraningPrograms == null)
             {
-                return NotFound();
+                return Ok(new List<FavoriteTraningProgramsDto>());
             }
             return await _context.favoriteTraningPrograms.ToListAsync();
 
             
         }
+
+
 
 
 
@@ -63,7 +65,7 @@ namespace WebApi.Controllers
 
             if (programs == null)
             {
-                return NotFound();
+                return Ok(new List<FavoriteTraningProgramsDto>());
             }
 
             var programDtos = _mapper.Map<IEnumerable<FavoriteTraningProgramsDto>>(programs);

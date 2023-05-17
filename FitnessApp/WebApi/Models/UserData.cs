@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
-using WebApi.Models.TraningTypes;
+//using WebApi.Models.TraningTypes;
 
 namespace WebApi.Models
 {

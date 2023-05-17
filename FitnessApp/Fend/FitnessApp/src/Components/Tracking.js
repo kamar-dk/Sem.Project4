@@ -6,12 +6,12 @@ import { Grid, Paper, Typography } from "@material-ui/core";
 
 function Tracking() {
   const [date, setDate] = useState(new Date());
-  const [calories, setCalories] = useState(1000);
+  const [calories, setCalories] = useState(2000);
   const percentage = calories / 2000 * 100;
  const cappedPercentage = percentage > 100 ? 100 : percentage;
 
   const fetchCalories = () => {
-    var url = "https://localhost:7181/api/Jobs";
+    var url = "https://localhost:7221/api/TraningDatas";
     return fetch(url, {
       method: "GET",
       credentials: "include",

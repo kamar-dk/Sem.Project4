@@ -12,8 +12,8 @@ using WebApi.Data;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230516100640_AddedGenderToUser")]
-    partial class AddedGenderToUser
+    [Migration("20230517133105_NyMig")]
+    partial class NyMig
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -229,10 +229,27 @@ namespace WebApi.Migrations
 
             modelBuilder.Entity("WebApi.Models.FavoriteTraningPrograms", b =>
                 {
+                    b.Property<int>("FavoriteTraningProgramsID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FavoriteTraningProgramsID"));
+
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("Email");
+                    b.Property<int>("TraningProgramID")
+                        .HasColumnType("int");
+
+                    b.HasKey("FavoriteTraningProgramsID");
+
+                    b.HasIndex("Email");
+
+                    b.HasIndex("FavoriteTraningProgramsID")
+                        .IsUnique();
+
+                    b.HasIndex("TraningProgramID");
 
                     b.ToTable("favoriteTraningPrograms");
                 });
@@ -290,7 +307,7 @@ namespace WebApi.Migrations
                     b.ToTable("traningData");
                 });
 
-            modelBuilder.Entity("WebApi.Models.TraningProgram", b =>
+            modelBuilder.Entity("WebApi.Models.TraningPrograms", b =>
                 {
                     b.Property<int>("TraningProgramID")
                         .ValueGeneratedOnAdd()
@@ -298,16 +315,11 @@ namespace WebApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TraningProgramID"));
 
-                    b.Property<string>("FavoriteTraningProgramsEmail")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("TraningProgramID");
-
-                    b.HasIndex("FavoriteTraningProgramsEmail");
 
                     b.ToTable("traningPrograms");
                 });
@@ -507,10 +519,18 @@ namespace WebApi.Migrations
             modelBuilder.Entity("WebApi.Models.FavoriteTraningPrograms", b =>
                 {
                     b.HasOne("WebApi.Models.User", "User")
-                        .WithOne("FavoriteTraningPrograms")
-                        .HasForeignKey("WebApi.Models.FavoriteTraningPrograms", "Email")
+                        .WithMany("FavoriteTraningPrograms")
+                        .HasForeignKey("Email")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("WebApi.Models.TraningPrograms", "TraningProgram")
+                        .WithMany("FavoriteTraningPrograms")
+                        .HasForeignKey("TraningProgramID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TraningProgram");
 
                     b.Navigation("User");
                 });
@@ -524,13 +544,6 @@ namespace WebApi.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("WebApi.Models.TraningProgram", b =>
-                {
-                    b.HasOne("WebApi.Models.FavoriteTraningPrograms", null)
-                        .WithMany("TraningPrograms")
-                        .HasForeignKey("FavoriteTraningProgramsEmail");
                 });
 
             modelBuilder.Entity("WebApi.Models.TraningTypes.BikeSession", b =>
@@ -577,15 +590,14 @@ namespace WebApi.Migrations
                     b.Navigation("UserData");
                 });
 
-            modelBuilder.Entity("WebApi.Models.FavoriteTraningPrograms", b =>
+            modelBuilder.Entity("WebApi.Models.TraningPrograms", b =>
                 {
-                    b.Navigation("TraningPrograms");
+                    b.Navigation("FavoriteTraningPrograms");
                 });
 
             modelBuilder.Entity("WebApi.Models.User", b =>
                 {
-                    b.Navigation("FavoriteTraningPrograms")
-                        .IsRequired();
+                    b.Navigation("FavoriteTraningPrograms");
 
                     b.Navigation("TraningDatas");
 

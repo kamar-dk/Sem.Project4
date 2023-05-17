@@ -226,16 +226,25 @@ namespace WebApi.Migrations
 
             modelBuilder.Entity("WebApi.Models.FavoriteTraningPrograms", b =>
                 {
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("FavoriteTraningProgramsID")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FavoriteTraningProgramsID"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("TraningProgramID")
                         .HasColumnType("int");
 
-                    b.HasKey("Email");
+                    b.HasKey("FavoriteTraningProgramsID");
+
+                    b.HasIndex("Email");
+
+                    b.HasIndex("FavoriteTraningProgramsID")
+                        .IsUnique();
 
                     b.HasIndex("TraningProgramID");
 

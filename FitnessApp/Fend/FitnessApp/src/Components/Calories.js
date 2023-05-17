@@ -74,7 +74,7 @@ function Calories() {
                 <Button variant="contained" color="primary" type="submit" style={{ marginBottom: 20 }}>Calculate</Button>
               </form>
               {result && (
-                <Typography variant="h5" align="center" gutterBottom>
+                <Typography variant="h5" align="center" >
                   Your daily calorie needs are: <strong>{result} calories</strong>
                 </Typography>
               )}
