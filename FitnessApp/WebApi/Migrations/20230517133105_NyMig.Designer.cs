@@ -12,8 +12,8 @@ using WebApi.Data;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230517103047_UniqueFTPkey")]
-    partial class UniqueFTPkey
+    [Migration("20230517133105_NyMig")]
+    partial class NyMig
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -229,22 +229,27 @@ namespace WebApi.Migrations
 
             modelBuilder.Entity("WebApi.Models.FavoriteTraningPrograms", b =>
                 {
-                    b.Property<int>("TraningProgramID")
+                    b.Property<int>("FavoriteTraningProgramsID")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FavoriteTraningProgramsID"));
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("FavoriteTraningProgramsID")
+                    b.Property<int>("TraningProgramID")
                         .HasColumnType("int");
 
-                    b.HasKey("TraningProgramID");
+                    b.HasKey("FavoriteTraningProgramsID");
 
                     b.HasIndex("Email");
 
                     b.HasIndex("FavoriteTraningProgramsID")
                         .IsUnique();
+
+                    b.HasIndex("TraningProgramID");
 
                     b.ToTable("favoriteTraningPrograms");
                 });

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WebApi.Migrations
 {
     /// <inheritdoc />
-    public partial class FlyttetTilWebAPI : Migration
+    public partial class NyMig : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -51,12 +51,26 @@ namespace WebApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "traningPrograms",
+                columns: table => new
+                {
+                    TraningProgramID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_traningPrograms", x => x.TraningProgramID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "users",
                 columns: table => new
                 {
                     Email = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PasswordHash = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     Salt = table.Column<byte[]>(type: "varbinary(max)", nullable: true)
                 },
@@ -175,11 +189,20 @@ namespace WebApi.Migrations
                 name: "favoriteTraningPrograms",
                 columns: table => new
                 {
+                    FavoriteTraningProgramsID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TraningProgramID = table.Column<int>(type: "int", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_favoriteTraningPrograms", x => x.Email);
+                    table.PrimaryKey("PK_favoriteTraningPrograms", x => x.FavoriteTraningProgramsID);
+                    table.ForeignKey(
+                        name: "FK_favoriteTraningPrograms_traningPrograms_TraningProgramID",
+                        column: x => x.TraningProgramID,
+                        principalTable: "traningPrograms",
+                        principalColumn: "TraningProgramID",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_favoriteTraningPrograms_users_Email",
                         column: x => x.Email,
@@ -237,25 +260,6 @@ namespace WebApi.Migrations
                         principalTable: "users",
                         principalColumn: "Email",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "traningPrograms",
-                columns: table => new
-                {
-                    TraningProgramID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FavoriteTraningProgramsEmail = table.Column<string>(type: "nvarchar(450)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_traningPrograms", x => x.TraningProgramID);
-                    table.ForeignKey(
-                        name: "FK_traningPrograms_favoriteTraningPrograms_FavoriteTraningProgramsEmail",
-                        column: x => x.FavoriteTraningProgramsEmail,
-                        principalTable: "favoriteTraningPrograms",
-                        principalColumn: "Email");
                 });
 
             migrationBuilder.CreateTable(
@@ -372,6 +376,22 @@ namespace WebApi.Migrations
                 column: "traningDataUserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_favoriteTraningPrograms_Email",
+                table: "favoriteTraningPrograms",
+                column: "Email");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_favoriteTraningPrograms_FavoriteTraningProgramsID",
+                table: "favoriteTraningPrograms",
+                column: "FavoriteTraningProgramsID",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_favoriteTraningPrograms_TraningProgramID",
+                table: "favoriteTraningPrograms",
+                column: "TraningProgramID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_runningSessions_traningDataUserId",
                 table: "runningSessions",
                 column: "traningDataUserId");
@@ -380,11 +400,6 @@ namespace WebApi.Migrations
                 name: "IX_traningData_UserEmail",
                 table: "traningData",
                 column: "UserEmail");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_traningPrograms_FavoriteTraningProgramsEmail",
-                table: "traningPrograms",
-                column: "FavoriteTraningProgramsEmail");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserWeights_UserDataEmail",
@@ -414,10 +429,10 @@ namespace WebApi.Migrations
                 name: "bikeSessions");
 
             migrationBuilder.DropTable(
-                name: "runningSessions");
+                name: "favoriteTraningPrograms");
 
             migrationBuilder.DropTable(
-                name: "traningPrograms");
+                name: "runningSessions");
 
             migrationBuilder.DropTable(
                 name: "UserWeights");
@@ -429,10 +444,10 @@ namespace WebApi.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "traningData");
+                name: "traningPrograms");
 
             migrationBuilder.DropTable(
-                name: "favoriteTraningPrograms");
+                name: "traningData");
 
             migrationBuilder.DropTable(
                 name: "userDatas");

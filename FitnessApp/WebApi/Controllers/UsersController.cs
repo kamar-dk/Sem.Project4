@@ -88,7 +88,7 @@ namespace WebApi.Controllers
                 return NotFound(request.Email);
             }
 
-            if (_accountServices.TryVerifyPasswordHash(request.Password, dbAccount.PasswordHash, dbAccount.Salt))
+            if (!_accountServices.TryVerifyPasswordHash(request.Password, dbAccount.PasswordHash, dbAccount.Salt))
             {
                 return BadRequest("Not a valid Password");
             }

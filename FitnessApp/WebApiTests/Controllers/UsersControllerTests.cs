@@ -67,7 +67,6 @@ namespace WebApi.Controllers.Tests
         [Test()]
         public async Task RegisterTest_Assert_InvalidEmailAsync(/*string Expected*/)
         {
-
             //Arrange
             var register = new UserRegisterDto
             {
@@ -79,26 +78,19 @@ namespace WebApi.Controllers.Tests
             //uut._accountServices.IsVaildEmail(register.Email).Returns(true);
             //uut._context.users.AnyAsync(x => x.Email == register.Email).Returns(true);
             var result = await uut.Register(register);
-
-            //check that result is of type BadRequestObjectResult
-
-            NUnit.Framework.Assert.IsInstanceOf<BadRequestObjectResult>(result);
-
-
-
-
-
+            var value = result.Result as BadRequestObjectResult;
+            
+            NUnit.Framework.Assert.AreEqual(value.Value, "Email is not valid");
         }
-        /*NUnit.Framework.Assert.AreEqual("Email is not valid", Expected);*/
+        
 
         [TestCase("Email is already taken")]
         public async Task RegisterTest_Assert_EmailAlreadyTakenAsync(string Expected)
         {
-
             //Arrange
             var register = new UserRegisterDto
             {
-                Email = "test",
+                Email = "test@mail.dk",
                 FirstName = "Test",
                 LastName = "Test",
                 Password = "Test"
@@ -106,28 +98,33 @@ namespace WebApi.Controllers.Tests
 
             //uut._accountServices.IsVaildEmail(register.Email).Returns(true);
             //uut._context.users.AnyAsync(x => x.Email == register.Email).Returns(true);
-            await uut.Register(register);
-            NUnit.Framework.Assert.AreEqual("Email is already taken", Expected);
-            
-            
+            var result = await uut.Register(register);
 
+            var value = result.Result as BadRequestObjectResult;
+
+            NUnit.Framework.Assert.AreEqual(value.Value, "Email is already taken");
         }
 
         [Test]
-        public void LoginTest_Valid()
+        public async Task LoginTest_ValidAsync()
         {
             var token = "200OK";
             //Arrange
             var request = new UserLoginDto
             {
-                Email = "Jeppe@mail.dk",
+                Email = "test@mail.dk",
                 Password = "1234"
             };
             //uut._context.users.AnyAsync(x => x.Email == request.Email).Returns(true);
             //uut._accountServices.VerifyPasswordHash(request.Password, request.Password, request.Password).Returns(true);
-            var result = uut.Login(request);
 
-            NUnit.Framework.Assert.AreEqual(result, token);
+            
+            var result = await uut.Login(request);
+            
+            
+            var value = result.Result as OkObjectResult;
+
+            NUnit.Framework.Assert.AreEqual( token, value);
             
         }
 
