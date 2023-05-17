@@ -18,6 +18,9 @@ using WebApi.DTO;
 using NSubstitute;
 using Moq;
 using NSubstitute.ReceivedExtensions;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http.HttpResults;
+using NuGet.Common;
 
 namespace WebApi.Controllers.Tests
 {
@@ -33,9 +36,19 @@ namespace WebApi.Controllers.Tests
         [SetUp]
         public void SetUp()
         {
+            // setup test class
+            mockedDbContext = new DataContext();
             _userServices = Substitute.For<IUserServices>();
             _context = Substitute.For<DataContext>();
             uut = new UsersController(mockedDbContext, _userServices);
+
+
+
+            /*
+            _userServices = Substitute.For<IUserServices>();
+            _context = Substitute.For<DataContext>();
+            uut = new UsersController(mockedDbContext, _userServices);*/
+
         }
 
         [TestCase("Email is not valid")]
@@ -57,7 +70,7 @@ namespace WebApi.Controllers.Tests
         }
 
         [TestCase("Email is already taken")]
-        public void RegisterTest_Assert_EmailAlreadyTaken(string Expected)
+        public async Task RegisterTest_Assert_EmailAlreadyTakenAsync(string Expected)
         {
             
             //Arrange
@@ -69,19 +82,51 @@ namespace WebApi.Controllers.Tests
                 Password = "Test"
             };
 
-            uut._accountServices.IsVaildEmail(register.Email).Returns(true);
+            //uut._accountServices.IsVaildEmail(register.Email).Returns(true);
+            
 
             uut._context.users.AnyAsync(x => x.Email == register.Email).Returns(true);
 
-            uut.Register(register);
+            await uut.Register(register);
             NUnit.Framework.Assert.AreEqual("Email is already taken", Expected);
 
         }
 
-        [Test()]
-        public void LoginTest_assert_ok()
+        [Test]
+        public void LoginTest_Valid()
         {
+            var token = "200OK";
+            //Arrange
+            var request = new UserLoginDto
+            {
+                Email = "Jeppe@mail.dk",
+                Password = "1234"
+            };
+            //uut._context.users.AnyAsync(x => x.Email == request.Email).Returns(true);
+            //uut._accountServices.VerifyPasswordHash(request.Password, request.Password, request.Password).Returns(true);
+            var result = uut.Login(request);
 
+            NUnit.Framework.Assert.AreEqual(result, token);
+            
+        }
+
+        [Test()]
+        public void LoginTest_NotFound()
+        {
+            // test login with wrong email
+            //Arrange
+            var request = new UserLoginDto
+            { 
+                Email = "Alan@mail.dk",
+                Password = "test"
+            };
+
+            //uut._context.users.AnyAsync(x => x.Email == request.Email).Returns(false)
+            var result = uut.Login(request);
+
+            NUnit.Framework.Assert.IsInstanceOf<NotFoundResult>(result.Result);
+
+            
         }
 
         [Test()]
