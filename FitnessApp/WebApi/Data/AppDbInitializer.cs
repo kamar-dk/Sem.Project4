@@ -82,7 +82,7 @@ namespace WebApi.Data
 
                 if (!context.traningPrograms.Any())
                 {
-                    context.traningPrograms.AddRange(new TraningProgram()
+                    context.traningPrograms.AddRange(new TraningPrograms()
                     {
 
                         Name = "Program 1"

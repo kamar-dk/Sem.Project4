@@ -22,7 +22,7 @@ namespace WebApi.Models
 
         //public TraningData TraningData { get; set; }
         public UserData UserData { get; set; }
-        public FavoriteTraningPrograms FavoriteTraningPrograms { get; set; }
+        public ICollection<FavoriteTraningPrograms> FavoriteTraningPrograms { get; set; }
 
         public virtual ICollection<TraningData> TraningDatas { get; set; } = new List<TraningData>();
     }

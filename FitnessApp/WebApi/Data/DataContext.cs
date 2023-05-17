@@ -66,9 +66,9 @@ namespace WebApi.Data
                 .WithOne(ud => ud.User)
                 .HasForeignKey<UserData>(ud => ud.Email);
             modelBuilder.Entity<User>()
-                .HasOne(u => u.FavoriteTraningPrograms)
+                .HasMany(u => u.FavoriteTraningPrograms)
                 .WithOne(ftp => ftp.User)
-                .HasForeignKey<FavoriteTraningPrograms>(ftp => ftp.Email);
+                .HasForeignKey(ftp => ftp.Email);
 
             //modelBuilder.Entity<User>()
             //    .HasOne(u => u.TraningDatas);
@@ -81,9 +81,9 @@ namespace WebApi.Data
                 .HasForeignKey<UserData>(ud => ud.Email);
 
             modelBuilder.Entity<User>()
-                .HasOne(u => u.FavoriteTraningPrograms)
+                .HasMany(u => u.FavoriteTraningPrograms)
                 .WithOne(ft => ft.User)
-                .HasForeignKey<FavoriteTraningPrograms>(ft => ft.Email);
+                .HasForeignKey(ft => ft.Email);
 
             modelBuilder.Entity<UserWeight>()
                 .HasOne(w => w.UserData)
@@ -92,17 +92,25 @@ namespace WebApi.Data
             modelBuilder.Entity<UserData>()
                 .HasMany(uw => uw.UserWeights);
 
-            modelBuilder.Entity<FavoriteTraningPrograms>()
-                .HasOne(ft => ft.TraningProgramID)
-                .WithMany(tp => tp.FavoriteTraningPrograms)
-                .HasForeignKey<TraningPrograms>(tp => tp.TraningProgramID);
-            
-            modelBuilder.Entity<FavoriteTraningPrograms>()
-                .HasOne(ft => ft.User)
-                .HasForeignKey(ft. => ft.Email);
 
-            modelBuilder.Entity<BikeSession>()
-                .HasOne(bs => bs.traningData);
+            modelBuilder.Entity<FavoriteTraningPrograms>()
+                .HasOne(ftp => ftp.TraningProgram)
+                .WithMany(tp => tp.FavoriteTraningPrograms)
+                .HasForeignKey(ftp => ftp.TraningProgramID);
+
+            modelBuilder.Entity<FavoriteTraningPrograms>()
+                .HasOne(u => u.User)
+                .WithMany(ftp => ftp.FavoriteTraningPrograms)
+                .HasForeignKey(ftp => ftp.Email);
+
+
+            /*modelBuilder.Entity<FavoriteTraningPrograms>()
+                .HasOne(ft => ft.TraningProgram)
+                .WithMany(tp => tp.FavoriteTraningPrograms)
+                .
+                ;*/
+                
+                
         }
     }
 }

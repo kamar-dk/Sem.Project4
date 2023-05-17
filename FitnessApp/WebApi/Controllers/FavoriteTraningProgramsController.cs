@@ -37,7 +37,7 @@ namespace WebApi.Controllers
         {
             var programs = await _context.favoriteTraningPrograms
                 .Include(f => f.User)
-                .Include(f => f.TraningPrograms)
+                .Include(f => f.TraningProgram)
                 .ToListAsync();
 
             if (!programs.Any())
@@ -58,7 +58,7 @@ namespace WebApi.Controllers
         {
             var program = await _context.favoriteTraningPrograms
                 .Include(f => f.User)
-                .Include(f => f.TraningPrograms)
+                .Include(f => f.TraningProgram)
                 .FirstOrDefaultAsync(f => f.Email == email);
 
             if (program == null)

@@ -23,7 +23,7 @@ namespace WebApi.Controllers
         public DataContext _context;
         public IUserServices _accountServices;
 
-        //private readonly IMapper _mapper;
+        private readonly IMapper _mapper;
 
         public UsersController(DataContext context, IMapper mapper, IConfiguration configuration)
         {
@@ -32,11 +32,11 @@ namespace WebApi.Controllers
 
         }
 
-        public UsersController(DataContext context, IUserServices userServices)
+        /*public UsersController(DataContext context, IUserServices userServices)
         {
             _context = context;
             _accountServices = userServices;
-        }
+        }*/
 
 
         //[AllowAnonymous]
@@ -88,7 +88,7 @@ namespace WebApi.Controllers
                 return NotFound(request.Email);
             }
 
-            if (!_accountServices.TryVerifyPasswordHash(request.Password, dbAccount.PasswordHash, dbAccount.Salt))
+            if (_accountServices.TryVerifyPasswordHash(request.Password, dbAccount.PasswordHash, dbAccount.Salt))
             {
                 return BadRequest("Not a valid Password");
             }
@@ -96,7 +96,7 @@ namespace WebApi.Controllers
             var token = _accountServices.CreateToken(dbAccount);
             var account = dbAccount.Adapt<UserDto>();
             account.Token = token;
-            return Ok(account);
+            return Ok(account.Token);
 
         }
 
