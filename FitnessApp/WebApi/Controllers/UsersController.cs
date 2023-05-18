@@ -226,7 +226,7 @@ namespace WebApi.Controllers
         /// </summary>
         /// <param name="id">The ID of the user.</param>
         /// <returns>True if the user exists, otherwise false.</returns>
-        private bool UserExists(string id)
+        public bool UserExists(string id)
         {
             return (_context.users?.Any(e => e.Email == id)).GetValueOrDefault();
         }
