@@ -80,7 +80,7 @@ namespace WebApi.Controllers
             userData.Email = userDataDto.Email;
             userData.Height = userDataDto.Height;
             userData.Weight = userDataDto.Weight;
-            userData.Gender = userDataDto.Gender;
+            //userData.Gender = userDataDto.Gender;
             userData.DoB = userDataDto.DoB;
 
             _context.Entry(userData).State = EntityState.Modified;

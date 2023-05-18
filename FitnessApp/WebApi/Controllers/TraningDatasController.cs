@@ -10,6 +10,7 @@ using WebApi.DTO;
 using WebApi.Models;
 using WebApi.Data;
 using WebApi.Controllers.ControllerInterfaces;
+using Mapster;
 
 namespace WebApi.Controllers
 {
@@ -48,10 +49,10 @@ namespace WebApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<TraningData>> GetTraningData(string id)
         {
-          if (_context.traningData == null)
-          {
-              return NotFound();
-          }
+            if (_context.traningData == null)
+            {
+                return NotFound();
+            }
             var traningData = await _context.traningData.FindAsync(id);
 
             if (traningData == null)
@@ -60,6 +61,23 @@ namespace WebApi.Controllers
             }
 
             return traningData;
+        }
+
+        [HttpGet("{UserId}")]
+        public async Task<ActionResult<TraningData>> GetTraningDataEmail()
+        {
+            //if (_context.traningData == null)
+            //{
+            //    return NotFound();
+            //}
+            var traningDataEmail = await _context.traningData.OrderBy(i => i.UserId).ToListAsync();
+
+            //if (traningDataEmail == null)
+            //{
+            //    return NotFound();
+            //}
+
+            return Ok(traningDataEmail.Adapt<List<TraningDatasDto>>());
         }
 
         // PUT: api/TraningDatas/5
