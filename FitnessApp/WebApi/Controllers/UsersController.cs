@@ -38,8 +38,7 @@ namespace WebApi.Controllers
         /// </summary>
         /// <param name="register">The DTO containing user registration data.</param>
         /// <returns>An ActionResult containing the registered UserDto.</returns>
-        [HttpPost("register")]
-        //[AllowAnonymous]
+       //[AllowAnonymous]
         [HttpPost("register")]
         public async Task<ActionResult<UserDto>> Register(UserRegisterDto register)
         {
