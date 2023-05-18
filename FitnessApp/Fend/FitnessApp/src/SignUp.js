@@ -56,6 +56,11 @@ export default function SignUp() {
       height: height,
       weight: weight,
     };
+    
+    if (!username || !email || !password || !age || !height || !weight) {
+      alert("Please enter all fields");
+      return;
+    }
     // Send the payload to the server to sign up the user
     fetch("https://localhost:7221/api/Users/register", {
       method: "POST",

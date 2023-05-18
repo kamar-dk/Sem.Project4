@@ -37,7 +37,84 @@ export default function Login() {
   const classes = useStyles();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState(null);
+  
+  function Sendlogin(event) {
+    event.preventDefault()
+    console.log(event.target[0].value)
+    console.log(event.target[1].value)
+    
 
+    const emailValue = event.target[0].value;
+    const passwordValue = event.target[1].value;
+    // Check if email and password fields are empty
+
+    if (!emailValue || !passwordValue) {
+      setErrorMessage("Please enter both email and password");
+      return; // Prevent further execution of the function
+    }
+
+
+    const payload = {
+      email: emailValue,
+      password: passwordValue
+    }
+
+
+
+    fetch('https://localhost:7221/api/Users/login', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload)
+    })
+      .then(res => res.json())
+      .then((token) => {
+        console.log(token.jwt);
+        localStorage.setItem("token", token.jwt);
+        localStorage.setItem("email", payload.email);
+        localStorage.setItem("user", "user");
+        let RoleExtracted = parseToJwt(token.jwt);
+        console.log(RoleExtracted);
+        // Assuming line 105 is where the role is being accessed
+
+        window.location.href = "/User";
+      },
+        (error) => {
+          console.log(error);
+
+        }
+
+      );
+
+
+
+  }
+
+  function parseToJwt(token) {
+    if (!token) {
+      console.error('Token is undefined or null');
+      return null; // or handle the error as per your requirements
+    }
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    var jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split('')
+        .map(function (c) {
+          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        })
+        .join('')
+    );
+
+    return JSON.parse(window.atob(base64));
+  }
+
+ 
+ 
+ 
   return(
     <div className="gradient-background">
     <Container maxWidth="sm" style={{backgroundColor: "white"}} >
@@ -70,6 +147,7 @@ export default function Login() {
         Submit
       </Button>
     </form>
+    {errorMessage && <p align="center" style={{ color: 'red' }}>{errorMessage}</p>}
     <p align ="center">
       Don't have an account? <Link to="/SignUp">SignUp</Link>
     </p>
@@ -77,64 +155,5 @@ export default function Login() {
   </div>
   
 );
-}
-  function Sendlogin(event) {
-    event.preventDefault()
-    console.log(event.target[0].value)
-    console.log(event.target[1].value)
-    const  payload = {
-      email: event.target[0].value,
-      password: event.target[1].value
-    }
-    
-
-    fetch('https://localhost:7221/api/Users/login', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(payload)
-  })
-  .then(res => res.json())
-  .then((token)=> {
-    console.log(token.jwt);
-    localStorage.setItem("token", token.jwt);
-    localStorage.setItem("email", payload.email);
-    localStorage.setItem("user", "user");
-    let RoleExtracted = parseToJwt(token.jwt);
-    console.log(RoleExtracted);
-    // Assuming line 105 is where the role is being accessed
-
-    window.location.href = "/User";
-  },
-  (error) => {
-      console.log(error);
-      
-    }
-  
-  );
-  
-    
-  
-}
-
-function parseToJwt(token) {
-  if (!token) {
-    console.error('Token is undefined or null');
-    return null; // or handle the error as per your requirements
-  }
-  var base64Url = token.split('.')[1];
-  var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-  var jsonPayload = decodeURIComponent(
-    atob(base64)
-      .split('')
-      .map(function(c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-      })
-      .join('')
-  );
-  
-  return JSON.parse(window.atob(base64));
 }
 
