@@ -25,6 +25,7 @@ using Microsoft.CodeAnalysis.Options;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore.InMemory;
+using Azure.Core;
 
 namespace WebApi.Controllers.Tests
 {
@@ -37,31 +38,23 @@ namespace WebApi.Controllers.Tests
         public DataContext _context;
         public UsersController uut;
         public IMapper _mapper = Substitute.For<IMapper>();
-        IConfiguration _configuration = Substitute.For<IConfiguration>();
+        IConfiguration _configuration = new ConfigurationBuilder()
+            .AddJsonFile("appsettings.json")
+            .Build();
         IServiceCollection _services;
         private IServiceProvider? serviceProvider;
 
-        
-        
         [SetUp]
         public void SetUp()
         {
-
             var contextOptions = new DbContextOptionsBuilder<DataContext>()
-                .UseSqlServer(@"Data Source=sql.bsite.net\\MSSQL2016;Initial Catalog=kaspermartensen_Prj4;User ID=kaspermartensen_Prj4;Password=Bed2Fed2;Encrypt=False; Trust Server Certificate=False;Persist Security Info = True;")
+                .UseSqlServer(@"Data Source=sql.bsite.net\\MSSQL2016;Initial Catalog=kaspermartensen_prj4nyny;User ID=kaspermartensen_prj4nyny;Password=123456;Encrypt=False; Trust Server Certificate=False;Persist Security Info = True;")
                 .Options;
 
             mockedDbContext = new DataContext(contextOptions);
             _context = mockedDbContext;
-            _userServices = Substitute.For<IUserServices>();
             _mapper = Substitute.For<IMapper>();
-            _configuration = Substitute.For<IConfiguration>();
-            _services = Substitute.For<IServiceCollection>();
-            serviceProvider = Substitute.For<IServiceProvider>();
-            _services.AddSingleton(serviceProvider);
             uut = new UsersController(_context, _mapper, _configuration);
-
-            
         }
 
         [Test()]
@@ -105,64 +98,103 @@ namespace WebApi.Controllers.Tests
             NUnit.Framework.Assert.AreEqual(value.Value, "Email is already taken");
         }
 
-        [Test]
+        [Test()]
         public async Task LoginTest_ValidAsync()
         {
-            var token = "200OK";
             //Arrange
             var request = new UserLoginDto
             {
                 Email = "test@mail.dk",
                 Password = "1234"
             };
-            //uut._context.users.AnyAsync(x => x.Email == request.Email).Returns(true);
-            //uut._accountServices.VerifyPasswordHash(request.Password, request.Password, request.Password).Returns(true);
 
-            
             var result = await uut.Login(request);
-            
-            
             var value = result.Result as OkObjectResult;
 
-            NUnit.Framework.Assert.AreEqual( token, value);
-            
+            NUnit.Framework.Assert.AreEqual(200, value.StatusCode);   
         }
 
         [Test()]
-        public void LoginTest_NotFound()
+        public async Task LoginTest_NotFound()
         {
             // test login with wrong email
             //Arrange
             var request = new UserLoginDto
             { 
-                Email = "Alan@mail.dk",
+                Email = "Alan",
                 Password = "test"
             };
 
-            //uut._context.users.AnyAsync(x => x.Email == request.Email).Returns(false)
-            var result = uut.Login(request);
+            var result = await uut.Login(request);
+            var value = result.Result as NotFoundObjectResult;
 
-            NUnit.Framework.Assert.IsInstanceOf<NotFoundResult>(result.Result);
-
-            
+            NUnit.Framework.Assert.AreEqual(404, value.StatusCode);     
         }
 
         [Test()]
-        public async Task GetuserTestAsync()
+        public async Task LoginTest_UnvalidPassowrd()
+        {
+            // test login with wrong password
+            //Arrange
+            var request = new UserLoginDto
+            {
+                Email = "test@mail.dk",
+                Password = "1235"
+            };
+
+            var result = await uut.Login(request);
+            var value = result.Result as BadRequestObjectResult;
+
+            NUnit.Framework.Assert.AreEqual(400, value.StatusCode);
+
+        }
+
+        [Test()]
+        public async Task GetuserTest_ContextUsersNull_Async()
         {
             //Arrange
-            User user = new User
+            uut._context.users = null;
+
+            var user = new User
             {
-                Email = "test",
-                FirstName = "Test",
-                LastName = "Test"
+                Email = "",
+                FirstName = "",
+                LastName = "",
             };
-            /*_context.users.Add(user);
-            _context.SaveChanges();*/
 
-        var result = await uut.GetUser(user.Email);
+            var result = await uut.GetUser(user.Email);
+            var value = result.Result as NotFoundResult;
+
+            NUnit.Framework.Assert.AreEqual(404, value.StatusCode);
+        }
+
+        [Test()]
+        public async Task GetUserTest_UserIsNull()
+        {
+            //Arrange
+            var user = new User
+            {
+                Email = "",
+                FirstName = "",
+                LastName = "",
+            };
+
+            var result = await uut.GetUser(user.Email);
+            var value = result.Result as NotFoundResult;
+            NUnit.Framework.Assert.AreEqual(404, value.StatusCode);
+        }
+
+        [Test()]
+        public async Task GetUserTest_UserIsNotNull()
+        {
+            //Arrange
+            var user = new User
+            {
+                Email = "test@mail.dk"
+            };
+
+            var result = await uut.GetUser(user.Email);
             NUnit.Framework.Assert.AreEqual(result.Value.Email, user.Email);
-
 
         }
 
