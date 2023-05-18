@@ -161,7 +161,7 @@ namespace WebApi.Controllers
             return NoContent();
         }
 
-        public bool TraningProgramExists(int id)
+        private bool TraningProgramExists(int id)
         {
             return (_context.traningPrograms?.Any(e => e.TraningProgramID == id)).GetValueOrDefault();
         }

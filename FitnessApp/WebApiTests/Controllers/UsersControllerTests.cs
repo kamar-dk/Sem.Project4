@@ -279,7 +279,7 @@ namespace WebApi.Controllers.Tests
 
             NUnit.Framework.Assert.AreEqual(true, result);
         }
-
+        /*
         [Test()]
         public void UserExists_UserNotExist()
         {
@@ -287,6 +287,6 @@ namespace WebApi.Controllers.Tests
             var result = uut.UserExists(email);
 
             NUnit.Framework.Assert.AreEqual(false, result);
-        }
+        }*/
     }
 }

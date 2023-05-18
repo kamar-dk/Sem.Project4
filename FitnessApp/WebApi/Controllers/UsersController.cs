@@ -38,7 +38,6 @@ namespace WebApi.Controllers
         /// </summary>
         /// <param name="register">The DTO containing user registration data.</param>
         /// <returns>An ActionResult containing the registered UserDto.</returns>
-        [HttpPost("register")]
         //[AllowAnonymous]
         [HttpPost("register")]
         public async Task<ActionResult<UserDto>> Register(UserRegisterDto register)
@@ -226,7 +225,7 @@ namespace WebApi.Controllers
         /// </summary>
         /// <param name="id">The ID of the user.</param>
         /// <returns>True if the user exists, otherwise false.</returns>
-        public bool UserExists(string id)
+        private bool UserExists(string id)
         {
             return (_context.users?.Any(e => e.Email == id)).GetValueOrDefault();
         }
