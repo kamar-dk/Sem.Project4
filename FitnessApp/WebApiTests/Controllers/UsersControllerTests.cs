@@ -204,14 +204,12 @@ namespace WebApi.Controllers.Tests
         public void PutUserTest()
         {
 
-            
+            throw new NotImplementedException();
         }
 
         [Test()]
-        public void DeleteUserTest()
         public async Task DeleteUserTest_ContextNull()
         {
-            throw new NotImplementedException();
             uut._context.users = null;
 
             var user = new User
