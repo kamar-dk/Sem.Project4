@@ -58,6 +58,7 @@ namespace WebApi.Controllers
                 Email = register.Email,
                 FirstName = register.FirstName,
                 LastName = register.LastName,
+                Gender = register.Gender,
                 PasswordHash = passwordHash,
                 Salt = passwordSalt,
             };
@@ -65,7 +66,8 @@ namespace WebApi.Controllers
 
             var userData = new UserData
             {
-                Email = register.Email
+                Email = register.Email,
+                Gender = register.Gender
             };
 
 
