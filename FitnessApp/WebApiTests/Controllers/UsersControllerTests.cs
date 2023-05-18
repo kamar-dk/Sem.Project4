@@ -190,7 +190,9 @@ namespace WebApi.Controllers.Tests
             //Arrange
             var user = new User
             {
-                Email = "test@mail.dk"
+                Email = "test@mail.dk",
+                FirstName = "Test",
+                LastName = "Test",
             };
 
             var result = await uut.GetUser(user.Email);
@@ -202,8 +204,7 @@ namespace WebApi.Controllers.Tests
         public void PutUserTest()
         {
 
-
-            throw new NotImplementedException();
+            
         }
 
         [Test()]

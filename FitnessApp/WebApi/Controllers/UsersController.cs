@@ -32,13 +32,6 @@ namespace WebApi.Controllers
 
         }
 
-        /*public UsersController(DataContext context, IUserServices userServices)
-        {
-            _context = context;
-            _accountServices = userServices;
-        }*/
-
-
         //[AllowAnonymous]
         [HttpPost("register")]
         public async Task<ActionResult<UserDto>> Register(UserRegisterDto register)
