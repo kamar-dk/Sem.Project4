@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WebApi.Migrations
 {
     /// <inheritdoc />
-    public partial class NyMig : Migration
+    public partial class Initialize : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -215,8 +215,8 @@ namespace WebApi.Migrations
                 name: "traningData",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Id = table.Column<long>(type: "bigint", nullable: false),
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     TrainingType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SessionDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Distance = table.Column<float>(type: "real", nullable: false),
@@ -228,17 +228,16 @@ namespace WebApi.Migrations
                     MinHeartRate = table.Column<int>(type: "int", nullable: false),
                     AvgHeartRate = table.Column<int>(type: "int", nullable: false),
                     Vo2Max = table.Column<float>(type: "real", nullable: false),
-                    UserEmail = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_traningData", x => x.UserId);
+                    table.PrimaryKey("PK_traningData", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_traningData_users_UserEmail",
-                        column: x => x.UserEmail,
+                        name: "FK_traningData_users_UserId",
+                        column: x => x.UserId,
                         principalTable: "users",
-                        principalColumn: "Email",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Email");
                 });
 
             migrationBuilder.CreateTable(
@@ -259,54 +258,6 @@ namespace WebApi.Migrations
                         column: x => x.Email,
                         principalTable: "users",
                         principalColumn: "Email",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "bikeSessions",
-                columns: table => new
-                {
-                    SessionID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Durration = table.Column<float>(type: "real", nullable: false),
-                    Distance = table.Column<float>(type: "real", nullable: false),
-                    AvgSpeed = table.Column<float>(type: "real", nullable: false),
-                    Note = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    traningDataUserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_bikeSessions", x => x.SessionID);
-                    table.ForeignKey(
-                        name: "FK_bikeSessions_traningData_traningDataUserId",
-                        column: x => x.traningDataUserId,
-                        principalTable: "traningData",
-                        principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "runningSessions",
-                columns: table => new
-                {
-                    SessionID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Durration = table.Column<float>(type: "real", nullable: false),
-                    Distance = table.Column<float>(type: "real", nullable: false),
-                    AvgSpeed = table.Column<float>(type: "real", nullable: false),
-                    Note = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    traningDataUserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_runningSessions", x => x.SessionID);
-                    table.ForeignKey(
-                        name: "FK_runningSessions_traningData_traningDataUserId",
-                        column: x => x.traningDataUserId,
-                        principalTable: "traningData",
-                        principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -371,11 +322,6 @@ namespace WebApi.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_bikeSessions_traningDataUserId",
-                table: "bikeSessions",
-                column: "traningDataUserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_favoriteTraningPrograms_Email",
                 table: "favoriteTraningPrograms",
                 column: "Email");
@@ -392,14 +338,9 @@ namespace WebApi.Migrations
                 column: "TraningProgramID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_runningSessions_traningDataUserId",
-                table: "runningSessions",
-                column: "traningDataUserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_traningData_UserEmail",
+                name: "IX_traningData_UserId",
                 table: "traningData",
-                column: "UserEmail");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserWeights_UserDataEmail",
@@ -426,13 +367,10 @@ namespace WebApi.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "bikeSessions");
-
-            migrationBuilder.DropTable(
                 name: "favoriteTraningPrograms");
 
             migrationBuilder.DropTable(
-                name: "runningSessions");
+                name: "traningData");
 
             migrationBuilder.DropTable(
                 name: "UserWeights");
@@ -445,9 +383,6 @@ namespace WebApi.Migrations
 
             migrationBuilder.DropTable(
                 name: "traningPrograms");
-
-            migrationBuilder.DropTable(
-                name: "traningData");
 
             migrationBuilder.DropTable(
                 name: "userDatas");

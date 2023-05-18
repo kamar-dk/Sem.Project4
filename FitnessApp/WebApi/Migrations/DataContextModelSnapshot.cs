@@ -253,8 +253,11 @@ namespace WebApi.Migrations
 
             modelBuilder.Entity("WebApi.Models.TraningData", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<int>("AvgHeartRate")
                         .HasColumnType("int");
@@ -264,9 +267,6 @@ namespace WebApi.Migrations
 
                     b.Property<float>("Distance")
                         .HasColumnType("real");
-
-                    b.Property<long>("Id")
-                        .HasColumnType("bigint");
 
                     b.Property<int>("MaxHeartRate")
                         .HasColumnType("int");
@@ -290,16 +290,15 @@ namespace WebApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserEmail")
-                        .IsRequired()
+                    b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<float>("Vo2Max")
                         .HasColumnType("real");
 
-                    b.HasKey("UserId");
+                    b.HasKey("Id");
 
-                    b.HasIndex("UserEmail");
+                    b.HasIndex("UserId");
 
                     b.ToTable("traningData");
                 });
@@ -319,74 +318,6 @@ namespace WebApi.Migrations
                     b.HasKey("TraningProgramID");
 
                     b.ToTable("traningPrograms");
-                });
-
-            modelBuilder.Entity("WebApi.Models.TraningTypes.BikeSession", b =>
-                {
-                    b.Property<int>("SessionID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SessionID"));
-
-                    b.Property<float>("AvgSpeed")
-                        .HasColumnType("real");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<float>("Distance")
-                        .HasColumnType("real");
-
-                    b.Property<float>("Durration")
-                        .HasColumnType("real");
-
-                    b.Property<string>("Note")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("traningDataUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("SessionID");
-
-                    b.HasIndex("traningDataUserId");
-
-                    b.ToTable("bikeSessions");
-                });
-
-            modelBuilder.Entity("WebApi.Models.TraningTypes.RunningSession", b =>
-                {
-                    b.Property<int>("SessionID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SessionID"));
-
-                    b.Property<float>("AvgSpeed")
-                        .HasColumnType("real");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<float>("Distance")
-                        .HasColumnType("real");
-
-                    b.Property<float>("Durration")
-                        .HasColumnType("real");
-
-                    b.Property<string>("Note")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("traningDataUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("SessionID");
-
-                    b.HasIndex("traningDataUserId");
-
-                    b.ToTable("runningSessions");
                 });
 
             modelBuilder.Entity("WebApi.Models.User", b =>
@@ -536,33 +467,9 @@ namespace WebApi.Migrations
                 {
                     b.HasOne("WebApi.Models.User", "User")
                         .WithMany("TraningDatas")
-                        .HasForeignKey("UserEmail")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("WebApi.Models.TraningTypes.BikeSession", b =>
-                {
-                    b.HasOne("WebApi.Models.TraningData", "traningData")
-                        .WithMany()
-                        .HasForeignKey("traningDataUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("traningData");
-                });
-
-            modelBuilder.Entity("WebApi.Models.TraningTypes.RunningSession", b =>
-                {
-                    b.HasOne("WebApi.Models.TraningData", "traningData")
-                        .WithMany()
-                        .HasForeignKey("traningDataUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("traningData");
                 });
 
             modelBuilder.Entity("WebApi.Models.UserData", b =>
