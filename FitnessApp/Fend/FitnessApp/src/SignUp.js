@@ -56,6 +56,11 @@ export default function SignUp() {
       height: height,
       weight: weight,
     };
+    
+    if (!username || !email || !password || !age || !height || !weight) {
+      alert("Please enter all fields");
+      return;
+    }
     // Send the payload to the server to sign up the user
     fetch("https://localhost:7221/api/Users/register", {
       method: "POST",
@@ -69,6 +74,7 @@ export default function SignUp() {
       .then((data) => {
         // Handle successful sign-up, e.g. display a success message
         console.log(data);
+        
         navigate("/Login");
       })
       .catch((error) => console.error(error));
@@ -76,7 +82,7 @@ export default function SignUp() {
 
   return (
     <div className="gradient-background">
-    <Container maxWidth="sm" style={{backgroundColor: "#ffffff"}} >
+    <Container maxWidth="sm" style={{backgroundColor: "white"}} >
       <Typography variant="h3" align="center" gutterBottom>
         Sign Up
       </Typography>

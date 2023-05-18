@@ -23,6 +23,10 @@ namespace WebApi.Controllers
             _context = context;
         }
 
+        /// <summary>
+        /// Retrieves a collection of training programs.
+        /// </summary>
+        /// <returns>An ActionResult containing a collection of TraningPrograms objects.</returns>
         // GET: api/TraningPrograms
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TraningPrograms>>> GettraningPrograms()
@@ -34,6 +38,11 @@ namespace WebApi.Controllers
             return await _context.traningPrograms.ToListAsync();
         }
 
+        /// <summary>
+        /// Retrieves a specific training program by ID.
+        /// </summary>
+        /// <param name="id">The ID of the training program to retrieve.</param>
+        /// <returns>An ActionResult containing the TraningPrograms object.</returns>
         // GET: api/TraningPrograms/5
         [HttpGet("{id}")]
         public async Task<ActionResult<TraningPrograms>> GetTraningProgram(int id)
@@ -52,6 +61,12 @@ namespace WebApi.Controllers
             return traningProgram;
         }
 
+        /// <summary>
+        /// Updates a training program with the specified ID.
+        /// </summary>
+        /// <param name="id">The ID of the training program to update.</param>
+        /// <param name="traningProgram">The TraningPrograms object containing the updated training program data.</param>
+        /// <returns>An IActionResult representing the result of the update operation.</returns>
         // PUT: api/TraningPrograms/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -83,6 +98,11 @@ namespace WebApi.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Creates a new training program.
+        /// </summary>
+        /// <param name="traningProgram">The TraningProgramsDto object containing the training program data to create.</param>
+        /// <returns>An ActionResult containing the created TraningPrograms object.</returns>
         // POST: api/TraningPrograms
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
@@ -116,6 +136,11 @@ namespace WebApi.Controllers
             return CreatedAtAction("GetUser", new { id = traningProgram.TraningProgramID }, traningProgram);
         }
 
+        /// <summary>
+        /// Deletes a training program with the specified ID.
+        /// </summary>
+        /// <param name="id">The ID of the training program to delete.</param>
+        /// <returns>An IActionResult representing the result of the delete operation.</returns>
         // DELETE: api/TraningPrograms/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTraningProgram(int id)
@@ -136,7 +161,7 @@ namespace WebApi.Controllers
             return NoContent();
         }
 
-        private bool TraningProgramExists(int id)
+        public bool TraningProgramExists(int id)
         {
             return (_context.traningPrograms?.Any(e => e.TraningProgramID == id)).GetValueOrDefault();
         }

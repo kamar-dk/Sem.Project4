@@ -32,13 +32,13 @@ namespace WebApi.Controllers
 
         }
 
-        /*public UsersController(DataContext context, IUserServices userServices)
-        {
-            _context = context;
-            _accountServices = userServices;
-        }*/
 
-
+        /// <summary>
+        /// Registers a new user.
+        /// </summary>
+        /// <param name="register">The DTO containing user registration data.</param>
+        /// <returns>An ActionResult containing the registered UserDto.</returns>
+        [HttpPost("register")]
         //[AllowAnonymous]
         [HttpPost("register")]
         public async Task<ActionResult<UserDto>> Register(UserRegisterDto register)
@@ -58,14 +58,20 @@ namespace WebApi.Controllers
                 Email = register.Email,
                 FirstName = register.FirstName,
                 LastName = register.LastName,
+                Gender = register.Gender,
+                Height = register.Height,
+                Weight = register.Weight,
                 PasswordHash = passwordHash,
-                Salt = passwordSalt,
+                Salt = passwordSalt
             };
             //_context.Calender.Add(Calender);
 
             var userData = new UserData
             {
-                Email = register.Email
+                Email = register.Email,
+                Gender = register.Gender,
+                Height = register.Height,
+                Weight = register.Weight
             };
 
 
@@ -77,7 +83,11 @@ namespace WebApi.Controllers
             return Accepted(register.Email);
         }
 
-
+        /// <summary>
+        /// Logs in a user.
+        /// </summary>
+        /// <param name="request">The DTO containing user login data.</param>
+        /// <returns>An ActionResult containing the logged-in UserDto with a token.</returns>
         //[AllowAnonymous]
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login(UserLoginDto request)
@@ -100,7 +110,10 @@ namespace WebApi.Controllers
 
         }
 
-
+        /// <summary>
+        /// Retrieves all users.
+        /// </summary>
+        /// <returns>An ActionResult containing a list of User.</returns>
         // GET: api/Users
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> Getusers()
@@ -112,6 +125,11 @@ namespace WebApi.Controllers
             return await _context.users.ToListAsync();
         }
 
+        /// <summary>
+        /// Retrieves a specific user by their ID.
+        /// </summary>
+        /// <param name="id">The ID of the user.</param>
+        /// <returns>An ActionResult containing the requested User.</returns>
         // GET: api/Users/5
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(string id)
@@ -130,6 +148,12 @@ namespace WebApi.Controllers
             return user;
         }
 
+        /// <summary>
+        /// Updates a specific user by their ID.
+        /// </summary>
+        /// <param name="id">The ID of the user.</param>
+        /// <param name="userDto">The updated UserDto.</param>
+        /// <returns>An IActionResult indicating the result of the update operation.</returns>
         // PUT: api/Users/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -171,40 +195,12 @@ namespace WebApi.Controllers
 
         }
 
-        //// POST: api/Users
-        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        //[HttpPost]
-        //public async Task<ActionResult<User>> PostUserDto(UserDto user)
-        //{
-        //    if (_context.users == null)
-        //    {
-        //        return Problem("Entity set 'DataContext.users'  is null.");
-        //    }
-        //    var config = new MapperConfiguration(cfg => cfg.CreateMap<UserDto, User>());
-        //    var mapper = new Mapper(config);
-        //    var user_ = mapper.Map<User>(user);
 
-        //    _context.users.Add(user_);
-        //    try
-        //    {
-        //        await _context.SaveChangesAsync();
-        //    }
-        //    catch (DbUpdateException)
-        //    {
-        //        if (UserExists(user.Email))
-        //        {
-        //            return Conflict();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
-
-        //    return CreatedAtAction("GetUser", new { id = user.Email }, user);
-        //}
-
-
+        /// <summary>
+        /// Deletes a specific user by their ID.
+        /// </summary>
+        /// <param name="id">The ID of the user.</param>
+        /// <returns>An IActionResult indicating the result of the deletion operation.</returns>
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(string id)
@@ -225,7 +221,12 @@ namespace WebApi.Controllers
             return NoContent();
         }
 
-        private bool UserExists(string id)
+        /// <summary>
+        /// Checks if a user with the specified ID exists.
+        /// </summary>
+        /// <param name="id">The ID of the user.</param>
+        /// <returns>True if the user exists, otherwise false.</returns>
+        public bool UserExists(string id)
         {
             return (_context.users?.Any(e => e.Email == id)).GetValueOrDefault();
         }
