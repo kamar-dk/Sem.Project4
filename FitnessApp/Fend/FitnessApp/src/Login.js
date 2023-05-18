@@ -40,8 +40,8 @@ export default function Login() {
 
   return(
     <div className="gradient-background">
-    <Container maxWidth="sm" style={{backgroundColor: "#ffffff"}} >
-    <Typography variant="h3" align="center" gutterBottom color='#ffffff'> 
+    <Container maxWidth="sm" style={{backgroundColor: "white"}} >
+    <Typography variant="h3" align="center" color='white'> 
       Please Log In
     </Typography>
 
@@ -101,6 +101,7 @@ export default function Login() {
     console.log(token.jwt);
     localStorage.setItem("token", token.jwt);
     localStorage.setItem("email", payload.email);
+    localStorage.setItem("user", "user");
     let RoleExtracted = parseToJwt(token.jwt);
     console.log(RoleExtracted);
     // Assuming line 105 is where the role is being accessed
