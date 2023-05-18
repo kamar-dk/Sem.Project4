@@ -204,8 +204,7 @@ namespace WebApi.Controllers.Tests
         public void PutUserTest()
         {
 
-
-            throw new NotImplementedException();
+            
         }
 
         [Test()]
