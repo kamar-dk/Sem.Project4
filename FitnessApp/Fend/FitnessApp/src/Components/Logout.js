@@ -10,8 +10,8 @@ function Footer(){
 
 function Logout(){
     localStorage.removeItem("token");
-    localStorage.removeItem("ModelId");
-    localStorage.removeItem("role");
+    localStorage.removeItem("user");
+    localStorage.removeItem("email");
     window.location.href = "/Login";
 }
 

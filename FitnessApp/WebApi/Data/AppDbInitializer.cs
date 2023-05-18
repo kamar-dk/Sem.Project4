@@ -84,12 +84,27 @@ namespace WebApi.Data
                 {
                     context.traningPrograms.AddRange(new TraningPrograms()
                     {
-
-                        Name = "Program 1"
+                        Name = "Full Body"
+                    },
+                    new TraningPrograms()
+                    {
+                        Name = "Chest"
+                    },
+                    new TraningPrograms()
+                    {
+                        Name = "Legs"
+                    },
+                    new TraningPrograms()
+                    {
+                        Name = "Back"
+                    },
+                    new TraningPrograms()
+                    {
+                        Name = "Shoulders"
                     });
                     context.SaveChanges();
                 }
-
+                
             }
         }
     }
