@@ -26,13 +26,13 @@ namespace WebApi.Controllers
         }
 
         public class MappingProfile : Profile
-{
-    public MappingProfile()
-    {
-        CreateMap<FavoriteTraningPrograms, FavoriteTraningProgramsDto>().ReverseMap();
-        CreateMap<TraningPrograms, TraningProgramsDto>().ReverseMap();
-    }
-}
+        {
+            public MappingProfile()
+            {
+                CreateMap<FavoriteTraningPrograms, FavoriteTraningProgramsDto>().ReverseMap();
+                CreateMap<TraningPrograms, TraningProgramsDto>().ReverseMap();
+            }
+        }
 
 
         /// <summary>
