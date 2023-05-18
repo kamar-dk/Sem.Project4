@@ -18,6 +18,8 @@ namespace WebApi.Models
         public string? LastName { get; set; }
 
         public string? Gender { get; set; }
+        public float? Height { get; set; }
+        public float? Weight { get; set; }
         public byte[]? PasswordHash { get; set; }
         public byte[]? Salt { get; set; }
 

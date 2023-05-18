@@ -23,7 +23,11 @@ namespace WebApi.Controllers
         {
             _context = context;
         }
-
+        
+        /// <summary>
+        /// Retrieves all training data.
+        /// </summary>
+        /// <returns>An ActionResult containing a list of TraningData.</returns>
         // GET: api/TraningDatas
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TraningData>>> GettrantingData()
@@ -35,6 +39,11 @@ namespace WebApi.Controllers
             return await _context.traningData.ToListAsync();
         }
 
+        /// <summary>
+        /// Retrieves a specific training data by its ID.
+        /// </summary>
+        /// <param name="id">The ID of the training data.</param>
+        /// <returns>An ActionResult containing the requested TraningData.</returns>
         // GET: api/TraningDatas/5
         [HttpGet("{id}")]
         public async Task<ActionResult<TraningData>> GetTraningData(string id)
@@ -84,7 +93,12 @@ namespace WebApi.Controllers
         //    return NoContent();
         //}
 
-        // POST: api/TraningDatas
+
+        /// <summary>
+        /// Creates a new training data.
+        /// </summary>
+        /// <param name="traningData">The DTO representing the new training data.</param>
+        /// <returns>An ActionResult containing the created TraningData.</returns>
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<TraningData>> PostTraningData(TraningDatasDto traningData)
@@ -119,6 +133,11 @@ namespace WebApi.Controllers
             return CreatedAtAction("GetTraningData", new { id = traningData.Id }, traningData);
         }
 
+        /// <summary>
+        /// Deletes a specific training data by its ID.
+        /// </summary>
+        /// <param name="id">The ID of the training data.</param>
+        /// <returns>An IActionResult indicating the result of the deletion operation.</returns>
         // DELETE: api/TraningDatas/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTraningData(string id)

@@ -35,7 +35,10 @@ namespace WebApi.Controllers
 }
 
 
-
+        /// <summary>
+        /// Retrieves a list of all favorite training programs.
+        /// </summary>
+        /// <returns>Gets a list of FavoriteTraningPrograms.</returns>
         // GET: api/FavoriteTraningPrograms
         [HttpGet]
         public async Task<ActionResult<IEnumerable<FavoriteTraningPrograms>>> GetFavoriteTraningPrograms()
@@ -52,7 +55,11 @@ namespace WebApi.Controllers
 
 
 
-
+        /// <summary>
+        /// Retrieves favorite training programs for a specific user identified by their email.
+        /// </summary>
+        /// <param name="email">The email of the user.</param>
+        /// <returns>An ActionResult containing a list of FavoriteTraningProgramsDto.</returns>
         // GET: api/FavoriteTraningPrograms/{email}
         [HttpGet("{email}")]
         public async Task<ActionResult<IEnumerable<FavoriteTraningProgramsDto>>> GetFavoriteTraningPrograms(string email)
@@ -73,7 +80,11 @@ namespace WebApi.Controllers
             return Ok(programDtos);
         }
 
-
+        /// <summary>
+        /// Adds a new favorite training program.
+        /// </summary>
+        /// <param name="programDto">The DTO representing the new favorite training program.</param>
+        /// <returns>An ActionResult containing the created FavoriteTraningProgramsDto.</returns>
         [HttpPost]
         public async Task<ActionResult<FavoriteTraningProgramsDto>> PostFavoriteTraningPrograms(FavoriteTraningProgramsDto programDto)
         {
@@ -104,7 +115,12 @@ namespace WebApi.Controllers
 
 
 
-
+        /// <summary>
+        /// Updates an existing favorite training program.
+        /// </summary>
+        /// <param name="email">The email of the user.</param>
+        /// <param name="programDto">The DTO representing the updated favorite training program.</param>
+        /// <returns>An IActionResult indicating the result of the update operation.</returns>
         [HttpPut("{email}")]
         public async Task<IActionResult> PutFavoriteTraningPrograms(string email, FavoriteTraningProgramsDto programDto)
         {
@@ -140,10 +156,12 @@ namespace WebApi.Controllers
             return NoContent();
         }
 
-        
 
-
-        // DELETE: api/FavoriteTraningPrograms/{email}
+        /// <summary>
+        /// Deletes a favorite training program based on the provided email.
+        /// </summary>
+        /// <param name="email">The email of the user.</param>
+        /// <returns>An IActionResult indicating the result of the deletion operation.</returns>
         [HttpDelete("{email}")]
         public async Task<IActionResult> DeletefavoriteTraningPrograms(string email)
         {
@@ -159,7 +177,11 @@ namespace WebApi.Controllers
             return NoContent();
         }
 
-
+        /// <summary>
+        /// Checks if a favorite training program exists for the given email.
+        /// </summary>
+        /// <param name="email">The email of the user.</param>
+        /// <returns>True if a favorite training program exists, otherwise false.</returns>
         private bool FavoriteTraningProgramsExists(string email)
         {
             return _context.favoriteTraningPrograms.Any(e => e.Email == email);
