@@ -31,6 +31,10 @@ namespace WebApi.Controllers
             _mapper = config.CreateMapper();
         }
 
+        /// <summary>
+        /// Retrieves a collection of user weights.
+        /// </summary>
+        /// <returns>An enumerable collection of UserWeightDto objects representing the user weights.</returns>
         [HttpGet]
         public IEnumerable<UserWeightDto> GetUser()
         {
@@ -42,6 +46,11 @@ namespace WebApi.Controllers
             return userWeights;
         }
 
+        /// <summary>
+        /// Retrieves a specific user weight by its ID.
+        /// </summary>
+        /// <param name="id">The ID of the user weight to retrieve.</param>
+        /// <returns>An ActionResult containing the UserWeightDto object representing the user weight.</returns>
         [HttpGet("{id}")]
         public ActionResult<UserWeightDto> GetUserWeight(int id)
         {
@@ -59,6 +68,12 @@ namespace WebApi.Controllers
             return userWeightDto;
         }
 
+        /// <summary>
+        /// Updates a user weight with the specified ID.
+        /// </summary>
+        /// <param name="id">The ID of the user weight to update.</param>
+        /// <param name="userWeightDto">The UserWeightDto object containing the updated user weight data.</param>
+        /// <returns>An ActionResult containing the updated UserWeightDto object.</returns>
         [HttpPut("{id}")]
         public async Task<ActionResult<UserWeightDto>> UpdateUserWeight(int id, [FromBody] UserWeightDto userWeightDto)
         {
@@ -89,7 +104,11 @@ namespace WebApi.Controllers
             return updatedUserWeightDto;
         }
 
-
+        // <summary>
+        /// Deletes a user weight with the specified ID.
+        /// </summary>
+        /// <param name="id">The ID of the user weight to delete.</param>
+        /// <returns>An ActionResult representing the result of the delete operation.</returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteUserWeight(int id)
         {

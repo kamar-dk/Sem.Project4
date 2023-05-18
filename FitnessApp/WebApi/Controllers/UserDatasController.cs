@@ -23,7 +23,10 @@ namespace WebApi.Controllers
             _context = context;
         }
 
-        
+        /// <summary>
+        /// Retrieves a collection of user data.
+        /// </summary>
+        /// <returns>An ActionResult containing a collection of UserData objects.</returns>
         // GET: api/UserDatas
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserData>>> GetuserDatas()
@@ -35,6 +38,11 @@ namespace WebApi.Controllers
             return await _context.userDatas.ToListAsync();
         }
 
+        /// <summary>
+        /// Retrieves a specific user data by email ID.
+        /// </summary>
+        /// <param name="id">The email ID of the user data to retrieve.</param>
+        /// <returns>An ActionResult containing the UserData object.</returns>
         // GET: api/UserDatas/5
         [HttpGet("{id}")]
         public async Task<ActionResult<UserData>> GetUserData(string id)
@@ -53,6 +61,12 @@ namespace WebApi.Controllers
             return userData;
         }
 
+        /// <summary>
+        /// Updates user data with the specified email ID.
+        /// </summary>
+        /// <param name="id">The email ID of the user data to update.</param>
+        /// <param name="userDataDto">The UserDatasDto object containing the updated user data.</param>
+        /// <returns>An IActionResult representing the result of the update operation.</returns>
         // PUT: api/UserDatas/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -90,6 +104,12 @@ namespace WebApi.Controllers
             return NoContent();
         }
 
+        
+        /// <summary>
+        /// Creates a new user data.
+        /// </summary>
+        /// <param name="userData">The UserDatasDto object containing the user data to create.</param>
+        /// <returns>An ActionResult containing the created UserData object.</returns>
         // POST: api/UserDatas
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
@@ -123,6 +143,11 @@ namespace WebApi.Controllers
             return CreatedAtAction("GetUserData", new { id = userData.Email }, userData);
         }
 
+        /// <summary>
+        /// Deletes user data with the specified email ID.
+        /// </summary>
+        /// <param name="id">The email ID of the user data to delete.</param>
+        /// <returns>An IActionResult representing the result of the delete operation.</returns>
         // DELETE: api/UserDatas/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUserData(string id)
