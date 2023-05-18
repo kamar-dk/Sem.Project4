@@ -2,7 +2,7 @@
 
 namespace WebApi.DTO
 {
-    public class UserRegisterDto
+    public class UserRegisterDto : UserDatasDto
     {
         public string Email { get; set; }// = string.Empty;
         public string Password { get; set; }// = string.Empty;

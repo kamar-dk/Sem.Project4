@@ -80,37 +80,22 @@ namespace WebApi.Data
                     context.SaveChanges();
                 }
 
-                if (!context.traningPrograms.Any())
+                if(!context.traningPrograms.Any())
                 {
-                    context.traningPrograms.AddRange(new TraningPrograms()
-                    
-                        {
-                            Name = "Program 1"
-                        },
-                        new TraningPrograms()
-                        {
-                            Name = "Chest"
-                        },
-                        new TraningPrograms()
-                        {
-                            Name = "Legs"
-                        },
-                        new TraningPrograms()
-                        {
-                            Name = "Back"
-                        },
-                        new TraningPrograms()
-                        {
-                            Name = "Shoulders"
-                        },
-                        new TraningPrograms()
-                        {
-                            Name = "Full Body"
-                        });
+                    var trainingPrograms = new List<TraningPrograms>()
+                    {
+                        new TraningPrograms() { Name = "Program 1" },
+                        new TraningPrograms() { Name = "Chest" },
+                        new TraningPrograms() { Name = "Legs" },
+                        new TraningPrograms() { Name = "Back" },
+                        new TraningPrograms() { Name = "Shoulders" },
+                        new TraningPrograms() { Name = "Full Body" }
+                    };
+
+                    context.traningPrograms.AddRange(trainingPrograms);
                     context.SaveChanges();
-                    
                 }
-                
+
             }
         }
     }
