@@ -95,27 +95,27 @@ namespace WebApi.Data
             modelBuilder.Entity<UserData>()
                 .HasMany(uw => uw.UserWeights);
 
-            /*
+
             modelBuilder.Entity<FavoriteTraningPrograms>()
                 .HasOne(ftp => ftp.TraningProgram)
                 .WithMany(tp => tp.FavoriteTraningPrograms)
-                .HasForeignKey(ftp => ftp.TraningProgramID);*/
+                .HasForeignKey(ftp => ftp.TraningProgramID);
 
             modelBuilder.Entity<FavoriteTraningPrograms>()
                 .HasOne(u => u.User)
                 .WithMany(ftp => ftp.FavoriteTraningPrograms)
                 .HasForeignKey(ftp => ftp.Email);
 
-            modelBuilder.Entity<FavoriteTraningPrograms>()
-                .HasOne(tp => tp.TraningProgram)
-                .WithMany(ftp => ftp.FavoriteTraningPrograms)
-                .HasForeignKey(ftp => ftp.TraningProgramID);
-            
-            /*modelBuilder.Entity<TraningPrograms>()
-                .HasMany(tp => tp.FavoriteTraningPrograms)
-                .WithOne(ftp => ftp.TraningProgram)
-                .HasForeignKey(ftp => ftp.TraningProgramID)
-                .OnDelete(DeleteBehavior.Cascade);*/
+            //modelBuilder.Entity<FavoriteTraningPrograms>()
+            //    .HasOne(tp => tp.TraningProgram)
+            //    .WithMany(ftp => ftp.FavoriteTraningPrograms)
+            //    .HasForeignKey(ftp => ftp.TraningProgramID);
+
+            //modelBuilder.Entity<TraningPrograms>()
+            //    .HasMany(tp => tp.FavoriteTraningPrograms)
+            //    .WithOne(ftp => ftp.TraningProgram)
+            //    .HasForeignKey(ftp => ftp.TraningProgramID)
+            //    .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

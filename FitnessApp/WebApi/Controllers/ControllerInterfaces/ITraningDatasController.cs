@@ -21,6 +21,10 @@ namespace WebApi.Controllers.ControllerInterfaces
         [HttpGet("{id}")]
         public Task<ActionResult<TraningData>> GetTraningData(string id);
 
+        // Get: api/TraningDatas/Email
+        [HttpGet("{Userid}")]
+        public Task<ActionResult<TraningData>> GetTraningDataEmail();
+
         // POST: api/TraningDatas
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
@@ -29,6 +33,7 @@ namespace WebApi.Controllers.ControllerInterfaces
         // DELETE: api/TraningDatas/5
         [HttpDelete("{id}")]
         public Task<IActionResult> DeleteTraningData(string id);
+                
 
     }
 }
