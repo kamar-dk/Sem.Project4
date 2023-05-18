@@ -104,7 +104,7 @@ namespace WebApi.Controllers
             return updatedUserWeightDto;
         }
 
-        // <summary>
+        /// <summary>
         /// Deletes a user weight with the specified ID.
         /// </summary>
         /// <param name="id">The ID of the user weight to delete.</param>
