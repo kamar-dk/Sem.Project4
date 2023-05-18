@@ -11,6 +11,11 @@ using WebApi.Data;
 using WebApi.Models;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using NSubstitute;
+using WebApi.Services;
+using AutoMapper;
 
 namespace WebApi.Controllers.Tests
 {
@@ -20,14 +25,26 @@ namespace WebApi.Controllers.Tests
 
         DataContext mockedDbContext;
 
-        [SetUp] 
-        public void SetUp() 
+        public IUserServices _userServices = Substitute.For<IUserServices>();
+        public DataContext _context;
+        public UserWeightController uut;
+        public IMapper _mapper = Substitute.For<IMapper>();
+        IConfiguration _configuration = new ConfigurationBuilder()
+            .AddJsonFile("appsettings.json")
+            .Build();
+        private IServiceProvider? serviceProvider;
+
+        [SetUp]
+        public void SetUp()
         {
-            mockedDbContext = Create.MockedDbContextFor<DataContext>();
+            var contextOptions = new DbContextOptionsBuilder<DataContext>()
+                .UseSqlServer(@"Data Source=sql.bsite.net\\MSSQL2016;Initial Catalog=kaspermartensen_prj4nyny;User ID=kaspermartensen_prj4nyny;Password=123456;Encrypt=False; Trust Server Certificate=False;Persist Security Info = True;")
+                .Options;
 
-
-            
-
+            mockedDbContext = new DataContext(contextOptions);
+            _context = mockedDbContext;
+            _mapper = Substitute.For<IMapper>();
+            uut = new UserWeightController(_context, _mapper);
         }
 
         [Test()]

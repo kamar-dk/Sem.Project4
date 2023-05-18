@@ -204,13 +204,89 @@ namespace WebApi.Controllers.Tests
         public void PutUserTest()
         {
 
-            
+            throw new NotImplementedException();
         }
 
         [Test()]
-        public void DeleteUserTest()
+        public async Task DeleteUserTest_ContextNull()
         {
-            throw new NotImplementedException();
+            uut._context.users = null;
+
+            var user = new User
+            {
+                Email = "",
+                FirstName = "",
+                LastName = "",
+            };
+
+            var result = await uut.DeleteUser(user.Email);
+            var value = result as NotFoundResult;
+
+            NUnit.Framework.Assert.AreEqual(404, value.StatusCode);
         }
+
+        [Test()]
+        public async Task DeleteUserTest_UserIsNull()
+        {
+            var user = new User
+            {
+                Email = "",
+                FirstName = "",
+                LastName = "",
+            };
+
+            var result = await uut.DeleteUser(user.Email);
+            var value = result as NotFoundResult;
+
+            NUnit.Framework.Assert.AreEqual(404, value.StatusCode);
+        }
+
+        [Test()]
+        public async Task DeleteUserTest_Success()
+        {
+            var user = new User
+            {
+                Email = "TestDelete@mail.dk",
+                FirstName = "TestDelete",
+                LastName = "TestDelete",
+            };
+
+            var register = new UserRegisterDto
+            {
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Password = "12345",
+                Gender = "Male"
+            };
+
+            var reg_result = await uut.Register(register);
+            var reg_value = reg_result.Result as AcceptedResult;
+
+            NUnit.Framework.Assert.AreEqual(202, reg_value.StatusCode);
+
+            var del_result = uut.DeleteUser(user.Email);
+            var del_value = del_result.Result as NoContentResult;
+
+            NUnit.Framework.Assert.AreEqual(204, del_value.StatusCode);
+        }
+        /*
+        [Test()]
+        public void UserExists_UserExist()
+        {
+            string email = "test@mail.dk";
+            var result = uut.UserExists(email);
+
+            NUnit.Framework.Assert.AreEqual(true, result);
+        }*/
+        /*
+        [Test()]
+        public void UserExists_UserNotExist()
+        {
+            string email = "test";
+            var result = uut.UserExists(email);
+
+            NUnit.Framework.Assert.AreEqual(false, result);
+        }*/
     }
 }
