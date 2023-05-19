@@ -7,6 +7,7 @@ import { Grid, Paper, Typography } from "@material-ui/core";
 function Tracking() {
   const [date, setDate] = useState(new Date());
   const [data, setData] = useState([]);
+  const [filtereddata, setFiltered] = useState([])
   const [calories, setCalories] = useState(0);
   const percentage = calories / 2000 * 100;
  const cappedPercentage = percentage > 100 ? 100 : percentage;
@@ -32,8 +33,6 @@ function Tracking() {
         const targetDate = date // replace with date from calender.
         targetDate.setHours(0,0,0,0); // removes timestamp from calender date if there is one.
 
-        
-
         const filtered = data.filter((data) =>{
           if(data.sessionDate){
           const dataDate = new Date(data.sessionDate.substring(0,10)); // year/month/day.
@@ -45,6 +44,7 @@ function Tracking() {
           return false;
         })
 
+        setFiltered(filtered); // setting it to use later
 
 
         const Sum = filtered.reduce((totalCalories, item) => {  //takes sessions, and sums the calorie values.
@@ -60,6 +60,15 @@ function Tracking() {
   const onClickDay = (date) => {
     setDate(date);
   };
+  const arrange = () => {
+    const arranged = [...filtereddata].sort((a,b) => {
+      const dateA = new Date(a.sessionDate);
+      const dateB = new Date(b.sessionDate);
+      return dateA.getTime() - dateB.getTime();
+    });
+
+    return arranged;
+  };
   return (
     <div className="gradient-background">
       <React.Fragment>
@@ -69,30 +78,23 @@ function Tracking() {
               <Calendar onChange={onClickDay} value={date} />
             </Grid>
             <Grid item xs={2} md={8}>
-              <Paper style={{ padding: 10 }}>
+              <Paper style={{ padding: 10, maxHeight:"300px", overflow:"auto" }}>
                 <div className="left-Container">
-                  <h1 style={{ backgroundColor: "lightblue" }}>Sessions Selected</h1>
+                  <h1 style={{ backgroundColor: "lightblue" }}>Sessions:</h1>
                   <p>
-                    BikeSessions:{" "}
-                    {
-
-                    }
+                    {arrange().map((data) => (
+                      <div key={data.id} className="text-center">
+                        id: {data.id} <br />
+                        Trainingtype: {data.trainingType} <br />
+                        Date: {data.sessionDate} <br />
+                        distance: {data.distance} <br />
+                        Session Hour/Min/Sec: {data.sessionHourTime} {data.sessionMinuteTime} {data.sessionSecondTime} <br />
+                        Calories: {data.calories} <br />
+                        Min/Max/Avg Heart rate: {data.minHeartRate} {data.maxHeartRate} {data.avgHeartRate} <br />
+                        VO2 max: {data.vo2Max} <br /> <br />
+                      </div>
+                    ))}
                   </p>
-                  <p>
-                    RunningSessions:{" "}
-                    {
-                      <div className="text-center">Selected date: {date.toDateString()} </div>
-                    }
-                  </p>
-                  <div>
-                      {data.length > 0 && (
-                       <ul>
-                         {data.map(data => (
-                        <li key={data.id}>{data.sessionDate}</li>
-                          ))}
-                         </ul>
-                      )}
-                    </div>
                 </div>
               </Paper>
             </Grid>
