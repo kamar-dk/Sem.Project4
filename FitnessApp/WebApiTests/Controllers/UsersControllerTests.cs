@@ -86,7 +86,10 @@ namespace WebApi.Controllers.Tests
                 Email = "test@mail.dk",
                 FirstName = "Test",
                 LastName = "Test",
-                Password = "Test"
+                Password = "Test",
+                Gender = "Test",
+                Height = 1,
+                Weight = 1
             };
 
             //uut._accountServices.IsVaildEmail(register.Email).Returns(true);

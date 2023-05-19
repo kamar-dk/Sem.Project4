@@ -14,7 +14,7 @@ import User from './Components/User';
 import {Box, IconButton,usetheme} from '@material-ui/core';
 
 function App() {
-  const token = localStorage.getItem("token")
+const token = localStorage.getItem("token")
 const user = localStorage.getItem("user")
    if (!user) {
     return (
@@ -33,17 +33,6 @@ const user = localStorage.getItem("user")
         <Route path="/Login" element={<Login />} ></Route>
         <Route path="/SignUp" element={<SignUp />} ></Route>
         <Route path="/" element={<Main />} ></Route>
-  
-        <Route element={<PrivateRoutes />}>
-        
-        <Route path="/User" element={<User/>} ></Route>
-        <Route path="/Activity" element={<Activity/>} ></Route>
-        <Route path="/Calories" element={<Calories/>} ></Route>
-        <Route path="/Tracking" element={<Tracking/>} ></Route>
-        <Route path="/Logout" element={<Logout/>} ></Route>
-  
-        <Route path="/TrainingsPrograms" element={<TrainingsProgram/>} ></Route>
-        </Route>
       
       </Routes>
       </>

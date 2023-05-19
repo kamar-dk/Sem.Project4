@@ -15,12 +15,8 @@ namespace WebApi.Models
     {
         public string Email { get; set; }
         public User User { get; set; }
-        
-        public float Height { get; set; }
-        
-        public float Weight { get; set; }
-        
-        //public string Gender { get; set; }
+        public double Height { get; set; }
+        public double Weight { get; set; }
         public DateTime DoB { get; set; }
         public ICollection<UserWeight>? UserWeights { get; set; }
     }
