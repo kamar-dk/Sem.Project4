@@ -141,11 +141,47 @@ namespace WebApi.Controllers.Tests
             var status = value.Value as ProblemDetails;
 
             Assert.AreEqual("Entity set 'DataContext.traningPrograms'  is null.", status.Detail);
-
         }
 
         [Test()]
-        public async void PostTraningProgramTest()
+        public async Task PostTraningProgramTest_ProgramExcistExpectConflict()
+        {
+            var tp = new TraningProgramsDto()
+            {
+                TraningProgramID = 3,
+                Name = "Program 1"
+            };
+
+            var result = await uut.PostTraningProgram(tp);
+            var value = result.Result as ConflictResult;
+            
+            Assert.AreEqual(409, value.StatusCode);
+        }
+
+        [Test()]
+        public async Task PostTraningProgramTest_Success()
+        {
+            var tp = new TraningProgramsDto()
+            {
+                Name = "Program 1 test"
+            };
+
+            var result = await uut.PostTraningProgram(tp);
+
+            
+            //var newtp = result.;
+            var value = result.Result as CreatedAtActionResult;
+
+            Assert.AreEqual(201, value.StatusCode);
+
+            var newid = value.ActionName;
+            var idint = Int32.Parse(newid);
+
+            await uut.DeleteTraningProgram(idint);
+        }
+
+        [Test()]
+        public async Task PostTraningProgramTest()
         {
             throw new NotImplementedException();
         }
