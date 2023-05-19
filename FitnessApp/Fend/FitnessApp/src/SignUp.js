@@ -56,7 +56,7 @@ export default function SignUp() {
       lastName: lastName,
       email: email,
       password: password,
-     // age: age,
+      dob: dob,
       height: height,
       weight: weight,
       gender:gender,
