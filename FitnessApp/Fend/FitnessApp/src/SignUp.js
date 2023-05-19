@@ -79,7 +79,7 @@ export default function SignUp() {
       .then((data) => {
         // Handle successful sign-up, e.g. display a success message
         console.log(data);
-
+        alert("User created successfully!");
         navigate("/Login");
       })
       .catch((error) => console.error(error));
