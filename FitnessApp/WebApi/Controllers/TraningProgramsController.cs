@@ -16,7 +16,7 @@ namespace WebApi.Controllers
     [ApiController]
     public class TraningProgramsController : ControllerBase
     {
-        private readonly DataContext _context;
+        public readonly DataContext _context;
 
         public TraningProgramsController(DataContext context)
         {
