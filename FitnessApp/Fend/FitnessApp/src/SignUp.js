@@ -83,15 +83,22 @@ export default function SignUp() {
             alert("User successfully created!");
         
             return response.json();
-            navigate("/Login");
+            
           }
         })
         .then((data) => {
           //console.log(data);
-          
+          navigate("/Login");
          
         })
-        .catch((error) => console.error(error));
+        .catch((error) => {
+          if (error.message === "Failed to sign up") {
+            alert("Email is already in use");
+          } else {
+            console.error(error);
+            alert("An error occurred while signing up");
+          }
+        });
   };
 
   return (
