@@ -180,17 +180,48 @@ namespace WebApi.Controllers.Tests
             await uut.DeleteTraningProgram(idint);
         }
 
+
         [Test()]
-        public async Task PostTraningProgramTest()
+        public async Task DeleteTraningProgramTest_ContextNull()
         {
-            throw new NotImplementedException();
+            uut._context.traningPrograms = null;
+            var result = await uut.DeleteTraningProgram(1);
+
+            var value = result as NotFoundResult;
+
+            Assert.AreEqual(404, value.StatusCode);
+
         }
 
+        [Test()]
+        public async Task DeleteTraningProgramTest_TraningProgramNull()
+        {
+            var result = await uut.DeleteTraningProgram(-1);
+
+            var value = result as NotFoundResult;
+
+            Assert.AreEqual(404, value.StatusCode);
+        }
 
         [Test()]
-        public void DeleteTraningProgramTest()
+        public async Task DeleteTraningProgramTest_Success()
         {
-            throw new NotImplementedException();
+            var tp = new TraningProgramsDto()
+            {
+                Name = "Program 1 test"
+            };
+
+            var result1 = await uut.PostTraningProgram(tp);
+            var value1 = result1.Result as CreatedAtActionResult;
+            var newid = value1.ActionName;
+            var idint = Int32.Parse(newid);
+
+            var result = await uut.DeleteTraningProgram(idint);
+            var value = result as NoContentResult;
+
+            Assert.AreEqual(204, value.StatusCode);
+
+
         }
     }
 }
