@@ -147,6 +147,43 @@ namespace WebApi.Controllers
             return user;
         }
 
+        [HttpGet("{id}/TraningData")]
+        public async Task<ActionResult<UserDto>> GetTrainingsData(string id)
+        {
+            var trainingData = await _context.users.FindAsync(id);
+            if(trainingData == null)
+            {
+                return NotFound("Training data could not be found");
+            }
+
+            _context.Entry(trainingData).Collection(i => i.TraningDatas).Load();
+
+            var trainingDataWithEmail = trainingData.Adapt<UserDto>();
+
+            foreach (var data in trainingData.TraningDatas) 
+            {
+                var training = new TraningDatasDto
+                {
+                    Id = data.Id,
+                    UserId = data.UserId,
+                    TrainingType = data.TrainingType,
+                    SessionDate = data.SessionDate,
+                    Distance = data.Distance,
+                    SessionHourTime = data.SessionHourTime,
+                    SessionMinuteTime = data.SessionMinuteTime,
+                    SessionSecondTime = data.SessionSecondTime,
+                    Calories = data.Calories,
+                    MaxHeartRate = data.MaxHeartRate,
+                    MinHeartRate = data.MinHeartRate,
+                    AvgHeartRate = data.AvgHeartRate,
+                    Vo2Max = data.Vo2Max
+                };
+                trainingDataWithEmail.TraningDatasDtos.Add(training);
+            }
+            return Ok(trainingDataWithEmail);
+
+        }
+
         /// <summary>
         /// Updates a specific user by their ID.
         /// </summary>

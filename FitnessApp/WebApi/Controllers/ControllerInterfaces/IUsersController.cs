@@ -15,5 +15,7 @@ namespace WebApi.Controllers.ControllerInterfaces
         ActionResult<IEnumerable<UserDto>> Getusers();
         ActionResult<UserDto> GetUser(int id);
 
+        ActionResult<IEnumerable<TraningData>> GetTrainingsData();
+
     }
 }

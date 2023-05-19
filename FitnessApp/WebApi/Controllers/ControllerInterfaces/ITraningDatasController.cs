@@ -19,11 +19,12 @@ namespace WebApi.Controllers.ControllerInterfaces
 
         // GET: api/TraningDatas/5
         [HttpGet("{id}")]
-        public Task<ActionResult<TraningData>> GetTraningData(string id);
+        public Task<ActionResult<TraningData>> GetTraningData(long id);
 
         // Get: api/TraningDatas/Email
-        [HttpGet("{Userid}")]
-        public Task<ActionResult<TraningData>> GetTraningDataEmail();
+        //[HttpGet("{Userid}")]
+        //public Task<ActionResult<IEnumerable<TraningData>>> GetTrainingDataEmail(string UserId);
+
 
         // POST: api/TraningDatas
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
