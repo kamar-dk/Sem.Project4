@@ -44,8 +44,8 @@ export default function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   //const [age, setAge] = useState("");
-  const [height, setHeight] = useState("");
-  const [weight, setWeight] = useState("");
+  // const [height, setHeight] = useState("");
+  // const [weight, setWeight] = useState("");
   const [gender, setGender] = useState("");
   const [dob, setDob] = useState("");
 
@@ -57,32 +57,41 @@ export default function SignUp() {
       email: email,
       password: password,
      // age: age,
-      height: height,
-      weight: weight,
+      // height: height,
+      // weight: weight,
       gender:gender,
     };
 
-    if (!firstName || !lastName || !email || !password || !gender  || !height || !weight) {
+    if (!firstName || !lastName || !email || !password || !gender || !dob) {
       alert("Please enter all fields");
       return;
     }
-    // Send the payload to the server to sign up the user
-    fetch("https://localhost:7221/api/Users/register", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // Handle successful sign-up, e.g. display a success message
-        console.log(data);
-        alert("User created successfully!");
-        navigate("/Login");
+  
+      fetch("https://localhost:7221/api/Users/register", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
       })
-      .catch((error) => console.error(error));
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Failed to sign up");
+          }
+          else {
+            alert("User successfully created!");
+        
+            return response.json();
+            navigate("/Login");
+          }
+        })
+        .then((data) => {
+          //console.log(data);
+          
+         
+        })
+        .catch((error) => console.error(error));
   };
 
   return (
@@ -153,7 +162,7 @@ export default function SignUp() {
             value={age}
             onChange={(e) => setAge(e.target.value)}
           /> */}
-          <TextField
+          {/* <TextField
             label="Height (cm)"
             type="number"
             variant="outlined"
@@ -168,7 +177,7 @@ export default function SignUp() {
             className={classes.input}
             value={weight}
             onChange={(e) => setWeight(e.target.value)}
-          />
+          /> */}
           <Button
             variant="contained"
             color="primary"
@@ -179,6 +188,7 @@ export default function SignUp() {
           </Button>
         </form>
       </Container>
+   
     </div>
   );
 }
