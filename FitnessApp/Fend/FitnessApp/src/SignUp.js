@@ -87,18 +87,17 @@ export default function SignUp() {
           }
         })
         .then((data) => {
-          //console.log(data);
-          navigate("/Login");
-         
+          console.log(data);
         })
         .catch((error) => {
           if (error.message === "Failed to sign up") {
             alert("Email is already in use");
-          } else {
-            console.error(error);
-            alert("An error occurred while signing up");
-          }
-        });
+          } 
+          
+        })
+        .finally(() => {
+          navigate("/Login");
+          });
   };
 
   return (
