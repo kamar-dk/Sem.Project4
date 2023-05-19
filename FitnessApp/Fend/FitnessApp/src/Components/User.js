@@ -57,7 +57,7 @@ function User({}) {
     alert("Delete User");
     const userId = userData.id; // Assuming you have a user ID available
 
-    fetch(`https://localhost:7221/api/User/${userId}`, {
+    fetch(`https://localhost:7221/api/Users/${userData.email}`, {
       method: 'DELETE',
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem("token"),
@@ -68,7 +68,11 @@ function User({}) {
         if (response.ok) {
           // User deleted successfully
           alert("User deleted");
-          // Perform any additional actions if needed
+          // deleting the token and user from local storage
+          localStorage.removeItem("token");
+          localStorage.removeItem("user");
+          localStorage.removeItem("email");
+          window.location.href = "/Login";
         } else {
           // Failed to delete user
           alert("Failed to delete user");
@@ -87,7 +91,7 @@ function User({}) {
   };
 
   const saveUserData = () => {
-    fetch(`https://localhost:7221/api/User/${userData.email}`, {
+    fetch(`https://localhost:7221/api/Userdatas/${userData.email}`, {
       method: 'PUT',
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem("token"),
@@ -122,14 +126,7 @@ function User({}) {
               </h1>
   
               <div style={{ display: "flex", flexDirection: "column" }}>
-                <TextField
-                  label="Name"
-                  value={userData.name || ""}
-                  variant="outlined"
-                  fullWidth
-                  margin="normal"
-                  onChange={(e) => handleInputChange(e, 'name')}
-                />
+              
                 <TextField
                   label="Email"
                   value={userData.email || ""}

@@ -12,7 +12,8 @@ function Activity(){
           <Paper style={{ padding: 20 }}>
             <div className="left-Container">
               <h1 align="center" style={{backgroundColor: "lightblue"}}>Add Activity</h1>
-                <ActivityForm></ActivityForm>
+              <ActivityForm
+              />
                 <br/>
             </div>
           </Paper>
@@ -44,23 +45,40 @@ function Activity(){
 }
 
 function PutActivity(event){
+  var id = "0"
+  var time = "T00:00:00.000Z"
     event.preventDefault()
     console.log(event.target[0].value)
-    console.log(event.target[1].value) 
+    console.log(event.target[1].value + time) 
+    console.log(event.target[2].value)
+    console.log(event.target[3].value)
+    console.log(event.target[4].value)
+    console.log(event.target[5].value)
+    console.log(event.target[6].value)
+    console.log(event.target[7].value)
+    console.log(event.target[8].value)
+    console.log(event.target[9].value)
+    console.log(event.target[10].value)
     const  payload = {
-        "Activity": event.target[0].value,
-        "Duration": event.target[1].value,
+        "id": id,
+        "userId" : localStorage.getItem("email"),
+        "trainingType" : event.target[0].value,
+        "sessionDate": event.target[1].value + time,
         "Distance": event.target[2].value,
-        "MaxHeartRate": event.target[3].value,
-        "AvgHeartRate": event.target[4].value,
-        "birthDate": new Date(event.target[5].value).toISOString(),
+        "sessionHourTime": event.target[3].value,
+        "sessionMinuteTime": event.target[4].value,
+        "sessionSecondTime": event.target[5].value,
+        "calories": event.target[6].value,
+        "MaxHeartRate": event.target[7].value,
+        "MinHeartRate": event.target[8].value,
+        "AvgHeartRate": event.target[9].value,
+        "vo2Max": event.target[10].value,
     }
-    fetch('https://localhost:7181/api/Models', {
+    fetch('https://localhost:7221/api/TraningDatas', {
     method: 'POST',
     headers: {
-        'Accept': 'application/json',
-        'Authorization': 'Bearer ' + localStorage.getItem("token"),
-        'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify(payload)
     })
@@ -75,28 +93,37 @@ const options = [
     { value: "4", label: "Walking" },
 ];
 
+
 function ActivityForm() {
-    const [Activity, setActivity] = useState("");
-    const [Duration, setDuration] = useState("");
+    const [selectedActivity, setSelectedActivity] = useState("");
+    const [date, setDate] = useState("");
+    const [SessionHours, setSessionHours] = useState("");
+    const [SessionMinutes, setSessionMinutes] = useState("");
+    const [SessionSeconds, setSessionSeconds] = useState("");
+    const [CaloriesBurned, setCaloriesBurned] = useState("");
+    const [VO2Max, setVO2Max] = useState("");
+    const [MinHeartRate, setMinHeartRate] = useState("");
     const [Distance, setDistance] = useState("");
     const [MaxHeartRate, setMaxHeartRate] = useState("");
     const [AvgHeartRate, setAvgHeartRate] = useState("");
+    
 
     return (
       <div style={{ padding: 20 }}>
       <form onSubmit={PutActivity}>
         <label>Enter Activity:
-           <Dropdown placeHolder="Select..." 
-           options={options} 
-           value={Activity}
-           onChange={(e) => setActivity(e.target.value)}
-           />
-        </label>
-        <label>Enter Duration:
           <input
-            type="text" 
-            value={Duration}
-            onChange={(e) => setDuration(e.target.value)}
+           type="text"
+           value={selectedActivity}
+            onChange={(e) => setSelectedActivity(e.target.value)}
+          />
+        </label>
+        <br></br>
+        <label>Enter Date:
+          <input
+            type="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
           />
         </label>
         <br></br>
@@ -108,11 +135,51 @@ function ActivityForm() {
           />
         </label>
         <br></br>
+        <label>Session Hours:
+        <input
+            type="text"
+            value={SessionHours}
+            onChange={(e) => setSessionHours(e.target.value)}
+          />
+        </label>
+        <br></br>
+        <label>Session Minutes:
+        <input
+            type="text"
+            value={SessionMinutes}
+            onChange={(e) => setSessionMinutes(e.target.value)}
+          />
+        </label>
+        <br></br>
+        <label>Session Seconds:
+        <input
+            type="text"
+            value={SessionSeconds}
+            onChange={(e) => setSessionSeconds(e.target.value)}
+          />
+        </label>
+        <br></br>
+        <label>Calories Burned:
+        <input
+            type="text"
+            value={CaloriesBurned}
+            onChange={(e) => setCaloriesBurned(e.target.value)}
+          />
+        </label>
+        <br></br>
         <label>Max Heart Rate:
         <input
             type="text"
             value={MaxHeartRate}
             onChange={(e) => setMaxHeartRate(e.target.value)}
+          />
+        </label>
+        <br></br>
+        <label>Min Heart Rate:
+        <input
+            type="text"
+            value={MinHeartRate}
+            onChange={(e) => setMinHeartRate(e.target.value)}
           />
         </label>
         <br></br>
@@ -125,10 +192,11 @@ function ActivityForm() {
         </label>
         <br></br>
 
-        <label>Enter Date:
-          <input
-            type="date"
-            value={new Date().toISOString()}
+        <label>VO2 Max:
+        <input
+            type="text"
+            value={VO2Max}
+            onChange={(e) => setVO2Max(e.target.value)}
           />
         </label>
         <br></br>
