@@ -47,7 +47,7 @@ namespace WebApi.Controllers
         /// <returns>An ActionResult containing the requested TraningData.</returns>
         // GET: api/TraningDatas/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<TraningData>> GetTraningData(string id)
+        public async Task<ActionResult<TraningData>> GetTraningData(long id)
         {
             if (_context.traningData == null)
             {
@@ -63,22 +63,20 @@ namespace WebApi.Controllers
             return traningData;
         }
 
-        [HttpGet("{UserId}")]
-        public async Task<ActionResult<TraningData>> GetTraningDataEmail()
-        {
-            //if (_context.traningData == null)
-            //{
-            //    return NotFound();
-            //}
-            var traningDataEmail = await _context.traningData.OrderBy(i => i.UserId).ToListAsync();
+        //[HttpGet("Id/{UserId}")]
+        //public async Task<ActionResult<IEnumerable<TraningData>>> GetTrainingDataEmail( string UserId)
+        //{          
+        //    var dbUserId = await _context.traningData.FindAsync(UserId);
+        //    if(dbUserId == null)
+        //    {
+        //        return NotFound("UserId could not be found");
+        //    }
 
-            //if (traningDataEmail == null)
-            //{
-            //    return NotFound();
-            //}
+        //    return Ok(UserId);
 
-            return Ok(traningDataEmail.Adapt<List<TraningDatasDto>>());
-        }
+
+        //}
+
 
         // PUT: api/TraningDatas/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -180,5 +178,7 @@ namespace WebApi.Controllers
         {
             return (_context.traningData?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+
+        
     }
 }

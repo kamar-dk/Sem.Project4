@@ -16,7 +16,7 @@ import {Box, IconButton,usetheme} from '@material-ui/core';
 function App() {
 const token = localStorage.getItem("token")
 const user = localStorage.getItem("user")
-   if (!user || !token) {
+   if (!user) {
     return (
       <>
         <nav>

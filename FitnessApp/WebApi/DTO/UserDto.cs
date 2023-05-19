@@ -15,7 +15,7 @@
         public string Token { get; set; }
 
 
-        //public virtual List<TraningDatasDto> TraningDatasDtos { get; set; } = new List<TraningDatasDto>();
+        public virtual List<TraningDatasDto> TraningDatasDtos { get; set; } = new List<TraningDatasDto>();
         //public virtual ICollection<TraningDatasDto> TraningDatasDtos { get; set; } = new List<TraningDatasDto>();
     }
 }
