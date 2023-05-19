@@ -92,47 +92,50 @@ function Sendlogin(event) {
       return;
     }
 
-  fetch('https://localhost:7221/api/Users/login', {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(payload)
-  })
-    .then(res => res.json())
-    .then((token) => {
-      console.log(token.jwt);
-      localStorage.setItem("token", token.jwt);
-      localStorage.setItem("email", payload.email);
-      localStorage.setItem("user", "user");
-      // let RoleExtracted = parseToJwt(token.jwt);
-      // console.log(RoleExtracted);
-      // Assuming line 105 is where the role is being accessed
+  // fetch('https://localhost:7221/api/Users/login', {
+  //   method: 'POST',
+  //   headers: {
+  //     'Accept': 'application/json',
+  //     'Content-Type': 'application/json',
+  //   },
+  //   body: JSON.stringify(payload)
+  // })
+  //   .then(res => res.json())
+  //   .then((token) => {
+  //     console.log(token.jwt);
+  //     localStorage.setItem("token", token.jwt);
+  //     localStorage.setItem("email", payload.email);
+  //     localStorage.setItem("user", "user");
 
-      window.location.href = "/User";
-    })
-    .catch(error => {
-      console.log(error);
-    });
+  //     window.location.href = "/User";
+  //   })
+  //   .catch(error => {
+  //     console.log(error);
+  //   });
+
+  fetch('https://localhost:7221/api/Users/login', {
+  method: 'POST',
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(payload)
+})
+  .then(res => {
+    if (res.ok) {
+      return res.json();
+    } else {
+      throw  alert('Login failed. Forkerte Brugerinformationer'); // Or handle the error in an appropriate way
+    }
+  })
+  .then((token) => {
+    localStorage.setItem("email", payload.email);
+    localStorage.setItem("user", "user");
+
+    window.location.href = "/User";
+  })
+  .catch(error => {
+    console.log(error);
+  });
 }
 
-
-// function parseToJwt(token) {
-//   if (!token) {
-//     console.error('Token is undefined or null');
-//     return null; // or handle the error as per your requirements
-//   }
-//   var base64Url = token.split('.')[1];
-//   var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-//   var jsonPayload = decodeURIComponent(
-//     atob(base64)
-//       .split('')
-//       .map(function(c) {
-//         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-//       })
-//       .join('')
-//   );
-  
-//   return JSON.parse(window.atob(base64));
-// }
