@@ -133,7 +133,7 @@ namespace WebApi.Controllers
                 }
             }
 
-            return CreatedAtAction("GetUser", new { id = traningProgram.TraningProgramID }, traningProgram);
+            return CreatedAtAction(program.TraningProgramID.ToString()/*"GetUser"*/, new { id = traningProgram.TraningProgramID }, traningProgram);
         }
 
         /// <summary>
