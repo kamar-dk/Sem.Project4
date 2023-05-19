@@ -70,7 +70,7 @@ export default function SignUp() {
       fetch("https://localhost:7221/api/Users/register", {
         method: "POST",
         headers: {
-          Accept: "application/json",
+          "Accept": "application/json",
           "Content-Type": "application/json",
         },
         body: JSON.stringify(payload),
@@ -91,7 +91,7 @@ export default function SignUp() {
         })
         .catch((error) => {
           if (error.message === "Failed to sign up") {
-            alert("Email is already in use");
+            alert("Emailen er allerede i brug, prøv igen");
           } 
           
         })
