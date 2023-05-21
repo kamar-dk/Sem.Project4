@@ -187,11 +187,84 @@ namespace WebApi.Controllers.Tests
         }
 
         [Test()]
-        public void PutUserTest()
+        public async Task PutUserTest_IdsNotEqual_AssertBadReguest()
         {
+            var user = new UserDto()
+            {
+                Email = "1",
+                FirstName = "Test",
+                LastName = "Test",
+                Password = "1234",
+                Gender = "Test"
+            };
 
-            throw new NotImplementedException();
+            var result = await uut.PutUser("test", user);
+            var value = result as BadRequestResult;
+
+            Assert.AreEqual(400, value.StatusCode);
         }
+
+        [Test()]
+        public async Task PutUserTest_CangedValue_AssertSucces()
+        {
+            var newUser = new UserRegisterDto()
+            {
+                Email = "NewTest@mail.dk",
+                Password = "1234",
+                FirstName = "NewTest",
+                LastName = "Test",
+                Height = 1,
+                Weight = 1
+            };
+
+            var user = new UserDto()
+            {
+                Email = newUser.Email,
+                FirstName = "new new Test",
+                LastName = newUser.LastName,
+                Password = newUser.Password,
+                Gender = "test"
+            };
+            
+            await uut.Register(newUser);
+
+            var result = uut.PutUser(newUser.Email, user);
+            var value = result.Result as NoContentResult;
+            
+            Assert.AreEqual(204, value.StatusCode);
+
+            await uut.DeleteUser(user.Email);
+        }
+        /*
+        [Test()]
+        public async Task PutUserTest_UserNotExsist_assertNotFound()
+        {
+            var newUser = new UserRegisterDto()
+            {
+                Email = "NewTest@mail.dk",
+                Password = "1234",
+                FirstName = "NewTest",
+                LastName = "Test",
+                Height = 1,
+                Weight = 1
+            };
+
+            var user = new UserDto()
+            {
+                Email = newUser.Email,
+                FirstName = "new new Test",
+                LastName = newUser.LastName,
+                Password = newUser.Password,
+                Gender = "test"
+            };
+
+            //await uut.Register(newUser);
+
+            var result = uut.PutUser(newUser.Email, user);
+            var value = result.Result as NotFoundResult;
+
+            Assert.AreEqual(404, value.StatusCode);
+        }*/
 
         [Test()]
         public async Task DeleteUserTest_ContextNull()

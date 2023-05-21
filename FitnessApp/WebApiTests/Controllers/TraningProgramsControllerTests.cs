@@ -119,11 +119,30 @@ namespace WebApi.Controllers.Tests
             Assert.AreEqual(tp.TraningProgramID, result.Value.TraningProgramID);
         }
 
+        /*
         [Test()]
-        public void PutTraningProgramTest()
+        public async Task PutTraningProgramTest()
         {
             throw new NotImplementedException();
+        }*/
+
+        [Test()]
+        public async Task PutTraningProgramTest_IdsNotEqual_AssertBadrequest()
+        {
+            var tp = new TraningPrograms()
+            {
+                TraningProgramID = 1,
+                Name = "Test"
+            };
+
+            var result = await uut.PutTraningProgram(2, tp);
+
+            var value = result as BadRequestResult;
+
+            Assert.AreEqual(400, value.StatusCode);
         }
+
+
 
         [Test()]
         public async Task PostTraningProgramTest_ContextNull()

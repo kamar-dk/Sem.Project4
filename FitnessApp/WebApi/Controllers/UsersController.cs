@@ -198,11 +198,11 @@ namespace WebApi.Controllers
             }
 
             var user = await _context.users.FindAsync(id);
-            user.Email = userDto.Email;
+            //user.Email = userDto.Email;
             user.FirstName = userDto.FirstName;
             user.LastName = userDto.LastName;
-            user.PasswordHash = userDto.PasswordHash;
-            user.Salt = userDto.Salt;
+            //user.PasswordHash = userDto.PasswordHash;
+            //user.Salt = userDto.Salt;
 
             //_mapper.Map(userDto, user);
 
