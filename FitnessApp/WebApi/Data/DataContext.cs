@@ -76,10 +76,6 @@ namespace WebApi.Data
             modelBuilder.Entity<FavoriteTraningPrograms>()
                 .HasIndex(ftp => ftp.FavoriteTraningProgramsID)
                 .IsUnique();
-
-            // Define TraningPrograms
-            modelBuilder.Entity<TraningPrograms>()
-                .HasKey(tp => tp.TraningProgramID);
             modelBuilder.Entity<FavoriteTraningPrograms>()
                 .HasOne(ftp => ftp.TraningProgram)
                 .WithMany(tp => tp.FavoriteTraningPrograms)
@@ -88,6 +84,11 @@ namespace WebApi.Data
                 .HasOne(u => u.User)
                 .WithMany(ftp => ftp.FavoriteTraningPrograms)
                 .HasForeignKey(ftp => ftp.Email);
+
+            // Define TraningPrograms
+            modelBuilder.Entity<TraningPrograms>()
+                .HasKey(tp => tp.TraningProgramID);
+            
 
 
             //modelBuilder.Entity<FavoriteTraningPrograms>()

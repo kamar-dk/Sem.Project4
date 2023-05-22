@@ -8,6 +8,8 @@ namespace WebApi.DTO
         public string? Email { get; set; }
         public int TraningProgramID { get; set; }
 
+        public string Name { get; set; }
+
         //public ICollection<TraningPrograms> TraningPrograms { get; set; }
     }
 }
