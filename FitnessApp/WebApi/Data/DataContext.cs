@@ -18,8 +18,6 @@ namespace WebApi.Data
         public DbSet<TraningData> traningData { get; set; }
         public DbSet<FavoriteTraningPrograms> favoriteTraningPrograms { get; set; }
         public DbSet<TraningPrograms> traningPrograms { get; set; }
-
-
         public DbSet<UserWeight> UserWeights { get; set; }
 
         // TraningSessions
@@ -48,6 +46,8 @@ namespace WebApi.Data
                 .HasMany(u => u.FavoriteTraningPrograms)
                 .WithOne(ftp => ftp.User)
                 .HasForeignKey(ftp => ftp.Email);
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.TraningDatas);
 
             //Define UserData
             modelBuilder.Entity<UserData>()
@@ -55,9 +55,20 @@ namespace WebApi.Data
             modelBuilder.Entity<UserData>()
                 .HasMany(uw => uw.UserWeights);
 
+            // Define UserWeight
+            modelBuilder.Entity<UserWeight>()
+                .HasKey(uw => uw.ID);
+            modelBuilder.Entity<UserWeight>()
+                .HasOne(w => w.UserData)
+                .WithMany(uw => uw.UserWeights);
+
             // Define TraningData
             modelBuilder.Entity<TraningData>()
                 .HasKey(td => td.Id);
+            modelBuilder.Entity<TraningData>()
+                .HasOne(u => u.User)
+                .WithMany(td => td.TraningDatas)
+                .HasForeignKey(td => td.UserId);
 
             // Define FavoriteTraningPrograms
             modelBuilder.Entity<FavoriteTraningPrograms>()
@@ -78,12 +89,6 @@ namespace WebApi.Data
                 .WithMany(ftp => ftp.FavoriteTraningPrograms)
                 .HasForeignKey(ftp => ftp.Email);
 
-            // Define UserWeight
-            modelBuilder.Entity<UserWeight>()
-                .HasKey(uw => uw.ID);
-            modelBuilder.Entity<UserWeight>()
-                .HasOne(w => w.UserData)
-                .WithMany(uw => uw.UserWeights);
 
             //modelBuilder.Entity<FavoriteTraningPrograms>()
             //    .HasOne(tp => tp.TraningProgram)
