@@ -13,8 +13,9 @@ namespace WebApi.Models
 
     public class UserData
     {
-        public string Email { get; set; }
-        public User User { get; set; }
+        public string? Email { get; set; }
+        public User? User { get; set; }
+        public string? Gender { get; set; }
         public double Height { get; set; }
         public double Weight { get; set; }
         public DateTime DoB { get; set; }
