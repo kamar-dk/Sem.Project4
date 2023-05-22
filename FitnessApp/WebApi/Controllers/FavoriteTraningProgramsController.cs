@@ -103,7 +103,8 @@ namespace WebApi.Controllers
                 var favoriteProgram = new FavoriteTraningPrograms
                 {
                     Email = programDto.Email,
-                    TraningProgramID = programDto.TraningProgramID
+                    TraningProgramID = programDto.TraningProgramID,
+                    Name = trainingProgram.Name,
                 };
 
 
