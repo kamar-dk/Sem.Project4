@@ -1,31 +1,14 @@
-﻿using NUnit.Framework;
-using WebApi.Controllers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EntityFrameworkCore.Testing.NSubstitute;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using WebApi.Data;
-using WebApi.Models;
-using Microsoft.Data.Sqlite;
-using Microsoft.EntityFrameworkCore;
-using AutoMapper;
-using Microsoft.Extensions.Configuration;
-using WebApi.Services;
-using WebApi.DTO;
-using NSubstitute;
-using Moq;
-using NSubstitute.ReceivedExtensions;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http.HttpResults;
-using NuGet.Common;
-using Microsoft.CodeAnalysis.Options;
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.EntityFrameworkCore.InMemory;
-using Azure.Core;
+using Microsoft.Extensions.DependencyInjection;
+using NSubstitute;
+using NUnit.Framework;
+using WebApi.Data;
+using WebApi.DTO;
+using WebApi.Models;
+using WebApi.Services;
 
 namespace WebApi.Controllers.Tests
 {
@@ -33,7 +16,7 @@ namespace WebApi.Controllers.Tests
     public class UsersControllerTests
     {
         DataContext mockedDbContext;
-        
+
         public IUserServices _userServices = Substitute.For<IUserServices>();
         public DataContext _context;
         public UsersController uut;
@@ -72,10 +55,10 @@ namespace WebApi.Controllers.Tests
             //uut._context.users.AnyAsync(x => x.Email == register.Email).Returns(true);
             var result = await uut.Register(register);
             var value = result.Result as BadRequestObjectResult;
-            
-            NUnit.Framework.Assert.AreEqual(value.Value, "Email is not valid");
+
+            Assert.AreEqual(value.Value, "Email is not valid");
         }
-        
+
 
         [TestCase("Email is already taken")]
         public async Task RegisterTest_Assert_EmailAlreadyTakenAsync(string Expected)
@@ -98,7 +81,7 @@ namespace WebApi.Controllers.Tests
 
             var value = result.Result as BadRequestObjectResult;
 
-            NUnit.Framework.Assert.AreEqual(value.Value, "Email is already taken");
+            Assert.AreEqual(value.Value, "Email is already taken");
         }
 
         [Test()]
@@ -114,7 +97,7 @@ namespace WebApi.Controllers.Tests
             var result = await uut.Login(request);
             var value = result.Result as OkObjectResult;
 
-            NUnit.Framework.Assert.AreEqual(200, value.StatusCode);   
+            Assert.AreEqual(200, value.StatusCode);
         }
 
         [Test()]
@@ -123,7 +106,7 @@ namespace WebApi.Controllers.Tests
             // test login with wrong email
             //Arrange
             var request = new UserLoginDto
-            { 
+            {
                 Email = "Alan",
                 Password = "test"
             };
@@ -131,7 +114,7 @@ namespace WebApi.Controllers.Tests
             var result = await uut.Login(request);
             var value = result.Result as NotFoundObjectResult;
 
-            NUnit.Framework.Assert.AreEqual(404, value.StatusCode);     
+            Assert.AreEqual(404, value.StatusCode);
         }
 
         [Test()]
@@ -148,7 +131,7 @@ namespace WebApi.Controllers.Tests
             var result = await uut.Login(request);
             var value = result.Result as BadRequestObjectResult;
 
-            NUnit.Framework.Assert.AreEqual(400, value.StatusCode);
+            Assert.AreEqual(400, value.StatusCode);
 
         }
 
@@ -168,7 +151,7 @@ namespace WebApi.Controllers.Tests
             var result = await uut.GetUser(user.Email);
             var value = result.Result as NotFoundResult;
 
-            NUnit.Framework.Assert.AreEqual(404, value.StatusCode);
+            Assert.AreEqual(404, value.StatusCode);
         }
 
         [Test()]
@@ -184,7 +167,7 @@ namespace WebApi.Controllers.Tests
 
             var result = await uut.GetUser(user.Email);
             var value = result.Result as NotFoundResult;
-            NUnit.Framework.Assert.AreEqual(404, value.StatusCode);
+            Assert.AreEqual(404, value.StatusCode);
         }
 
         [Test()]
@@ -199,16 +182,89 @@ namespace WebApi.Controllers.Tests
             };
 
             var result = await uut.GetUser(user.Email);
-            NUnit.Framework.Assert.AreEqual(result.Value.Email, user.Email);
+            Assert.AreEqual(result.Value.Email, user.Email);
 
         }
 
         [Test()]
-        public void PutUserTest()
+        public async Task PutUserTest_IdsNotEqual_AssertBadReguest()
         {
+            var user = new UserDto()
+            {
+                Email = "1",
+                FirstName = "Test",
+                LastName = "Test",
+                Password = "1234",
+                Gender = "Test"
+            };
 
-            throw new NotImplementedException();
+            var result = await uut.PutUser("test", user);
+            var value = result as BadRequestResult;
+
+            Assert.AreEqual(400, value.StatusCode);
         }
+
+        [Test()]
+        public async Task PutUserTest_CangedValue_AssertSucces()
+        {
+            var newUser = new UserRegisterDto()
+            {
+                Email = "NewTest@mail.dk",
+                Password = "1234",
+                FirstName = "NewTest",
+                LastName = "Test",
+                Height = 1,
+                Weight = 1
+            };
+
+            var user = new UserDto()
+            {
+                Email = newUser.Email,
+                FirstName = "new new Test",
+                LastName = newUser.LastName,
+                Password = newUser.Password,
+                Gender = "test"
+            };
+            
+            await uut.Register(newUser);
+
+            var result = uut.PutUser(newUser.Email, user);
+            var value = result.Result as NoContentResult;
+            
+            Assert.AreEqual(204, value.StatusCode);
+
+            await uut.DeleteUser(user.Email);
+        }
+        /*
+        [Test()]
+        public async Task PutUserTest_UserNotExsist_assertNotFound()
+        {
+            var newUser = new UserRegisterDto()
+            {
+                Email = "NewTest@mail.dk",
+                Password = "1234",
+                FirstName = "NewTest",
+                LastName = "Test",
+                Height = 1,
+                Weight = 1
+            };
+
+            var user = new UserDto()
+            {
+                Email = newUser.Email,
+                FirstName = "new new Test",
+                LastName = newUser.LastName,
+                Password = newUser.Password,
+                Gender = "test"
+            };
+
+            //await uut.Register(newUser);
+
+            var result = uut.PutUser(newUser.Email, user);
+            var value = result.Result as NotFoundResult;
+
+            Assert.AreEqual(404, value.StatusCode);
+        }*/
 
         [Test()]
         public async Task DeleteUserTest_ContextNull()
@@ -225,7 +281,7 @@ namespace WebApi.Controllers.Tests
             var result = await uut.DeleteUser(user.Email);
             var value = result as NotFoundResult;
 
-            NUnit.Framework.Assert.AreEqual(404, value.StatusCode);
+            Assert.AreEqual(404, value.StatusCode);
         }
 
         [Test()]
@@ -241,7 +297,7 @@ namespace WebApi.Controllers.Tests
             var result = await uut.DeleteUser(user.Email);
             var value = result as NotFoundResult;
 
-            NUnit.Framework.Assert.AreEqual(404, value.StatusCode);
+            Assert.AreEqual(404, value.StatusCode);
         }
 
         [Test()]
@@ -266,12 +322,12 @@ namespace WebApi.Controllers.Tests
             var reg_result = await uut.Register(register);
             var reg_value = reg_result.Result as AcceptedResult;
 
-            NUnit.Framework.Assert.AreEqual(202, reg_value.StatusCode);
+            Assert.AreEqual(202, reg_value.StatusCode);
 
             var del_result = uut.DeleteUser(user.Email);
             var del_value = del_result.Result as NoContentResult;
 
-            NUnit.Framework.Assert.AreEqual(204, del_value.StatusCode);
+            Assert.AreEqual(204, del_value.StatusCode);
         }
         /*
         [Test()]
@@ -280,7 +336,7 @@ namespace WebApi.Controllers.Tests
             string email = "test@mail.dk";
             var result = uut.UserExists(email);
 
-            NUnit.Framework.Assert.AreEqual(true, result);
+            Assert.AreEqual(true, result);
         }*/
         /*
         [Test()]
@@ -289,7 +345,7 @@ namespace WebApi.Controllers.Tests
             string email = "test";
             var result = uut.UserExists(email);
 
-            NUnit.Framework.Assert.AreEqual(false, result);
+            Assert.AreEqual(false, result);
         }*/
     }
 }

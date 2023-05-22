@@ -54,35 +54,45 @@ function User({}) {
 
   const deleteUser = () => {
     // Implement your delete user functionality here
-    alert("Delete User");
-    const userId = userData.id; // Assuming you have a user ID available
-
-    fetch(`https://localhost:7221/api/Users/${userData.email}`, {
-      method: 'DELETE',
-      headers: {
-        'Authorization': 'Bearer ' + localStorage.getItem("token"),
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(response => {
-        if (response.ok) {
-          // User deleted successfully
-          alert("User deleted");
-          // deleting the token and user from local storage
-          localStorage.removeItem("token");
-          localStorage.removeItem("user");
-          localStorage.removeItem("email");
-          window.location.href = "/Login";
-        } else {
-          // Failed to delete user
-          alert("Failed to delete user");
+    const confirmed = window.confirm("Are you sure you want to delete your user account?");
+    if (confirmed) {
+      // Implement your delete user functionality here
+      alert("Delete User");
+      const userId = userData.id; // Assuming you have a user ID available
+  
+      fetch(`https://localhost:7221/api/Users/${userData.email}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem("token"),
+          'Content-Type': 'application/json'
         }
       })
-      .catch(error => {
-        console.error(error);
-        alert("An error occurred while deleting user");
-      });
+        .then(response => {
+          if (response.ok) {
+            // User deleted successfully
+            alert("User deleted");
+            // deleting the token and user from local storage
+            localStorage.removeItem("token");
+            localStorage.removeItem("user");
+            localStorage.removeItem("email");
+            window.location.href = "/Login";
+          } else {
+            // Failed to delete user
+            alert("Failed to delete user");
+          }
+        })
+        .catch(error => {
+          console.error(error);
+          alert("An error occurred while deleting user");
+        });
+    }
   };
+  
+  
+  
+  
+  
+  
 
   const handleInputChange = (event, field) => {
     const updatedUserData = {...userData};
@@ -126,7 +136,24 @@ function User({}) {
               </h1>
   
               <div style={{ display: "flex", flexDirection: "column" }}>
-              
+               <TextField
+                  label="First Name"
+                  value={userData.firstName || ""}
+                  variant="outlined"
+                  fullWidth
+                  margin="normal"
+                  onChange={(e) => handleInputChange(e, 'firstName')}
+                />
+                  <TextField
+                  label="Last Name"
+                  value={userData.lastName || ""}
+                  variant="outlined"
+                  fullWidth
+                  margin="normal"
+                  onChange={(e) => handleInputChange(e, 'lastName')}
+                />
+
+
                 <TextField
                   label="Email"
                   value={userData.email || ""}
@@ -134,14 +161,14 @@ function User({}) {
                   fullWidth
                   margin="normal"
                 />
-                <TextField
+                {/* <TextField
                   label="Age"
                   value={userData.age || ""}
                   variant="outlined"
                   fullWidth
                   margin="normal"
                   onChange={(e) => handleInputChange(e, 'age')}
-                />
+                /> */}
                 <TextField
                   label="Weight"
                   value={userData.weight || ""}

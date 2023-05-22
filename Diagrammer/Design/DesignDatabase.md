@@ -5,7 +5,8 @@ User {
     string Email PK
     string Name
     string Lastname
-    string Password
+    byte[] PasswordHash
+    byte[] Salt
 }
 
 TraningData {
@@ -14,10 +15,15 @@ TraningData {
 
 UserData {
     string Email PK, FK
-    float Weight
     float Height
     string Gender
     datetime DoB
+}
+
+UserWeight {
+    int ID PK
+    float weight
+    datetime Date
 }
 
 FavoriteTraningPrograms {
@@ -55,10 +61,12 @@ BikeSession{
     string Note "Nullable"
 }
 
+
 User ||--|| TraningData : has
 User ||--|{ UserData : has
 User ||--|| FavoriteTraningPrograms : has
 FavoriteTraningPrograms }o--o{ TraningPrograms : has
+UserData }|--|{ UserWeight : has
 Server ||--o{ TraningPrograms : has
 Server ||--o{ User : has
 Server ||--o{ Diet : has

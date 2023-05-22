@@ -16,7 +16,7 @@ namespace WebApi.Controllers
     [ApiController]
     public class TraningProgramsController : ControllerBase
     {
-        private readonly DataContext _context;
+        public readonly DataContext _context;
 
         public TraningProgramsController(DataContext context)
         {
@@ -133,7 +133,7 @@ namespace WebApi.Controllers
                 }
             }
 
-            return CreatedAtAction("GetUser", new { id = traningProgram.TraningProgramID }, traningProgram);
+            return CreatedAtAction(program.TraningProgramID.ToString()/*"GetUser"*/, new { id = traningProgram.TraningProgramID }, traningProgram);
         }
 
         /// <summary>

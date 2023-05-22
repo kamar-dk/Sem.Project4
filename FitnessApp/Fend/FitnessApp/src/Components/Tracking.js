@@ -4,11 +4,14 @@ import { Parallax } from "react-parallax";
 import { Calendar } from "react-calendar";
 import { Grid, Paper, Typography } from "@material-ui/core";
 
+
+
 function Tracking() {
   const [date, setDate] = useState(new Date());
   const [data, setData] = useState([]);
   const [filtereddata, setFiltered] = useState([])
   const [calories, setCalories] = useState(0);
+  const [userData, setUserData] = useState({});
   const percentage = calories / 2000 * 100;
  const cappedPercentage = percentage > 100 ? 100 : percentage;
 
@@ -18,7 +21,8 @@ function Tracking() {
 
   const fetchData = async() => {
     console.log("FetchData called");
-    const url = "https://localhost:7221/api/TraningDatas";
+   const email = localStorage.getItem("email"); //gets the user email for a comparison later
+    const url = `https://localhost:7221/api/TraningDatas`;
     return fetch(url, {
       method: "GET",
       mode: "cors",
@@ -32,19 +36,22 @@ function Tracking() {
 
         const targetDate = date // replace with date from calender.
         targetDate.setHours(0,0,0,0); // removes timestamp from calender date if there is one.
-
+        
         const filtered = data.filter((data) =>{
           if(data.sessionDate){
           const dataDate = new Date(data.sessionDate.substring(0,10)); // year/month/day.
           dataDate.setHours(0,0,0,0); // removes timestamp from data (we should remove from database tbh).
 
-
-          return dataDate.getTime() === targetDate.getTime();
+          //console.log(email); //was for testing comparisons
+          //console.log(data.userId); // same as above
+          return dataDate.getTime() === targetDate.getTime() && email === data.userId; //compares dates and emails, returns the ones that are both true.
           }
           return false;
         })
 
         setFiltered(filtered); // setting it to use later
+
+       
 
 
         const Sum = filtered.reduce((totalCalories, item) => {  //takes sessions, and sums the calorie values.
