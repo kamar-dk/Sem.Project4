@@ -142,7 +142,7 @@ function User({}) {
                   variant="outlined"
                   fullWidth
                   margin="normal"
-                  onChange={(e) => handleInputChange(e, 'age')}
+                  onChange={(e) => handleInputChange(e, 'firstName')}
                 />
                   <TextField
                   label="Last Name"
@@ -150,7 +150,7 @@ function User({}) {
                   variant="outlined"
                   fullWidth
                   margin="normal"
-                  onChange={(e) => handleInputChange(e, 'age')}
+                  onChange={(e) => handleInputChange(e, 'lastName')}
                 />
 
 
