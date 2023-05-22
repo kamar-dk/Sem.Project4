@@ -136,7 +136,24 @@ function User({}) {
               </h1>
   
               <div style={{ display: "flex", flexDirection: "column" }}>
-              
+               <TextField
+                  label="First Name"
+                  value={userData.firstName || ""}
+                  variant="outlined"
+                  fullWidth
+                  margin="normal"
+                  onChange={(e) => handleInputChange(e, 'age')}
+                />
+                  <TextField
+                  label="Last Name"
+                  value={userData.lastName || ""}
+                  variant="outlined"
+                  fullWidth
+                  margin="normal"
+                  onChange={(e) => handleInputChange(e, 'age')}
+                />
+
+
                 <TextField
                   label="Email"
                   value={userData.email || ""}
@@ -144,14 +161,14 @@ function User({}) {
                   fullWidth
                   margin="normal"
                 />
-                <TextField
+                {/* <TextField
                   label="Age"
                   value={userData.age || ""}
                   variant="outlined"
                   fullWidth
                   margin="normal"
                   onChange={(e) => handleInputChange(e, 'age')}
-                />
+                /> */}
                 <TextField
                   label="Weight"
                   value={userData.weight || ""}

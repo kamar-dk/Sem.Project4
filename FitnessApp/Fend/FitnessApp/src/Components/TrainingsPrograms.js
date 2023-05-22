@@ -37,9 +37,9 @@ function TrainingProgram() {
   // }, [id]);
 
   return (
-    <div className="gradient-background2" justifyContent="center" alignItems="center" >
+    <div className="gradient-background2" >
 
-      <Grid ms={12} style={{ padding: 10 }}>
+      <Grid ms={6} style={{ padding: 10 }}>
         <Typography variant="h3" component="h3" style={{ color: 'white', align: 'center' }}>TrainingProgram</Typography>
         <Grid container justifyContent="center" alignItems="center">
           <Button variant="contained" color="primary" onClick={fetchData} >

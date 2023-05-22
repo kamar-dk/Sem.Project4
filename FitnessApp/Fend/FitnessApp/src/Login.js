@@ -82,7 +82,7 @@ export default function Login() {
   return(
     <div className="gradient-background">
     <Container maxWidth="sm" style={{backgroundColor: "white"}} >
-    <Typography variant="h3" align="center" color='white'> 
+    <Typography variant="h3" align="center" color='textPrimary'> 
       Please Log In
     </Typography>
 
