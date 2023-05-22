@@ -21,7 +21,7 @@ function Tracking() {
 
   const fetchData = async() => {
     console.log("FetchData called");
-   // const email = localStorage.getItem("userId"); //this would be from User.js
+   const email = localStorage.getItem("email"); //gets the user email for a comparison later
     const url = `https://localhost:7221/api/TraningDatas`;
     return fetch(url, {
       method: "GET",
@@ -36,16 +36,15 @@ function Tracking() {
 
         const targetDate = date // replace with date from calender.
         targetDate.setHours(0,0,0,0); // removes timestamp from calender date if there is one.
-
+        
         const filtered = data.filter((data) =>{
           if(data.sessionDate){
           const dataDate = new Date(data.sessionDate.substring(0,10)); // year/month/day.
           dataDate.setHours(0,0,0,0); // removes timestamp from data (we should remove from database tbh).
 
-          
-
-
-          return dataDate.getTime() === targetDate.getTime() && "Jonas@mail.dk" === data.userId; //replace Jonas with user mail.
+          //console.log(email); //was for testing comparisons
+          //console.log(data.userId); // same as above
+          return dataDate.getTime() === targetDate.getTime() && email === data.userId; //compares dates and emails, returns the ones that are both true.
           }
           return false;
         })
