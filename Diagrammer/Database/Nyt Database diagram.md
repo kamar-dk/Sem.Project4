@@ -35,8 +35,6 @@ erDiagram
         string FirstName
         string LastName
         string Gender
-        double Height
-        double weight
         byte PasswordHash
         byte Salt
     }
