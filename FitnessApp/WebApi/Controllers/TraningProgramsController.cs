@@ -69,34 +69,34 @@ namespace WebApi.Controllers
         /// <returns>An IActionResult representing the result of the update operation.</returns>
         // PUT: api/TraningPrograms/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutTraningProgram(int id, TraningPrograms traningProgram)
-        {
-            if (id != traningProgram.TraningProgramID)
-            {
-                return BadRequest();
-            }
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> PutTraningProgram(int id, TraningPrograms traningProgram)
+        //{
+        //    if (id != traningProgram.TraningProgramID)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            _context.Entry(traningProgram).State = EntityState.Modified;
+        //    _context.Entry(traningProgram).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!TraningProgramExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!TraningProgramExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         /// <summary>
         /// Creates a new training program.
@@ -105,36 +105,36 @@ namespace WebApi.Controllers
         /// <returns>An ActionResult containing the created TraningPrograms object.</returns>
         // POST: api/TraningPrograms
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<TraningPrograms>> PostTraningProgram(TraningProgramsDto traningProgram)
-        {
-          if (_context.traningPrograms == null)
-          {
-              return Problem("Entity set 'DataContext.traningPrograms'  is null.");
-          }
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<TraningProgramsDto, TraningPrograms>());
-            var mapper = new Mapper(config);
-            var program = mapper.Map<TraningPrograms>(traningProgram);
+        //[HttpPost]
+        //public async Task<ActionResult<TraningPrograms>> PostTraningProgram(TraningProgramsDto traningProgram)
+        //{
+        //  if (_context.traningPrograms == null)
+        //  {
+        //      return Problem("Entity set 'DataContext.traningPrograms'  is null.");
+        //  }
+        //    var config = new MapperConfiguration(cfg => cfg.CreateMap<TraningProgramsDto, TraningPrograms>());
+        //    var mapper = new Mapper(config);
+        //    var program = mapper.Map<TraningPrograms>(traningProgram);
 
-            _context.traningPrograms.Add(program);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (TraningProgramExists(traningProgram.TraningProgramID))
-                {
-                    return Conflict();
-                }
-                else    
-                {
-                    throw;
-                }
-            }
+        //    _context.traningPrograms.Add(program);
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateException)
+        //    {
+        //        if (TraningProgramExists(traningProgram.TraningProgramID))
+        //        {
+        //            return Conflict();
+        //        }
+        //        else    
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return CreatedAtAction(program.TraningProgramID.ToString()/*"GetUser"*/, new { id = traningProgram.TraningProgramID }, traningProgram);
-        }
+        //    return CreatedAtAction(program.TraningProgramID.ToString()/*"GetUser"*/, new { id = traningProgram.TraningProgramID }, traningProgram);
+        //}
 
         /// <summary>
         /// Deletes a training program with the specified ID.
