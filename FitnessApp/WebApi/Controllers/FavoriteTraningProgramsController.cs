@@ -86,7 +86,8 @@ namespace WebApi.Controllers
         /// <param name="programDto">The DTO representing the new favorite training program.</param>
         /// <returns>An ActionResult containing the created FavoriteTraningProgramsDto.</returns>
         [HttpPost]
-        public async Task<ActionResult<FavoriteTraningProgramsDto>> PostFavoriteTraningPrograms(FavoriteTraningProgramsDto programDto)
+        public async Task<ActionResult<FavoriteTraningProgramsDto>> PostFavoriteTraningPrograms(
+            FavoriteTraningProgramsDto programDto)
         {
             // Retrieve the training program based on the provided ID
             var trainingProgram = await _context.traningPrograms.FindAsync(programDto.TraningProgramID);
@@ -95,20 +96,28 @@ namespace WebApi.Controllers
                 return BadRequest("Invalid training program ID.");
             }
 
-            // Create a new favorite training program object
-            var favoriteProgram = new FavoriteTraningPrograms
+            if (!await _context.favoriteTraningPrograms.AnyAsync(x => x.Email == programDto.Email && x.TraningProgramID == programDto.TraningProgramID))
+                
             {
-                Email = programDto.Email,
-                TraningProgramID = programDto.TraningProgramID
-            };
+                // Create a new favorite training program object
+                var favoriteProgram = new FavoriteTraningPrograms
+                {
+                    Email = programDto.Email,
+                    TraningProgramID = programDto.TraningProgramID
+                };
 
-            // Add the favorite training program to the context
-            _context.favoriteTraningPrograms.Add(favoriteProgram);
-            await _context.SaveChangesAsync();
 
-            // Map the created favorite training program to a DTO and return it
-            var createdDto = _mapper.Map<FavoriteTraningProgramsDto>(favoriteProgram);
-            return CreatedAtAction(nameof(GetFavoriteTraningPrograms), new { email = favoriteProgram.Email }, createdDto);
+                // Add the favorite training program to the context
+                _context.favoriteTraningPrograms.Add(favoriteProgram);
+                await _context.SaveChangesAsync();
+
+                // Map the created favorite training program to a DTO and return it
+                var createdDto = _mapper.Map<FavoriteTraningProgramsDto>(favoriteProgram);
+                return CreatedAtAction(nameof(GetFavoriteTraningPrograms), new { email = favoriteProgram.Email },
+                    createdDto);
+            }
+
+            return BadRequest("Program already exists");
         }
 
 
@@ -162,10 +171,10 @@ namespace WebApi.Controllers
         /// </summary>
         /// <param name="email">The email of the user.</param>
         /// <returns>An IActionResult indicating the result of the deletion operation.</returns>
-        [HttpDelete("{email}")]
-        public async Task<IActionResult> DeletefavoriteTraningPrograms(string email)
+        [HttpDelete("{favoriteTraningProgramsID}")]
+        public async Task<IActionResult> DeletefavoriteTraningPrograms(int favoriteTraningProgramsID)
         {
-            var program = await _context.favoriteTraningPrograms.FindAsync(email);
+            var program = await _context.favoriteTraningPrograms.FindAsync(favoriteTraningProgramsID);
             if (program == null)
             {
                 return NotFound();

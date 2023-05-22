@@ -57,8 +57,8 @@ namespace WebApi.Controllers
                 Email = register.Email,
                 FirstName = register.FirstName,
                 LastName = register.LastName,
-                Gender = register.Gender,
-               PasswordHash = passwordHash,
+                //Gender = register.Gender,
+                PasswordHash = passwordHash,
                 Salt = passwordSalt
             };
             //_context.Calender.Add(Calender);
@@ -66,6 +66,7 @@ namespace WebApi.Controllers
             var userData = new UserData
             {
                 Email = register.Email,
+                Gender = register.Gender,
                 Height = register.Height,
                 Weight = register.Weight
             };
