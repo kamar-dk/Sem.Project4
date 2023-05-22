@@ -104,7 +104,7 @@ namespace WebApi.Controllers
                 {
                     Email = programDto.Email,
                     TraningProgramID = programDto.TraningProgramID,
-                    //Name = trainingProgram.Name,
+                    Name = trainingProgram.Name,
                 };
 
 

@@ -6,6 +6,7 @@ import {
   Grid, Paper, Typography, Button,
   Select, FormControl, InputLabel, Box, TextField
 } from "@material-ui/core";
+import { Card, CardContent } from "@material-ui/core";
 import { lightBlue } from "@material-ui/core/colors";
 import { OutlinedInput } from "@material-ui/core";
 
@@ -14,6 +15,60 @@ import { OutlinedInput } from "@material-ui/core";
 function User({}) {
   const [userData, setUserData] = useState({});
   const [loading,setLoading] = useState(true);
+  const [favoriteTrainingPrograms, setFavoriteTrainingPrograms] = useState([]);
+ 
+  const getFavoriteTrainingPrograms = () => {
+    const email = localStorage.getItem("email");
+
+    const url = `https://localhost:7221/api/FavoriteTraningPrograms/${email}`;
+  
+    fetch(url, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('Error fetching favorite training programs:', response.statusText);
+        }
+      })
+      .then(data => {
+        setFavoriteTrainingPrograms(data);
+      })
+      .catch(error => {
+        console.error(error);
+        alert('Error fetching favorite training programs');
+      });
+  };
+
+  // const getProgramData = async (programId) => {
+  //   const programID = localStorage.getItem("traningProgramID");
+  //   const url = `https://localhost:7221/api/TrainingPrograms/${programID}`;
+
+  //   try {
+  //     const response = await fetch(url, {
+  //       method: 'GET',
+  //       headers: {
+  //         'Accept': 'application/json',
+  //         'Content-Type': 'application/json'
+  //       }
+  //     });
+
+  //     if (response.ok) {
+  //       const data = await response.json();
+  //       setProgramData(data);
+  //     } else {
+  //       throw new Error('Error fetching program data:', response.statusText);
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //     alert('Error fetching program data');
+  //   }
+  // };
 
   useEffect(() => {
    const fetchData= async()=>{
@@ -43,6 +98,16 @@ function User({}) {
   };
   fetchData();
   }, []);
+
+  useEffect(() => {
+    getFavoriteTrainingPrograms();
+  }, []);
+
+  // useEffect(() => {
+  //   favoriteTrainingPrograms.forEach(program => {
+  //     getProgramData(program.traningProgramID);
+  //   });
+  // }, [favoriteTrainingPrograms]);
  
   if (loading) {
     return <p>Loading user data...</p>;
@@ -87,13 +152,7 @@ function User({}) {
         });
     }
   };
-  
-  
-  
-  
-  
-  
-
+ 
   const handleInputChange = (event, field) => {
     const updatedUserData = {...userData};
     updatedUserData[field] = event.target.value;
@@ -122,6 +181,9 @@ function User({}) {
         alert("An error occurred while saving user data");
       });
   };
+
+
+ 
 
 
   return (
@@ -161,14 +223,7 @@ function User({}) {
                   fullWidth
                   margin="normal"
                 />
-                {/* <TextField
-                  label="Age"
-                  value={userData.age || ""}
-                  variant="outlined"
-                  fullWidth
-                  margin="normal"
-                  onChange={(e) => handleInputChange(e, 'age')}
-                /> */}
+               
                 <TextField
                   label="Weight"
                   value={userData.weight || ""}
@@ -198,7 +253,7 @@ function User({}) {
           </Paper>
         </Grid>
   
-        {/* Right Container */}
+        {/* Favorite Traingings programs */}
         <Grid item xs={12} md={6}>
           <Paper
             style={{
@@ -212,10 +267,23 @@ function User({}) {
               <h1 align="center" style={{ backgroundColor: "lightblue" }}>
                 Favorite Training programs
               </h1>
+              {favoriteTrainingPrograms.map(program => (
+                <Card key={program.id}>
+                  <CardContent>
+                    <Typography variant="h5" component="h2">
+                    {program.name}
+                    </Typography>
+                    {/* Add more content or details about the training program */}
+                  </CardContent>
+                </Card>
+              ))}
+
             </div>
           </Paper>
         </Grid>
-  
+
+
+        {/* Last Activity */}
         <Grid item xs={12} md={12}>
           <Paper style={{ padding: 20 }}>
             <Box display="flex" flexDirection="row" alignItems="center" marginBottom={4}>
