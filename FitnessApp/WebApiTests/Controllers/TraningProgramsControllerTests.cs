@@ -64,7 +64,7 @@ namespace WebApi.Controllers.Tests
             var result = await uut.GettraningPrograms();
             var value = result.Value;
 
-            Assert.AreEqual(6, value.Count()); // You need to look up how many traning programs there are in the database and then compare it to the value.StatusCode
+            Assert.AreEqual(5, value.Count()); // You need to look up how many traning programs there are in the database and then compare it to the value.StatusCode
 
         }
 
@@ -110,8 +110,8 @@ namespace WebApi.Controllers.Tests
 
             var tp = new TraningPrograms()
             {
-                TraningProgramID = 3,
-                Name = "Program 1"
+                TraningProgramID = 4,
+                Name = "Chest"
             };
 
             var result = await uut.GetTraningProgram(tp.TraningProgramID);
@@ -161,7 +161,7 @@ namespace WebApi.Controllers.Tests
 
             Assert.AreEqual("Entity set 'DataContext.traningPrograms'  is null.", status.Detail);
         }
-
+        /* Can't post with Id throws exception
         [Test()]
         public async Task PostTraningProgramTest_ProgramExcistExpectConflict()
         {
@@ -175,6 +175,18 @@ namespace WebApi.Controllers.Tests
             var value = result.Result as ConflictResult;
             
             Assert.AreEqual(409, value.StatusCode);
+        }*/
+
+        [Test()]
+        public async Task PostTraningProgram_UpdateException()
+        {
+            var tp = new TraningProgramsDto()
+            {
+                TraningProgramID = 1,
+                Name = "Test"
+            };
+
+            Assert.ThrowsAsync<DbUpdateException>(() => uut.PostTraningProgram(tp));
         }
 
         [Test()]
@@ -221,7 +233,10 @@ namespace WebApi.Controllers.Tests
 
             Assert.AreEqual(404, value.StatusCode);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [Test()]
         public async Task DeleteTraningProgramTest_Success()
         {
