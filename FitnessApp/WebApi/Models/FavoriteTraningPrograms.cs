@@ -22,5 +22,6 @@ namespace WebApi.Models
         public string Email { get; set; }
         public User User { get; set; }
         public ICollection<TraningPrograms> TraningPrograms { get; set; }
+        //public string Name { get; internal set; }
     }
 }
