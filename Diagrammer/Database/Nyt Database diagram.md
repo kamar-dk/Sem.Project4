@@ -1,4 +1,34 @@
 ```mermaid
+---
+title: Database Concept Diagram 
+---
+erDiagram
+    User{}
+    
+    User |o--o| UserData : has
+    User |o--o| TraningData : has
+    User }|--|{ FavoriteTraningPrograms : has
+
+    UserData {}
+
+    UserWeight {}
+
+    UserData }|--o{ UserWeight : has
+    
+    TraningData {}
+
+    TraningProgram {}
+
+    FavoriteTraningPrograms ||--|{ TraningProgram : has
+
+    FavoriteTraningPrograms {}
+
+```
+
+```mermaid
+---
+title: Database Er Diagram
+---
 erDiagram
     User{
         string Email pk
@@ -23,13 +53,13 @@ erDiagram
         Date DOB
     }
 
-    UserData }|--o| UserWeight : has
-
-    UserWeight{
+    UserWeight {
         int ID pk
         float Weight
-        Date date
+        DateTime Date
     }
+
+    UserData }|--o{ UserWeight : has
     
     TraningData {
         int Id pk
@@ -58,9 +88,5 @@ erDiagram
         string Email fk
 
     }
-
-
-
-
 
 ```
