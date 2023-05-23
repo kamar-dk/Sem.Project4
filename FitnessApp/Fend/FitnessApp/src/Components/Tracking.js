@@ -11,7 +11,6 @@ function Tracking() {
   const [data, setData] = useState([]);
   const [filtereddata, setFiltered] = useState([])
   const [calories, setCalories] = useState(0);
-  const [userData, setUserData] = useState({});
   const percentage = calories / 2000 * 100;
  const cappedPercentage = percentage > 100 ? 100 : percentage;
 
