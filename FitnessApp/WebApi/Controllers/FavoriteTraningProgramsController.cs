@@ -104,7 +104,7 @@ namespace WebApi.Controllers
                 {
                     Email = programDto.Email,
                     TraningProgramID = programDto.TraningProgramID,
-                    //Name = trainingProgram.Name,
+                    Name = trainingProgram.Name,
                 };
 
 
@@ -172,10 +172,10 @@ namespace WebApi.Controllers
         /// </summary>
         /// <param name="email">The email of the user.</param>
         /// <returns>An IActionResult indicating the result of the deletion operation.</returns>
-        [HttpDelete("{favoriteTraningProgramsID}")]
-        public async Task<IActionResult> DeletefavoriteTraningPrograms(int favoriteTraningProgramsID)
+        [HttpDelete("{email}/{favoriteTraningProgramsID}")]
+        public async Task<IActionResult> DeletefavoriteTraningPrograms(string email, int favoriteTraningProgramsID)
         {
-            var program = await _context.favoriteTraningPrograms.FindAsync(favoriteTraningProgramsID);
+            var program = await _context.favoriteTraningPrograms.FirstOrDefaultAsync(p => p.Email == email && p.FavoriteTraningProgramsID == favoriteTraningProgramsID);
             if (program == null)
             {
                 return NotFound();

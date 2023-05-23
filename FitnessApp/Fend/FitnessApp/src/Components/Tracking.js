@@ -91,14 +91,13 @@ function Tracking() {
                   <p>
                     {arrange().map((data) => (
                       <div key={data.id} className="text-center">
-                        id: {data.id} <br />
-                        Trainingtype: {data.trainingType} <br />
+                        {data.trainingType} Session <br />
                         Date: {data.sessionDate} <br />
-                        distance: {data.distance} <br />
-                        Session Hour/Min/Sec: {data.sessionHourTime} {data.sessionMinuteTime} {data.sessionSecondTime} <br />
-                        Calories: {data.calories} <br />
-                        Min/Max/Avg Heart rate: {data.minHeartRate} {data.maxHeartRate} {data.avgHeartRate} <br />
-                        VO2 max: {data.vo2Max} <br /> <br />
+                        Distance: {data.distance}m <br />
+                        Session Time: {data.sessionHourTime}:{data.sessionMinuteTime}:{data.sessionSecondTime} <br />
+                        Calories Burned: {data.calories} <br />
+                        Min/Max/Avg Heart rate: {data.minHeartRate}-{data.maxHeartRate}/{data.avgHeartRate} <br />
+                        VO2 max: {data.vo2Max} mL/kg/min <br /> <br />
                       </div>
                     ))}
                   </p>
@@ -109,7 +108,7 @@ function Tracking() {
         </div>
       </React.Fragment>
       <div>
-        <div style={{ padding: 120, textAlign: "center"}}>
+        <div style={{ padding: 120, textAlign: "center", color: "white"}}>
         <h1> {date.toDateString()}</h1>
         <div style={{ width: 75, height: 300, padding: 100, display: "flex", flexDirection: "column-reverse", alignItems: "center" }}>
           <div
