@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 using WebApi.Models;
 using WebApi.DTO;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace WebApi.Controllers.Tests
 {
@@ -68,7 +69,7 @@ namespace WebApi.Controllers.Tests
         [Test()]
         public void GetFavoriteTraningProgramsWithParamterTest_ProgramsNull()
         {
-            uut._context.favoriteTraningPrograms = null;
+            //uut._context.favoriteTraningPrograms.ToListAsync().Returns(null);
             var result = uut.GetFavoriteTraningPrograms("test@mail.dk");
 
             Assert.That(result.Result, Is.TypeOf<ActionResult<IEnumerable<FavoriteTraningProgramsDto>>>());
@@ -103,7 +104,7 @@ namespace WebApi.Controllers.Tests
 
             // Not  part of the test, just for cleanup
             var i = _context.favoriteTraningPrograms.ToList().Last();
-            await uut.DeletefavoriteTraningPrograms(i.FavoriteTraningProgramsID);  
+            await uut.DeletefavoriteTraningPrograms(ftpDto.Email ,i.FavoriteTraningProgramsID);  
         }
 
         [Test()]
@@ -122,23 +123,65 @@ namespace WebApi.Controllers.Tests
             Assert.That(result.Result, Is.TypeOf<BadRequestObjectResult>());
             Assert.That(value.Value, Is.EqualTo("Invalid training program ID."));
         }
-
+        /*
         [Test()]
         public void PutFavoriteTraningProgramsTest()
         {
             throw new NotImplementedException();
+        }*/
+
+        [Test()]
+        public async Task DeletefavoriteTraningProgramsTest_Success()
+        {
+            var ftpDto = new FavoriteTraningProgramsDto()
+            {
+                FavoriteTraningProgramsID = 1,
+                TraningProgramID = 1,
+                Email = "asd@mail.dk"
+            };
+
+            await uut.PostFavoriteTraningPrograms(ftpDto);
+            
+
+            var i = _context.favoriteTraningPrograms.ToList().Last();
+            var result = await uut.DeletefavoriteTraningPrograms(ftpDto.Email, i.FavoriteTraningProgramsID);
+
+            Assert.That(result, Is.TypeOf<NoContentResult>());
+
+            //Assert.That(result.Result, Is.TypeOf<BadRequestObjectResult>());
+            //Assert.That(value.Value, Is.EqualTo("Invalid training program ID."));
         }
 
         [Test()]
-        public void DeletefavoriteTraningProgramsTest()
+        public async Task DeletefavoriteTraningProgramsTest_Invaid()
         {
-            throw new NotImplementedException();
+            var ftpdto = new FavoriteTraningProgramsDto()
+            {
+                FavoriteTraningProgramsID = 1,
+                TraningProgramID = 1,
+                Email = "test@mail.dk"
+            };
+
+            var result = await uut.DeletefavoriteTraningPrograms(ftpdto.Email, ftpdto.FavoriteTraningProgramsID);
+
+            Assert.That(result, Is.TypeOf<NotFoundResult>());
         }
 
-        [Test()]
-        public void DeletefavoriteTraningProgramsTest_Invaid()
+        [Test(), Order(1)]
+        public async Task PostFavoriteTraningProgramTest_ProgramAlreadyExist()
         {
-            throw new NotImplementedException();
+            var ftpDto = new FavoriteTraningProgramsDto()
+            {
+                FavoriteTraningProgramsID = 1,
+                TraningProgramID = 4,
+                Email = "asd@mail.dk"
+            };
+
+            var result = await uut.PostFavoriteTraningPrograms(ftpDto);
+            var value = result.Result as BadRequestObjectResult;
+
+            Assert.That(result.Result, Is.TypeOf<BadRequestObjectResult>());
+            Assert.That(value.Value, Is.EqualTo("Program already exists"));
         }
     }
 }

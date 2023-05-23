@@ -15,7 +15,7 @@ namespace WebApi.Controllers
     [ApiController]
     public class FavoriteTraningProgramsController : ControllerBase
     {
-        private readonly DataContext _context;
+        public readonly DataContext _context;
         private readonly IMapper _mapper;
 
         public FavoriteTraningProgramsController(DataContext context, IMapper mapper)
@@ -70,7 +70,7 @@ namespace WebApi.Controllers
                 .Where(f => f.Email== email)
                 .ToListAsync();
 
-            if (programs == null)
+            if (programs == null || programs.Count == 0)
             {
                 return Ok(new List<FavoriteTraningProgramsDto>());
             }
