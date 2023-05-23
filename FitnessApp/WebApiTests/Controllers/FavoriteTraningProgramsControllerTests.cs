@@ -15,6 +15,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Models;
 using WebApi.DTO;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace WebApi.Controllers.Tests
 {
@@ -48,32 +49,78 @@ namespace WebApi.Controllers.Tests
         }
 
         [Test()]
-        public void FavoriteTraningProgramsControllerTest()
+        public async Task GetFavoriteTraningProgramsTest_ContextNull()
         {
-            throw new NotImplementedException();
+            uut._context.favoriteTraningPrograms = null;
+            var result = await uut.GetFavoriteTraningPrograms();
+
+            Assert.That(result.Result, Is.TypeOf<OkObjectResult>());
         }
 
         [Test()]
-        public void GetFavoriteTraningProgramsTest()
+        public async Task GetFavoriteTraningProgramsTest_Success()
         {
-            throw new NotImplementedException();
+            var result = await uut.GetFavoriteTraningPrograms();
+
+            Assert.That(result, Is.TypeOf<ActionResult<IEnumerable<FavoriteTraningPrograms>>>());
         }
 
         [Test()]
-        public void GetFavoriteTraningProgramsTest1()
+        public void GetFavoriteTraningProgramsWithParamterTest_ProgramsNull()
         {
-            throw new NotImplementedException();
+            uut._context.favoriteTraningPrograms = null;
+            var result = uut.GetFavoriteTraningPrograms("test@mail.dk");
+
+            Assert.That(result.Result, Is.TypeOf<ActionResult<IEnumerable<FavoriteTraningProgramsDto>>>());
+        }
+        //asd@mail.dk
+
+        [Test()]
+        public void GetFavoriteTraningProgramsWithParamterTest_Success()
+        {
+            var result = uut.GetFavoriteTraningPrograms("asd@mail.dk");
+
+            Assert.That(result.Result, Is.TypeOf<ActionResult<IEnumerable<FavoriteTraningProgramsDto>>>());
         }
 
         [Test()]
-        public void PostFavoriteTraningProgramsTest()
+        public async Task PostFavoriteTraningProgramsTest()
+        {
+            //throw new NotImplementedException();
+
+            var ftpDto = new FavoriteTraningProgramsDto()
+            {
+                FavoriteTraningProgramsID = 1,
+                TraningProgramID = 6,
+                Email = "test@mail.dk",
+                Name = "Legs"
+            };
+
+            var result = uut.PostFavoriteTraningPrograms(ftpDto);
+            var value = result.Result as ActionResult<FavoriteTraningProgramsDto>;
+
+            Assert.That(result.Result, Is.TypeOf<ActionResult<FavoriteTraningProgramsDto>>());
+
+            // Not  part of the test, just for cleanup
+            var i = _context.favoriteTraningPrograms.ToList().Last();
+            await uut.DeletefavoriteTraningPrograms(i.FavoriteTraningProgramsID);  
+        }
+
+        [Test()]
+        public async Task PostFavoriteTraningProgramTest_InvalidTraningprogramId()
         {
             var ftpDto = new FavoriteTraningProgramsDto()
             {
                 FavoriteTraningProgramsID = 1,
                 TraningProgramID = 1,
-                Email = "test@mail.dk"
+                Email = "asd@mail.dk"
             };
+
+            var result = await uut.PostFavoriteTraningPrograms(ftpDto);
+            var value = result.Result as BadRequestObjectResult;
+
+            Assert.That(result.Result, Is.TypeOf<BadRequestObjectResult>());
+            Assert.That(value.Value, Is.EqualTo("Invalid training program ID."));
         }
 
         [Test()]
@@ -85,15 +132,13 @@ namespace WebApi.Controllers.Tests
         [Test()]
         public void DeletefavoriteTraningProgramsTest()
         {
-            
+            throw new NotImplementedException();
         }
 
         [Test()]
         public void DeletefavoriteTraningProgramsTest_Invaid()
         {
-
-            
-            
+            throw new NotImplementedException();
         }
     }
 }

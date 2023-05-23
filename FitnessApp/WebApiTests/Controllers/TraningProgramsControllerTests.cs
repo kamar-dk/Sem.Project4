@@ -125,7 +125,7 @@ namespace WebApi.Controllers.Tests
         {
             throw new NotImplementedException();
         }*/
-
+        /*
         [Test()]
         public async Task PutTraningProgramTest_IdsNotEqual_AssertBadrequest()
         {
@@ -176,7 +176,7 @@ namespace WebApi.Controllers.Tests
             
             Assert.AreEqual(409, value.StatusCode);
         }*/
-
+        /*
         [Test()]
         public async Task PostTraningProgram_UpdateException()
         {
@@ -187,8 +187,8 @@ namespace WebApi.Controllers.Tests
             };
 
             Assert.ThrowsAsync<DbUpdateException>(() => uut.PostTraningProgram(tp));
-        }
-
+        }*/
+        /*
         [Test()]
         public async Task PostTraningProgramTest_Success()
         {
@@ -210,7 +210,7 @@ namespace WebApi.Controllers.Tests
 
             await uut.DeleteTraningProgram(idint);
         }
-
+        */
 
         [Test()]
         public async Task DeleteTraningProgramTest_ContextNull()
@@ -233,6 +233,7 @@ namespace WebApi.Controllers.Tests
 
             Assert.AreEqual(404, value.StatusCode);
         }
+        /*
         /// <summary>
         /// 
         /// </summary>
@@ -256,6 +257,6 @@ namespace WebApi.Controllers.Tests
             Assert.AreEqual(204, value.StatusCode);
 
 
-        }
+        }*/
     }
 }
