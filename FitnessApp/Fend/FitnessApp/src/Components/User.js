@@ -3,7 +3,7 @@ import {
   Grid, Paper, Typography, Button,
   TextField, Box, Card, CardContent,
 } from "@material-ui/core";
-import "../App.css";
+
 
 function User() {
   const [userData, setUserData] = useState({});
@@ -175,7 +175,6 @@ function User() {
   };
 
   //updating userData but no firstname and lastname
-
   const saveUserData = () => {
     fetch(`https://localhost:7221/api/Userdatas/${userData.email}`, {
       method: 'PUT',
@@ -250,6 +249,7 @@ function User() {
   return (
     <div className="gradient-background">
       <Grid container spacing={2}>
+        
         {/* Left Container */}
         <Grid item xs={12} md={6}>
           <Paper style={{ padding: 20 }}>
