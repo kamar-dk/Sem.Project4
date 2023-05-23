@@ -50,34 +50,44 @@ namespace WebApi.Controllers.Tests
         }
 
         [Test()]
-        public async Task GetFavoriteTraningProgramsTest_ContextNull()
+        public async Task GetFavoriteTraningProgramsTest_ContextNull_Assert_OkObjectResult()
         {
             uut._context.favoriteTraningPrograms = null;
             var result = await uut.GetFavoriteTraningPrograms();
+            var returned = result.Value;
+
 
             Assert.That(result.Result, Is.TypeOf<OkObjectResult>());
+            Assert.AreEqual(returned, null);
         }
 
         [Test()]
-        public async Task GetFavoriteTraningProgramsTest_Success()
+        public async Task GetFavoriteTraningProgramsTest_Success_Assert_ActionResultNotEmpty()
         {
             var result = await uut.GetFavoriteTraningPrograms();
+            var returned = result.Value;
+
 
             Assert.That(result, Is.TypeOf<ActionResult<IEnumerable<FavoriteTraningPrograms>>>());
+            Assert.That(returned, Is.Not.Empty);
+            
         }
 
         [Test()]
-        public void GetFavoriteTraningProgramsWithParamterTest_ProgramsNull()
+        public void GetFavoriteTraningProgramsWithParamterTest_ProgramsNull_Assert_ActionResultEmpty()
         {
             //uut._context.favoriteTraningPrograms.ToListAsync().Returns(null);
             var result = uut.GetFavoriteTraningPrograms("test@mail.dk");
 
+            var returned = result.Result;
+
             Assert.That(result.Result, Is.TypeOf<ActionResult<IEnumerable<FavoriteTraningProgramsDto>>>());
+            Assert.AreEqual(returned.Value, null);
         }
         //asd@mail.dk
 
         [Test()]
-        public void GetFavoriteTraningProgramsWithParamterTest_Success()
+        public void GetFavoriteTraningProgramsWithParamterTest_Success_Assert_ActionResult()
         {
             var result = uut.GetFavoriteTraningPrograms("asd@mail.dk");
 
@@ -85,7 +95,7 @@ namespace WebApi.Controllers.Tests
         }
 
         [Test()]
-        public async Task PostFavoriteTraningProgramsTest()
+        public async Task PostFavoriteTraningProgramsTest_Success_Assert_ActionResultFTPDto()
         {
             //throw new NotImplementedException();
 
@@ -108,7 +118,7 @@ namespace WebApi.Controllers.Tests
         }
 
         [Test()]
-        public async Task PostFavoriteTraningProgramTest_InvalidTraningprogramId()
+        public async Task PostFavoriteTraningProgramTest_Assert_InvalidTraningprogramId()
         {
             var ftpDto = new FavoriteTraningProgramsDto()
             {
@@ -131,7 +141,7 @@ namespace WebApi.Controllers.Tests
         }*/
 
         [Test()]
-        public async Task DeletefavoriteTraningProgramsTest_Success()
+        public async Task DeletefavoriteTraningProgramsTest_Success_Assert_NoContentResult()
         {
             var ftpDto = new FavoriteTraningProgramsDto()
             {
@@ -153,7 +163,7 @@ namespace WebApi.Controllers.Tests
         }
 
         [Test()]
-        public async Task DeletefavoriteTraningProgramsTest_Invaid()
+        public async Task DeletefavoriteTraningProgramsTest_Invaid_Assert_NoContentResult()
         {
             var ftpdto = new FavoriteTraningProgramsDto()
             {
@@ -168,7 +178,7 @@ namespace WebApi.Controllers.Tests
         }
 
         [Test(), Order(1)]
-        public async Task PostFavoriteTraningProgramTest_ProgramAlreadyExist()
+        public async Task PostFavoriteTraningProgramTest_Assert_ProgramAlreadyExist()
         {
             var ftpDto = new FavoriteTraningProgramsDto()
             {
