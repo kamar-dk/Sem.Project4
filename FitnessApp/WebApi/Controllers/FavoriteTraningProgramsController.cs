@@ -52,9 +52,6 @@ namespace WebApi.Controllers
             
         }
 
-
-
-
         /// <summary>
         /// Retrieves favorite training programs for a specific user identified by their email.
         /// </summary>

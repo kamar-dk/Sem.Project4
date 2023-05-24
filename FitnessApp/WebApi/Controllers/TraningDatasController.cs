@@ -63,52 +63,6 @@ namespace WebApi.Controllers
             return traningData;
         }
 
-        //[HttpGet("Id/{UserId}")]
-        //public async Task<ActionResult<IEnumerable<TraningData>>> GetTrainingDataEmail( string UserId)
-        //{          
-        //    var dbUserId = await _context.traningData.FindAsync(UserId);
-        //    if(dbUserId == null)
-        //    {
-        //        return NotFound("UserId could not be found");
-        //    }
-
-        //    return Ok(UserId);
-
-
-        //}
-
-
-        // PUT: api/TraningDatas/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> PutTraningData(long id, TraningDatasDto traningData)
-        //{
-        //    if (id != traningData.Id)
-        //    {
-        //        return BadRequest();
-        //    }
-
-        //    _context.Entry(traningData).State = EntityState.Modified;
-
-        //    try
-        //    {
-        //        await _context.SaveChangesAsync();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!TraningDataExists(id))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
-
-        //    return NoContent();
-        //}
-
 
         /// <summary>
         /// Creates a new training data.
