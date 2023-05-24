@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using WebApi.Controllers;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -9,6 +10,7 @@ using WebApi.Data;
 using WebApi.DTO;
 using WebApi.Models;
 using WebApi.Services;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace WebApi.Controllers.Tests
 {
@@ -51,7 +53,7 @@ namespace WebApi.Controllers.Tests
                 LastName = "Test",
                 Password = "Test"
             };
-            //uut._accountServices.IsVaildEmail(register.Email).Returns(true);
+            //uut._accountServices.IsValidEmail(register.Email).Returns(true);
             //uut._context.users.AnyAsync(x => x.Email == register.Email).Returns(true);
             var result = await uut.Register(register);
             var value = result.Result as BadRequestObjectResult;
@@ -75,7 +77,7 @@ namespace WebApi.Controllers.Tests
                 Weight = 1
             };
 
-            //uut._accountServices.IsVaildEmail(register.Email).Returns(true);
+            //uut._accountServices.IsValidEmail(register.Email).Returns(true);
             //uut._context.users.AnyAsync(x => x.Email == register.Email).Returns(true);
             var result = await uut.Register(register);
 
@@ -225,12 +227,12 @@ namespace WebApi.Controllers.Tests
                 Password = newUser.Password,
                 Gender = "test"
             };
-            
+
             await uut.Register(newUser);
 
             var result = uut.PutUser(newUser.Email, user);
             var value = result.Result as NoContentResult;
-            
+
             Assert.AreEqual(204, value.StatusCode);
 
             await uut.DeleteUser(user.Email);
@@ -330,15 +332,61 @@ namespace WebApi.Controllers.Tests
 
             //Assert.AreEqual(204, del_value.StatusCode);
         }
-        /*
-        [Test()]
-        public void UserExists_UserExist()
-        {
-            string email = "test@mail.dk";
-            var result = uut.UserExists(email);
 
-            Assert.AreEqual(true, result);
-        }*/
+        [Test()]
+        public async Task GetTrainingsDataTest_UserIdNull_Assert_TrainingDataCouldNotBeFound()
+        {
+
+            var result = await uut.GetTrainingsData("bla");
+            var value = result.Result as NotFoundObjectResult;
+            var message = value.Value;
+
+            Assert.AreEqual(404, value.StatusCode);
+            Assert.AreEqual(message, "Training data could not be found");
+        }
+
+        [Test()]
+        public async Task GetTraningsDataTest_Succes_Assert_TraningDataDto()
+        {
+            var result = await uut.GetTrainingsData("asd@mail.dk");
+            var value = result.Result as OkObjectResult;
+
+            var dtos = value.Value as UserDatasDto;
+
+            Assert.AreEqual(200, value.StatusCode);
+            //Assert.IsInstanceOf<User>(dtos);
+        }
+        
+
+        [Test()]
+        public async Task GetusersTest_ContextNull_Assert_NotFound()
+        {
+            uut._context.users = null;
+            var result = await uut.Getusers();
+            var value = result.Result as NotFoundResult;
+
+            Assert.AreEqual(value.StatusCode, 404);
+
+        }
+
+        [Test()]
+        public async Task GetusersTest_ContextNull_Assert_GetUsersList()
+        {
+            var result = await uut.Getusers();
+            var returned = result.Value;
+
+            Assert.That(result, Is.TypeOf<ActionResult<IEnumerable<User>>>());
+            Assert.That(returned, Is.Not.Empty);
+        }
+        /*
+[Test()]
+public void UserExists_UserExist()
+{
+string email = "test@mail.dk";
+var result = uut.UserExists(email);
+
+Assert.AreEqual(true, result);
+}*/
         /*
         [Test()]
         public void UserExists_UserNotExist()
