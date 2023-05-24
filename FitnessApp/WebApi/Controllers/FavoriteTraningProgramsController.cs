@@ -15,7 +15,7 @@ namespace WebApi.Controllers
     [ApiController]
     public class FavoriteTraningProgramsController : ControllerBase
     {
-        private readonly DataContext _context;
+        public readonly DataContext _context;
         private readonly IMapper _mapper;
 
         public FavoriteTraningProgramsController(DataContext context, IMapper mapper)
@@ -70,7 +70,7 @@ namespace WebApi.Controllers
                 .Where(f => f.Email== email)
                 .ToListAsync();
 
-            if (programs == null)
+            if (programs == null || programs.Count == 0)
             {
                 return Ok(new List<FavoriteTraningProgramsDto>());
             }
@@ -181,10 +181,10 @@ namespace WebApi.Controllers
         /// </summary>
         /// <param name="email">The email of the user.</param>
         /// <returns>An IActionResult indicating the result of the deletion operation.</returns>
-        [HttpDelete("{favoriteTraningProgramsID}")]
-        public async Task<IActionResult> DeletefavoriteTraningPrograms(int favoriteTraningProgramsID)
+        [HttpDelete("{email}/{favoriteTraningProgramsID}")]
+        public async Task<IActionResult> DeletefavoriteTraningPrograms(string email, int favoriteTraningProgramsID)
         {
-            var program = await _context.favoriteTraningPrograms.FindAsync(favoriteTraningProgramsID);
+            var program = await _context.favoriteTraningPrograms.FirstOrDefaultAsync(p => p.Email == email && p.FavoriteTraningProgramsID == favoriteTraningProgramsID);
             if (program == null)
             {
                 return NotFound();

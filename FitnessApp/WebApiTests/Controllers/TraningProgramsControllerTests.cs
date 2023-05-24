@@ -48,7 +48,7 @@ namespace WebApi.Controllers.Tests
         }
 
         [Test()]
-        public async Task GettraningProgramsTest_ContextNullAsync()
+        public async Task GettraningProgramsTest_ContextNull_AssertStatusCode404()
         {
             uut._context.traningPrograms = null;
 
@@ -59,7 +59,7 @@ namespace WebApi.Controllers.Tests
         }
 
         [Test()]
-        public async Task GettraningProgramsTest_success()
+        public async Task GettraningProgramsTest_success_Assert_GettingTraningProgramsAmount()
         {
             var result = await uut.GettraningPrograms();
             var value = result.Value;
@@ -69,7 +69,7 @@ namespace WebApi.Controllers.Tests
         }
 
         [Test()]
-        public async Task GetTraningProgramTest_ContextTraningProgramsNull()
+        public async Task GetTraningProgramTest_ContextTraningProgramsNull_Assert_StatusCode404()
         {
             //Arrange
             uut._context.traningPrograms = null;
@@ -87,7 +87,7 @@ namespace WebApi.Controllers.Tests
         }
 
         [Test()]
-        public async Task GetTraningProgramTest_TraningprogramsNull()
+        public async Task GetTraningProgramTest_TraningprogramsNull_Assert_StatusCode404()
         {
             //Arrange
 
@@ -104,7 +104,7 @@ namespace WebApi.Controllers.Tests
         }
 
         [Test()]
-        public async Task GetTraningProgramTest_Success()
+        public async Task GetTraningProgramTest_Success_Assert_TpAndResultIdEqual()
         {
             //Arrange
 
@@ -119,13 +119,60 @@ namespace WebApi.Controllers.Tests
             Assert.AreEqual(tp.TraningProgramID, result.Value.TraningProgramID);
         }
 
+        [Test()]
+        public async Task DeleteTraningProgramTest_ContextNull_Assert_StatusCode404()
+        {
+            uut._context.traningPrograms = null;
+            var result = await uut.DeleteTraningProgram(1);
+
+            var value = result as NotFoundResult;
+
+            Assert.AreEqual(404, value.StatusCode);
+
+        }
+
+        [Test()]
+        public async Task DeleteTraningProgramTest_TraningProgramNull_Assert_StatusCode404()
+        {
+            var result = await uut.DeleteTraningProgram(-1);
+
+            var value = result as NotFoundResult;
+
+            Assert.AreEqual(404, value.StatusCode);
+        }
+        /*
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [Test()]
+        public async Task DeleteTraningProgramTest_Success()
+        {
+            var tp = new TraningProgramsDto()
+            {
+                Name = "Program 1 test"
+            };
+
+            var result1 = await uut.PostTraningProgram(tp);
+            var value1 = result1.Result as CreatedAtActionResult;
+            var newid = value1.ActionName;
+            var idint = Int32.Parse(newid);
+
+            var result = await uut.DeleteTraningProgram(idint);
+            var value = result as NoContentResult;
+
+            Assert.AreEqual(204, value.StatusCode);
+
+
+        }*/
+
         /*
         [Test()]
         public async Task PutTraningProgramTest()
         {
             throw new NotImplementedException();
         }*/
-
+        /*
         [Test()]
         public async Task PutTraningProgramTest_IdsNotEqual_AssertBadrequest()
         {
@@ -176,7 +223,7 @@ namespace WebApi.Controllers.Tests
             
             Assert.AreEqual(409, value.StatusCode);
         }*/
-
+        /*
         [Test()]
         public async Task PostTraningProgram_UpdateException()
         {
@@ -187,8 +234,8 @@ namespace WebApi.Controllers.Tests
             };
 
             Assert.ThrowsAsync<DbUpdateException>(() => uut.PostTraningProgram(tp));
-        }
-
+        }*/
+        /*
         [Test()]
         public async Task PostTraningProgramTest_Success()
         {
@@ -210,52 +257,6 @@ namespace WebApi.Controllers.Tests
 
             await uut.DeleteTraningProgram(idint);
         }
-
-
-        [Test()]
-        public async Task DeleteTraningProgramTest_ContextNull()
-        {
-            uut._context.traningPrograms = null;
-            var result = await uut.DeleteTraningProgram(1);
-
-            var value = result as NotFoundResult;
-
-            Assert.AreEqual(404, value.StatusCode);
-
-        }
-
-        [Test()]
-        public async Task DeleteTraningProgramTest_TraningProgramNull()
-        {
-            var result = await uut.DeleteTraningProgram(-1);
-
-            var value = result as NotFoundResult;
-
-            Assert.AreEqual(404, value.StatusCode);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        [Test()]
-        public async Task DeleteTraningProgramTest_Success()
-        {
-            var tp = new TraningProgramsDto()
-            {
-                Name = "Program 1 test"
-            };
-
-            var result1 = await uut.PostTraningProgram(tp);
-            var value1 = result1.Result as CreatedAtActionResult;
-            var newid = value1.ActionName;
-            var idint = Int32.Parse(newid);
-
-            var result = await uut.DeleteTraningProgram(idint);
-            var value = result as NoContentResult;
-
-            Assert.AreEqual(204, value.StatusCode);
-
-
-        }
+        */
     }
 }

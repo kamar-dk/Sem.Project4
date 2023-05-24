@@ -1,25 +1,47 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
-import { Parallax } from 'react-parallax';
-import "../App.css";
+import React, { useState, useEffect } from 'react';
 import {
   Grid, Paper, Typography, Button,
-  Select, FormControl, InputLabel, Box, TextField
+  TextField, Box, Card, CardContent,
 } from "@material-ui/core";
-import { lightBlue } from "@material-ui/core/colors";
-import { OutlinedInput } from "@material-ui/core";
 
 
-
-function User({}) {
+function User() {
   const [userData, setUserData] = useState({});
-  const [loading,setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const [favoriteTrainingPrograms, setFavoriteTrainingPrograms] = useState([]);
 
-  useEffect(() => {
-   const fetchData= async()=>{
 
-    const email= localStorage.getItem("email");
+
+  const getFavoriteTrainingPrograms = async () => {
+    const email = localStorage.getItem("email");
+    const url = `https://localhost:7221/api/FavoriteTraningPrograms/${email}`;
+
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setFavoriteTrainingPrograms(data);
+      } else {
+        throw new Error('Error fetching favorite training programs:', response.statusText);
+      }
+    } catch (error) {
+      console.error(error);
+      alert('Error fetching favorite training programs');
+    }
+  };
+
+  //fetching user data using UserDatas controller
+  const fetchUserData = async () => {
+    const email = localStorage.getItem("email");
     const url = `https://localhost:7221/api/UserDatas/${email}`;
+
     try {
       const response = await fetch(url, {
         method: 'GET',
@@ -29,6 +51,7 @@ function User({}) {
           'Content-Type': 'application/json'
         }
       });
+
       if (response.ok) {
         const data = await response.json();
         setUserData(data);
@@ -41,26 +64,60 @@ function User({}) {
 
     setLoading(false);
   };
-  fetchData();
-  }, []);
- 
-  if (loading) {
-    return <p>Loading user data...</p>;
-  }
 
-  if (!userData) {
-    return <p>Error: User data not found.</p>;
-  }
+  //fetching user data using Users controller
+  // const fetchUserData = async () => {
+
+  //   const email = localStorage.getItem("email");
+  //   const url = `https://localhost:7221/api/Users/${email}`;
+
+  //   try {
+  //     const response = await fetch(url, {
+  //       method: 'GET',
+  //       mode: 'cors',
+  //       headers: {
+  //         'Accept': 'application/json',
+  //         'Content-Type': 'application/json'
+  //       }
+  //     });
+
+  //     if (response.ok) {
+  //       const UserData = await response.json();
+  //       const { firstName, lastName, userData: UserDetails} = UserData;
+
+  //       if (UserDetails) {
+  //         const { gender, height, weight } = UserDetails;
+  //         setGender(gender);
+  //         setHeight(height);
+  //         setWeight(weight);
+  //       }
+
+  //       setFirstName(firstName);
+  //       setLastName(lastName);
+  //     } else {
+  //       console.error('Error fetching user data:', response.statusText);
+  //     }
+  //   } catch (error) {
+  //     console.error('Error fetching user data:', error);
+  //   }
+
+  //   setLoading(false);
+  // };
+
+
+  useEffect(() => {
+    fetchUserData();
+    getFavoriteTrainingPrograms();
+  }, []);
 
   const deleteUser = () => {
-    // Implement your delete user functionality here
     const confirmed = window.confirm("Are you sure you want to delete your user account?");
+
     if (confirmed) {
-      // Implement your delete user functionality here
-      alert("Delete User");
-      const userId = userData.id; // Assuming you have a user ID available
-  
-      fetch(`https://localhost:7221/api/Users/${userData.email}`, {
+
+      const deleteUserUrl = `https://localhost:7221/api/Users/${userData.email}`;
+
+      fetch(deleteUserUrl, {
         method: 'DELETE',
         headers: {
           'Authorization': 'Bearer ' + localStorage.getItem("token"),
@@ -69,15 +126,12 @@ function User({}) {
       })
         .then(response => {
           if (response.ok) {
-            // User deleted successfully
             alert("User deleted");
-            // deleting the token and user from local storage
             localStorage.removeItem("token");
             localStorage.removeItem("user");
             localStorage.removeItem("email");
             window.location.href = "/Login";
           } else {
-            // Failed to delete user
             alert("Failed to delete user");
           }
         })
@@ -87,24 +141,45 @@ function User({}) {
         });
     }
   };
-  
-  
-  
-  
-  
-  
+
+  const deleteFavoriteTrainingProgram = (id) => {
+    const confirmed = window.confirm("Are you sure you want to remove this favorite training program?");
+    if (confirmed) {
+      fetch(`https://localhost:7221/api/FavoriteTraningPrograms/${userData.email}/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem("token"),
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => {
+          if (response.ok) {
+            // Remove the removed program from the state
+            setFavoriteTrainingPrograms(prevState => prevState.filter(program => program.favoriteTraningProgramsID !== id));
+            alert("Favorite training program removed");
+          } else {
+            alert("Failed to remove favorite training program");
+          }
+        })
+        .catch(error => {
+          console.error(error);
+          alert("An error occurred while removing the favorite training program");
+        });
+    }
+  };
 
   const handleInputChange = (event, field) => {
-    const updatedUserData = {...userData};
+    const updatedUserData = { ...userData };
     updatedUserData[field] = event.target.value;
     setUserData(updatedUserData);
   };
 
+  //updating userData but no firstname and lastname
   const saveUserData = () => {
     fetch(`https://localhost:7221/api/Userdatas/${userData.email}`, {
       method: 'PUT',
       headers: {
-        'Authorization': 'Bearer ' + localStorage.getItem("token"),
+        'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(userData)
@@ -112,7 +187,6 @@ function User({}) {
       .then(response => {
         if (response.ok) {
           alert("User data saved");
-          // Perform any additional actions if needed
         } else {
           alert("Failed to save user data");
         }
@@ -123,10 +197,59 @@ function User({}) {
       });
   };
 
+  //Updating User to get firstName and lastName gives error in token
+  // const saveUserData = () => {
+  //   const email = localStorage.getItem("email");
+
+  //   const url = `https://localhost:7221/api/Users/${email}`;
+  //   const updatedUserData = {
+  //     ...userData,
+  //     firstName,
+  //     lastName,
+  //     userData: {
+  //       ...userData.userData,
+  //       gender,
+  //       height,
+  //       weight
+  //     }
+  //   };
+  //   fetch(url, {
+  //     method: 'PUT',
+  //     headers: {
+  //       'Authorization': 'Bearer ' + localStorage.getItem("token"),
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify(updatedUserData)
+  //   })
+  //     .then(response => {
+  //       if (response.ok) {
+  //         alert("User data saved");
+  //         setUserData(updatedUserData); // Update the state with the new user data
+  //       } else {
+  //         alert("Failed to save user data");
+  //       }
+  //     })
+  //     .catch(error => {
+  //       console.error(error);
+  //       alert("An error occurred while saving user data");
+  //     });
+  // };
+
+
+
+
+  if (loading) {
+    return <p>Loading user data...</p>;
+  }
+
+  if (!userData) {
+    return <p>Error: User data not found.</p>;
+  }
 
   return (
     <div className="gradient-background">
       <Grid container spacing={2}>
+        
         {/* Left Container */}
         <Grid item xs={12} md={6}>
           <Paper style={{ padding: 20 }}>
@@ -134,9 +257,9 @@ function User({}) {
               <h1 align="center" style={{ backgroundColor: "lightblue" }}>
                 UserData (to be deleted)
               </h1>
-  
+
               <div style={{ display: "flex", flexDirection: "column" }}>
-               <TextField
+                {/* <TextField
                   label="First Name"
                   value={userData.firstName || ""}
                   variant="outlined"
@@ -144,31 +267,22 @@ function User({}) {
                   margin="normal"
                   onChange={(e) => handleInputChange(e, 'firstName')}
                 />
-                  <TextField
+                <TextField
                   label="Last Name"
                   value={userData.lastName || ""}
                   variant="outlined"
                   fullWidth
                   margin="normal"
                   onChange={(e) => handleInputChange(e, 'lastName')}
-                />
-
-
+                /> */}
                 <TextField
                   label="Email"
                   value={userData.email || ""}
                   variant="outlined"
                   fullWidth
                   margin="normal"
+                  disabled
                 />
-                {/* <TextField
-                  label="Age"
-                  value={userData.age || ""}
-                  variant="outlined"
-                  fullWidth
-                  margin="normal"
-                  onChange={(e) => handleInputChange(e, 'age')}
-                /> */}
                 <TextField
                   label="Weight"
                   value={userData.weight || ""}
@@ -185,9 +299,16 @@ function User({}) {
                   margin="normal"
                   onChange={(e) => handleInputChange(e, 'height')}
                 />
-                {/* Render other user data fields */}
+                <TextField
+                  label="DOB"
+                  value={userData.doB || ""}
+
+                  fullWidth
+                  margin="normal"
+                  onChange={(e) => handleInputChange(e, 'doB')}
+                />
               </div>
-  
+
               <Button variant="contained" color="secondary" onClick={deleteUser}>
                 Delete User
               </Button>
@@ -197,29 +318,39 @@ function User({}) {
             </Box>
           </Paper>
         </Grid>
-  
-        {/* Right Container */}
+
+
+        {/* Favorite Training Programs */}
         <Grid item xs={12} md={6}>
-          <Paper
-            style={{
-              padding: 50,
-              maxHeight: "100vh",
-              width: "80vh",
-              overflow: "auto",
-            }}
-          >
+          <Paper style={{ padding: 50, maxHeight: "100vh", width: "80vh", overflow: "auto" }}>
             <div className="right-Container">
               <h1 align="center" style={{ backgroundColor: "lightblue" }}>
-                Favorite Training programs
+                Favorite Training Programs
               </h1>
+              {favoriteTrainingPrograms.map(program => (
+                <Card key={program.favoriteTraningProgramsID}>
+                  <CardContent style={{ textAlign: 'center' }}>
+                    <Typography variant="h5" component="h2">
+                      {program.name}
+                    </Typography>
+                    {/* Add more content or details about the training program */}
+                  </CardContent>
+                  <Button variant="contained" color="secondary"
+                    onClick={() => deleteFavoriteTrainingProgram(program.favoriteTraningProgramsID)}
+                  >
+                    Remove
+                  </Button>
+                </Card>
+              ))}
             </div>
           </Paper>
         </Grid>
-  
+
+        {/* Last Activity */}
         <Grid item xs={12} md={12}>
           <Paper style={{ padding: 20 }}>
             <Box display="flex" flexDirection="row" alignItems="center" marginBottom={4}>
-              <h1 align="center"  style={{ width: "100", backgroundColor: "lightblue" }}>
+              <h1 align="center" style={{ width: "100", backgroundColor: "lightblue" }}>
                 Last Activity:
               </h1>
             </Box>
@@ -228,9 +359,6 @@ function User({}) {
       </Grid>
     </div>
   );
-  
-  
 }
 
-
-export default User
+export default User;

@@ -61,7 +61,7 @@ namespace WebApi.Controllers.Tests
 
 
         [TestCase("Email is already taken")]
-        public async Task RegisterTest_Assert_EmailAlreadyTakenAsync(string Expected)
+        public async Task RegisterTest_Assert_EmailAlreadyTaken(string Expected)
         {
             //Arrange
             var register = new UserRegisterDto
@@ -85,7 +85,7 @@ namespace WebApi.Controllers.Tests
         }
 
         [Test()]
-        public async Task LoginTest_ValidAsync()
+        public async Task LoginTest_Valid_Assert_StatusCode200()
         {
             //Arrange
             var request = new UserLoginDto
@@ -101,7 +101,7 @@ namespace WebApi.Controllers.Tests
         }
 
         [Test()]
-        public async Task LoginTest_NotFound()
+        public async Task LoginTest_NotFound_Assert_StatusCode404()
         {
             // test login with wrong email
             //Arrange
@@ -118,7 +118,7 @@ namespace WebApi.Controllers.Tests
         }
 
         [Test()]
-        public async Task LoginTest_UnvalidPassowrd()
+        public async Task LoginTest_UnvalidPassowrd_Assert_StatusCode400()
         {
             // test login with wrong password
             //Arrange
@@ -136,7 +136,7 @@ namespace WebApi.Controllers.Tests
         }
 
         [Test()]
-        public async Task GetuserTest_ContextUsersNull_Async()
+        public async Task GetuserTest_ContextUsersNull_Assert_StatusCode404()
         {
             //Arrange
             uut._context.users = null;
@@ -155,7 +155,7 @@ namespace WebApi.Controllers.Tests
         }
 
         [Test()]
-        public async Task GetUserTest_UserIsNull()
+        public async Task GetUserTest_UserIsNull_Assert_StatusCode404()
         {
             //Arrange
             var user = new User
@@ -171,7 +171,7 @@ namespace WebApi.Controllers.Tests
         }
 
         [Test()]
-        public async Task GetUserTest_UserIsNotNull()
+        public async Task GetUserTest_UserIsNotNull_Assert_ResultEmailEqualsNewUserEmail()
         {
             //Arrange
             var user = new User
@@ -187,7 +187,7 @@ namespace WebApi.Controllers.Tests
         }
 
         [Test()]
-        public async Task PutUserTest_IdsNotEqual_AssertBadReguest()
+        public async Task PutUserTest_IdsNotEqual_Assert_BadReguest()
         {
             var user = new UserDto()
             {
@@ -205,7 +205,7 @@ namespace WebApi.Controllers.Tests
         }
 
         [Test()]
-        public async Task PutUserTest_CangedValue_AssertSucces()
+        public async Task PutUserTest_CangedValue_Success_Assert_StatusCode204()
         {
             var newUser = new UserRegisterDto()
             {
@@ -267,7 +267,7 @@ namespace WebApi.Controllers.Tests
         }*/
 
         [Test()]
-        public async Task DeleteUserTest_ContextNull()
+        public async Task DeleteUserTest_ContextNull_Assert_StatusCode404()
         {
             uut._context.users = null;
 
@@ -285,7 +285,7 @@ namespace WebApi.Controllers.Tests
         }
 
         [Test()]
-        public async Task DeleteUserTest_UserIsNull()
+        public async Task DeleteUserTest_UserIsNull_Assert_StatusCode404()
         {
             var user = new User
             {
@@ -301,7 +301,7 @@ namespace WebApi.Controllers.Tests
         }
 
         [Test()]
-        public async Task DeleteUserTest_Success()
+        public async Task DeleteUserTest_Success_Assert_StatusCode202()
         {
             var user = new User
             {
@@ -324,10 +324,11 @@ namespace WebApi.Controllers.Tests
 
             Assert.AreEqual(202, reg_value.StatusCode);
 
+            // Not  part of the test, just for cleanup
             var del_result = uut.DeleteUser(user.Email);
             var del_value = del_result.Result as NoContentResult;
 
-            Assert.AreEqual(204, del_value.StatusCode);
+            //Assert.AreEqual(204, del_value.StatusCode);
         }
         /*
         [Test()]

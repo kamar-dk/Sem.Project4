@@ -15,6 +15,8 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Models;
 using WebApi.DTO;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace WebApi.Controllers.Tests
 {
@@ -48,52 +50,148 @@ namespace WebApi.Controllers.Tests
         }
 
         [Test()]
-        public void FavoriteTraningProgramsControllerTest()
+        public async Task GetFavoriteTraningProgramsTest_ContextNull_Assert_OkObjectResult()
         {
-            throw new NotImplementedException();
+            uut._context.favoriteTraningPrograms = null;
+            var result = await uut.GetFavoriteTraningPrograms();
+            var returned = result.Value;
+
+
+            Assert.That(result.Result, Is.TypeOf<OkObjectResult>());
+            Assert.AreEqual(returned, null);
         }
 
         [Test()]
-        public void GetFavoriteTraningProgramsTest()
+        public async Task GetFavoriteTraningProgramsTest_Success_Assert_ActionResultNotEmpty()
         {
-            throw new NotImplementedException();
+            var result = await uut.GetFavoriteTraningPrograms();
+            var returned = result.Value;
+
+
+            Assert.That(result, Is.TypeOf<ActionResult<IEnumerable<FavoriteTraningPrograms>>>());
+            Assert.That(returned, Is.Not.Empty);
+            
         }
 
         [Test()]
-        public void GetFavoriteTraningProgramsTest1()
+        public void GetFavoriteTraningProgramsWithParamterTest_ProgramsNull_Assert_ActionResultEmpty()
         {
-            throw new NotImplementedException();
+            //uut._context.favoriteTraningPrograms.ToListAsync().Returns(null);
+            var result = uut.GetFavoriteTraningPrograms("test@mail.dk");
+
+            var returned = result.Result;
+
+            Assert.That(result.Result, Is.TypeOf<ActionResult<IEnumerable<FavoriteTraningProgramsDto>>>());
+            Assert.AreEqual(returned.Value, null);
+        }
+        //asd@mail.dk
+
+        [Test()]
+        public void GetFavoriteTraningProgramsWithParamterTest_Success_Assert_ActionResult()
+        {
+            var result = uut.GetFavoriteTraningPrograms("asd@mail.dk");
+
+            Assert.That(result.Result, Is.TypeOf<ActionResult<IEnumerable<FavoriteTraningProgramsDto>>>());
         }
 
         [Test()]
-        public void PostFavoriteTraningProgramsTest()
+        public async Task PostFavoriteTraningProgramsTest_Success_Assert_ActionResultFTPDto()
+        {
+            //throw new NotImplementedException();
+
+            var ftpDto = new FavoriteTraningProgramsDto()
+            {
+                FavoriteTraningProgramsID = 1,
+                TraningProgramID = 6,
+                Email = "test@mail.dk",
+                Name = "Legs"
+            };
+
+            var result = uut.PostFavoriteTraningPrograms(ftpDto);
+            var value = result.Result as ActionResult<FavoriteTraningProgramsDto>;
+
+            Assert.That(result.Result, Is.TypeOf<ActionResult<FavoriteTraningProgramsDto>>());
+
+            // Not  part of the test, just for cleanup
+            var i = _context.favoriteTraningPrograms.ToList().Last();
+            await uut.DeletefavoriteTraningPrograms(ftpDto.Email ,i.FavoriteTraningProgramsID);  
+        }
+
+        [Test()]
+        public async Task PostFavoriteTraningProgramTest_Assert_InvalidTraningprogramId()
         {
             var ftpDto = new FavoriteTraningProgramsDto()
             {
                 FavoriteTraningProgramsID = 1,
                 TraningProgramID = 1,
-                Email = "test@mail.dk"
+                Email = "asd@mail.dk"
             };
-        }
 
+            var result = await uut.PostFavoriteTraningPrograms(ftpDto);
+            var value = result.Result as BadRequestObjectResult;
+
+            Assert.That(result.Result, Is.TypeOf<BadRequestObjectResult>());
+            Assert.That(value.Value, Is.EqualTo("Invalid training program ID."));
+        }
+        /*
         [Test()]
         public void PutFavoriteTraningProgramsTest()
         {
             throw new NotImplementedException();
+        }*/
+
+        [Test()]
+        public async Task DeletefavoriteTraningProgramsTest_Success_Assert_NoContentResult()
+        {
+            var ftpDto = new FavoriteTraningProgramsDto()
+            {
+                FavoriteTraningProgramsID = 1,
+                TraningProgramID = 1,
+                Email = "asd@mail.dk"
+            };
+
+            await uut.PostFavoriteTraningPrograms(ftpDto);
+            
+
+            var i = _context.favoriteTraningPrograms.ToList().Last();
+            var result = await uut.DeletefavoriteTraningPrograms(ftpDto.Email, i.FavoriteTraningProgramsID);
+
+            Assert.That(result, Is.TypeOf<NoContentResult>());
+
+            //Assert.That(result.Result, Is.TypeOf<BadRequestObjectResult>());
+            //Assert.That(value.Value, Is.EqualTo("Invalid training program ID."));
         }
 
         [Test()]
-        public void DeletefavoriteTraningProgramsTest()
+        public async Task DeletefavoriteTraningProgramsTest_Invaid_Assert_NoContentResult()
         {
-            
+            var ftpdto = new FavoriteTraningProgramsDto()
+            {
+                FavoriteTraningProgramsID = 1,
+                TraningProgramID = 1,
+                Email = "test@mail.dk"
+            };
+
+            var result = await uut.DeletefavoriteTraningPrograms(ftpdto.Email, ftpdto.FavoriteTraningProgramsID);
+
+            Assert.That(result, Is.TypeOf<NotFoundResult>());
         }
 
-        [Test()]
-        public void DeletefavoriteTraningProgramsTest_Invaid()
+        [Test(), Order(1)]
+        public async Task PostFavoriteTraningProgramTest_Assert_ProgramAlreadyExist()
         {
+            var ftpDto = new FavoriteTraningProgramsDto()
+            {
+                FavoriteTraningProgramsID = 1,
+                TraningProgramID = 4,
+                Email = "asd@mail.dk"
+            };
 
-            
-            
+            var result = await uut.PostFavoriteTraningPrograms(ftpDto);
+            var value = result.Result as BadRequestObjectResult;
+
+            Assert.That(result.Result, Is.TypeOf<BadRequestObjectResult>());
+            Assert.That(value.Value, Is.EqualTo("Program already exists"));
         }
     }
 }
