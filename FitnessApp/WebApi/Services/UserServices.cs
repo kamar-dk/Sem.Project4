@@ -39,7 +39,7 @@ namespace WebApi.Services
             return jwt;
         }
 
-        public bool IsVaildEmail(string email)
+        public bool IsValidEmail(string email)
         {
             try
             {

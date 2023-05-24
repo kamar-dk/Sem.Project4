@@ -131,21 +131,29 @@ namespace WebApi.Controllers
         /// <param name="email">The email of the user.</param>
         /// <param name="programDto">The DTO representing the updated favorite training program.</param>
         /// <returns>An IActionResult indicating the result of the update operation.</returns>
-        [HttpPut("{email}")]
-        public async Task<IActionResult> PutFavoriteTraningPrograms(string email, FavoriteTraningProgramsDto programDto)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutFavoriteTraningPrograms(int id, FavoriteTraningProgramsDto programDto)
         {
-            if (email != programDto.Email)
+            if (id != programDto.FavoriteTraningProgramsID)
             {
                 return BadRequest();
             }
 
-            var program = await _context.favoriteTraningPrograms.FindAsync(email);
+            var program = await _context.favoriteTraningPrograms.FindAsync(id);
             if (program == null)
             {
                 return NotFound();
             }
 
-            _mapper.Map(programDto, program);
+            program.TraningProgramID = programDto.TraningProgramID;
+
+            var trainingProgram = await _context.traningPrograms.FindAsync(programDto.TraningProgramID);
+            if (trainingProgram == null)
+            {
+                return BadRequest("Invalid training program ID.");
+            }
+
+            program.Name = trainingProgram.Name;
 
             try
             {
@@ -153,7 +161,7 @@ namespace WebApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!FavoriteTraningProgramsExists(email))
+                if (!FavoriteTraningProgramsExists(id))
                 {
                     return NotFound();
                 }
@@ -165,6 +173,7 @@ namespace WebApi.Controllers
 
             return NoContent();
         }
+
 
 
         /// <summary>
@@ -192,9 +201,9 @@ namespace WebApi.Controllers
         /// </summary>
         /// <param name="email">The email of the user.</param>
         /// <returns>True if a favorite training program exists, otherwise false.</returns>
-        private bool FavoriteTraningProgramsExists(string email)
+        private bool FavoriteTraningProgramsExists(int id)
         {
-            return _context.favoriteTraningPrograms.Any(e => e.Email == email);
+            return _context.favoriteTraningPrograms.Any(e => e.FavoriteTraningProgramsID == id);
         }
 
     }
