@@ -1,23 +1,12 @@
-﻿using NUnit.Framework;
-using WebApi.Controllers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using NSubstitute;
-using WebApi.Data;
-using WebApi.Services;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using WebApi.Models;
+using Microsoft.EntityFrameworkCore;
+using NSubstitute;
+using NUnit.Framework;
+using WebApi.Data;
 using WebApi.DTO;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.AspNetCore.Http.HttpResults;
-using NSubstitute.ReturnsExtensions;
+using WebApi.Models;
+using WebApi.Services;
 
 namespace WebApi.Controllers.Tests
 {
@@ -31,11 +20,6 @@ namespace WebApi.Controllers.Tests
         public DataContext _context;
         public FavoriteTraningProgramsController uut;
         public IMapper _mapper = Substitute.For<IMapper>();
-        IConfiguration _configuration = new ConfigurationBuilder()
-            .AddJsonFile("appsettings.json")
-            .Build();
-        IServiceCollection _services;
-        private IServiceProvider? serviceProvider;
 
         [SetUp]
         public void SetUp()
@@ -77,7 +61,6 @@ namespace WebApi.Controllers.Tests
         [Test()]
         public void GetFavoriteTraningProgramsWithParamterTest_ProgramsNull_Assert_ActionResultEmpty()
         {
-            //uut._context.favoriteTraningPrograms.ToListAsync().Returns(null);
             var result = uut.GetFavoriteTraningPrograms("test@mail.dk");
 
             var returned = result.Result;
@@ -85,7 +68,6 @@ namespace WebApi.Controllers.Tests
             Assert.That(result.Result, Is.TypeOf<ActionResult<IEnumerable<FavoriteTraningProgramsDto>>>());
             Assert.AreEqual(returned.Value, null);
         }
-        //asd@mail.dk
 
         [Test()]
         public void GetFavoriteTraningProgramsWithParamterTest_Success_Assert_ActionResult()
@@ -98,8 +80,6 @@ namespace WebApi.Controllers.Tests
         [Test()]
         public async Task PostFavoriteTraningProgramsTest_Success_Assert_ActionResultFTPDto()
         {
-            //throw new NotImplementedException();
-
             var ftpDto = new FavoriteTraningProgramsDto()
             {
                 FavoriteTraningProgramsID = 1,
@@ -134,12 +114,6 @@ namespace WebApi.Controllers.Tests
             Assert.That(result.Result, Is.TypeOf<BadRequestObjectResult>());
             Assert.That(value.Value, Is.EqualTo("Invalid training program ID."));
         }
-        /*
-        [Test()]
-        public void PutFavoriteTraningProgramsTest()
-        {
-            throw new NotImplementedException();
-        }*/
 
         [Test()]
         public async Task DeletefavoriteTraningProgramsTest_Success_Assert_NoContentResult()
@@ -158,9 +132,6 @@ namespace WebApi.Controllers.Tests
             var result = await uut.DeletefavoriteTraningPrograms(ftpDto.Email, i.FavoriteTraningProgramsID);
 
             Assert.That(result, Is.TypeOf<NoContentResult>());
-
-            //Assert.That(result.Result, Is.TypeOf<BadRequestObjectResult>());
-            //Assert.That(value.Value, Is.EqualTo("Invalid training program ID."));
         }
 
         [Test()]
@@ -196,7 +167,7 @@ namespace WebApi.Controllers.Tests
         }
 
         [Test()]
-        public async Task PutFavoriteTraningProgramsTest_EmailAndDtoNotEqual_Assert_BadReguest()
+        public async Task PutFavoriteTraningProgramsTest_IdAndDtoNotEqual_Assert_BadReguest()
         {
             var ftpDto = new FavoriteTraningProgramsDto()
             {
@@ -205,7 +176,7 @@ namespace WebApi.Controllers.Tests
                 Email = "bla"
             };
 
-            var result = await uut.PutFavoriteTraningPrograms("test@mail.dk", ftpDto);
+            var result = await uut.PutFavoriteTraningPrograms(-1, ftpDto);
 
             var value = result as BadRequestResult;
 
@@ -214,24 +185,63 @@ namespace WebApi.Controllers.Tests
         }
 
         [Test()]
-        public async Task PutFavoriteTraningProgramsTest_ContextNull_Assert_t()
+        public async Task PutFavoriteTraningProgramsTest_ContextNull_Assert_StatusCode404()
         {
             var ftpDto = new FavoriteTraningProgramsDto()
             {
-                FavoriteTraningProgramsID = 1,
+                FavoriteTraningProgramsID = -1,
                 Email = "test",
-                TraningProgramID = 4, 
+                TraningProgramID = 4,
                 Name = "test"
             };
 
             //uut._context.favoriteTraningPrograms.FindAsync(ftpDto.Email).ReturnsNull();
 
-            var result = await uut.PutFavoriteTraningPrograms("test", ftpDto);
+            var result = await uut.PutFavoriteTraningPrograms(-1, ftpDto);
 
             var value = result as NotFoundResult;
 
             Assert.That(result, Is.TypeOf<NotFoundResult>());
             Assert.AreEqual(404, value.StatusCode);
+        }
+
+        [Test()]
+        public async Task PutFavoriteTraningProgramsTest_TPidInvlid_Assert_InvalidTrainingProgramID()
+        {
+            var ftpDto = new FavoriteTraningProgramsDto()
+            {
+                FavoriteTraningProgramsID = 125,
+                Email = "asd@mail.dk",
+                TraningProgramID = -1,
+                Name = "test"
+            };
+
+            var result = await uut.PutFavoriteTraningPrograms(125, ftpDto);
+
+            var value = result as BadRequestObjectResult;
+
+            Assert.That(result, Is.TypeOf<BadRequestObjectResult>());
+            Assert.AreEqual(400, value.StatusCode);
+            Assert.AreEqual("Invalid training program ID.", value.Value);
+        }
+
+        [Test()]
+        public async Task PutFavoriteTraningProgramsTest_Success_Assert_NoContent()
+        {
+            var ftpDto = new FavoriteTraningProgramsDto()
+            {
+                FavoriteTraningProgramsID = 125,
+                Email = "asd@mail.dk",
+                TraningProgramID = 5,
+                Name = "Legs"
+            };
+
+            var result = await uut.PutFavoriteTraningPrograms(125, ftpDto);
+
+            var value = result as NoContentResult;
+
+            Assert.That(result, Is.TypeOf<NoContentResult>());
+            Assert.AreEqual(204, value.StatusCode);
         }
     }
 }

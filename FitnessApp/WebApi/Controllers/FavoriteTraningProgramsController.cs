@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using WebApi.DTO;
 using WebApi.Models;
 using WebApi.Data;
-using WebApi.Controllers.ControllerInterfaces;
 
 namespace WebApi.Controllers
 {

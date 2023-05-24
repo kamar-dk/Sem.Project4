@@ -1,5 +1,4 @@
-﻿using WebApi.Controllers;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -10,7 +9,6 @@ using WebApi.Data;
 using WebApi.DTO;
 using WebApi.Models;
 using WebApi.Services;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace WebApi.Controllers.Tests
 {
@@ -45,7 +43,6 @@ namespace WebApi.Controllers.Tests
         [Test()]
         public async Task RegisterTest_Assert_InvalidEmailAsync(/*string Expected*/)
         {
-            //Arrange
             var register = new UserRegisterDto
             {
                 Email = "test",
@@ -53,8 +50,6 @@ namespace WebApi.Controllers.Tests
                 LastName = "Test",
                 Password = "Test"
             };
-            //uut._accountServices.IsValidEmail(register.Email).Returns(true);
-            //uut._context.users.AnyAsync(x => x.Email == register.Email).Returns(true);
             var result = await uut.Register(register);
             var value = result.Result as BadRequestObjectResult;
 
@@ -65,7 +60,6 @@ namespace WebApi.Controllers.Tests
         [TestCase("Email is already taken")]
         public async Task RegisterTest_Assert_EmailAlreadyTaken(string Expected)
         {
-            //Arrange
             var register = new UserRegisterDto
             {
                 Email = "test@mail.dk",
@@ -77,8 +71,6 @@ namespace WebApi.Controllers.Tests
                 Weight = 1
             };
 
-            //uut._accountServices.IsValidEmail(register.Email).Returns(true);
-            //uut._context.users.AnyAsync(x => x.Email == register.Email).Returns(true);
             var result = await uut.Register(register);
 
             var value = result.Result as BadRequestObjectResult;
@@ -89,7 +81,6 @@ namespace WebApi.Controllers.Tests
         [Test()]
         public async Task LoginTest_Valid_Assert_StatusCode200()
         {
-            //Arrange
             var request = new UserLoginDto
             {
                 Email = "test@mail.dk",
@@ -105,8 +96,6 @@ namespace WebApi.Controllers.Tests
         [Test()]
         public async Task LoginTest_NotFound_Assert_StatusCode404()
         {
-            // test login with wrong email
-            //Arrange
             var request = new UserLoginDto
             {
                 Email = "Alan",
@@ -122,8 +111,6 @@ namespace WebApi.Controllers.Tests
         [Test()]
         public async Task LoginTest_UnvalidPassowrd_Assert_StatusCode400()
         {
-            // test login with wrong password
-            //Arrange
             var request = new UserLoginDto
             {
                 Email = "test@mail.dk",
@@ -140,7 +127,6 @@ namespace WebApi.Controllers.Tests
         [Test()]
         public async Task GetuserTest_ContextUsersNull_Assert_StatusCode404()
         {
-            //Arrange
             uut._context.users = null;
 
             var user = new User
@@ -159,7 +145,6 @@ namespace WebApi.Controllers.Tests
         [Test()]
         public async Task GetUserTest_UserIsNull_Assert_StatusCode404()
         {
-            //Arrange
             var user = new User
             {
                 Email = "",
@@ -175,7 +160,6 @@ namespace WebApi.Controllers.Tests
         [Test()]
         public async Task GetUserTest_UserIsNotNull_Assert_ResultEmailEqualsNewUserEmail()
         {
-            //Arrange
             var user = new User
             {
                 Email = "test@mail.dk",
@@ -237,36 +221,6 @@ namespace WebApi.Controllers.Tests
 
             await uut.DeleteUser(user.Email);
         }
-        /*
-        [Test()]
-        public async Task PutUserTest_UserNotExsist_assertNotFound()
-        {
-            var newUser = new UserRegisterDto()
-            {
-                Email = "NewTest@mail.dk",
-                Password = "1234",
-                FirstName = "NewTest",
-                LastName = "Test",
-                Height = 1,
-                Weight = 1
-            };
-
-            var user = new UserDto()
-            {
-                Email = newUser.Email,
-                FirstName = "new new Test",
-                LastName = newUser.LastName,
-                Password = newUser.Password,
-                Gender = "test"
-            };
-
-            //await uut.Register(newUser);
-
-            var result = uut.PutUser(newUser.Email, user);
-            var value = result.Result as NotFoundResult;
-
-            Assert.AreEqual(404, value.StatusCode);
-        }*/
 
         [Test()]
         public async Task DeleteUserTest_ContextNull_Assert_StatusCode404()
@@ -329,8 +283,6 @@ namespace WebApi.Controllers.Tests
             // Not  part of the test, just for cleanup
             var del_result = uut.DeleteUser(user.Email);
             var del_value = del_result.Result as NoContentResult;
-
-            //Assert.AreEqual(204, del_value.StatusCode);
         }
 
         [Test()]
@@ -354,7 +306,6 @@ namespace WebApi.Controllers.Tests
             var dtos = value.Value as UserDatasDto;
 
             Assert.AreEqual(200, value.StatusCode);
-            //Assert.IsInstanceOf<User>(dtos);
         }
         
 
@@ -378,23 +329,5 @@ namespace WebApi.Controllers.Tests
             Assert.That(result, Is.TypeOf<ActionResult<IEnumerable<User>>>());
             Assert.That(returned, Is.Not.Empty);
         }
-        /*
-[Test()]
-public void UserExists_UserExist()
-{
-string email = "test@mail.dk";
-var result = uut.UserExists(email);
-
-Assert.AreEqual(true, result);
-}*/
-        /*
-        [Test()]
-        public void UserExists_UserNotExist()
-        {
-            string email = "test";
-            var result = uut.UserExists(email);
-
-            Assert.AreEqual(false, result);
-        }*/
     }
 }
