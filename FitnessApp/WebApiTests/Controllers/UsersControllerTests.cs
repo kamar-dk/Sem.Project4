@@ -53,7 +53,7 @@ namespace WebApi.Controllers.Tests
                 LastName = "Test",
                 Password = "Test"
             };
-            //uut._accountServices.IsVaildEmail(register.Email).Returns(true);
+            //uut._accountServices.IsValidEmail(register.Email).Returns(true);
             //uut._context.users.AnyAsync(x => x.Email == register.Email).Returns(true);
             var result = await uut.Register(register);
             var value = result.Result as BadRequestObjectResult;
@@ -77,7 +77,7 @@ namespace WebApi.Controllers.Tests
                 Weight = 1
             };
 
-            //uut._accountServices.IsVaildEmail(register.Email).Returns(true);
+            //uut._accountServices.IsValidEmail(register.Email).Returns(true);
             //uut._context.users.AnyAsync(x => x.Email == register.Email).Returns(true);
             var result = await uut.Register(register);
 

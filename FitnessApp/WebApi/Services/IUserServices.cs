@@ -11,7 +11,7 @@ namespace WebApi.Services
     {
         public string CreateToken(User user);
 
-        public bool IsVaildEmail(string email);
+        public bool IsValidEmail(string email);
         
         public void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt);
 
