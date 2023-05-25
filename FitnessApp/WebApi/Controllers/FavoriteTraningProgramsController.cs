@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using WebApi.DTO;
 using WebApi.Models;
 using WebApi.Data;
-using WebApi.Controllers.ControllerInterfaces;
 
 namespace WebApi.Controllers
 {
@@ -15,7 +14,7 @@ namespace WebApi.Controllers
     [ApiController]
     public class FavoriteTraningProgramsController : ControllerBase
     {
-        private readonly DataContext _context;
+        public readonly DataContext _context;
         private readonly IMapper _mapper;
 
         public FavoriteTraningProgramsController(DataContext context, IMapper mapper)
@@ -52,9 +51,6 @@ namespace WebApi.Controllers
             
         }
 
-
-
-
         /// <summary>
         /// Retrieves favorite training programs for a specific user identified by their email.
         /// </summary>
@@ -70,7 +66,7 @@ namespace WebApi.Controllers
                 .Where(f => f.Email== email)
                 .ToListAsync();
 
-            if (programs == null)
+            if (programs == null || programs.Count == 0)
             {
                 return Ok(new List<FavoriteTraningProgramsDto>());
             }
@@ -103,7 +99,8 @@ namespace WebApi.Controllers
                 var favoriteProgram = new FavoriteTraningPrograms
                 {
                     Email = programDto.Email,
-                    TraningProgramID = programDto.TraningProgramID
+                    TraningProgramID = programDto.TraningProgramID,
+                    Name = trainingProgram.Name,
                 };
 
 
@@ -130,21 +127,29 @@ namespace WebApi.Controllers
         /// <param name="email">The email of the user.</param>
         /// <param name="programDto">The DTO representing the updated favorite training program.</param>
         /// <returns>An IActionResult indicating the result of the update operation.</returns>
-        [HttpPut("{email}")]
-        public async Task<IActionResult> PutFavoriteTraningPrograms(string email, FavoriteTraningProgramsDto programDto)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutFavoriteTraningPrograms(int id, FavoriteTraningProgramsDto programDto)
         {
-            if (email != programDto.Email)
+            if (id != programDto.FavoriteTraningProgramsID)
             {
                 return BadRequest();
             }
 
-            var program = await _context.favoriteTraningPrograms.FindAsync(email);
+            var program = await _context.favoriteTraningPrograms.FindAsync(id);
             if (program == null)
             {
                 return NotFound();
             }
 
-            _mapper.Map(programDto, program);
+            program.TraningProgramID = programDto.TraningProgramID;
+
+            var trainingProgram = await _context.traningPrograms.FindAsync(programDto.TraningProgramID);
+            if (trainingProgram == null)
+            {
+                return BadRequest("Invalid training program ID.");
+            }
+
+            program.Name = trainingProgram.Name;
 
             try
             {
@@ -152,7 +157,7 @@ namespace WebApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!FavoriteTraningProgramsExists(email))
+                if (!FavoriteTraningProgramsExists(id))
                 {
                     return NotFound();
                 }
@@ -166,15 +171,16 @@ namespace WebApi.Controllers
         }
 
 
+
         /// <summary>
         /// Deletes a favorite training program based on the provided email.
         /// </summary>
         /// <param name="email">The email of the user.</param>
         /// <returns>An IActionResult indicating the result of the deletion operation.</returns>
-        [HttpDelete("{favoriteTraningProgramsID}")]
-        public async Task<IActionResult> DeletefavoriteTraningPrograms(int favoriteTraningProgramsID)
+        [HttpDelete("{email}/{favoriteTraningProgramsID}")]
+        public async Task<IActionResult> DeletefavoriteTraningPrograms(string email, int favoriteTraningProgramsID)
         {
-            var program = await _context.favoriteTraningPrograms.FindAsync(favoriteTraningProgramsID);
+            var program = await _context.favoriteTraningPrograms.FirstOrDefaultAsync(p => p.Email == email && p.FavoriteTraningProgramsID == favoriteTraningProgramsID);
             if (program == null)
             {
                 return NotFound();
@@ -191,9 +197,9 @@ namespace WebApi.Controllers
         /// </summary>
         /// <param name="email">The email of the user.</param>
         /// <returns>True if a favorite training program exists, otherwise false.</returns>
-        private bool FavoriteTraningProgramsExists(string email)
+        private bool FavoriteTraningProgramsExists(int id)
         {
-            return _context.favoriteTraningPrograms.Any(e => e.Email == email);
+            return _context.favoriteTraningPrograms.Any(e => e.FavoriteTraningProgramsID == id);
         }
 
     }

@@ -1,6 +1,5 @@
 import { React, useState } from 'react';
 import { useEffect } from 'react';
-import Dropdown from './Dropdown';
 import { Grid, Button, Typography, Card, CardContent, CardActions, IconButton } from "@material-ui/core";
 import { Favorite, FavoriteBorder } from "@material-ui/icons";
 
@@ -8,6 +7,7 @@ function TrainingProgram() {
   const [data, setData] = useState([]);
   //const [programId, setId] = useState([]);
   const [selectedProgram, setSelectedProgram] = useState([]);
+  const [name, setName] = useState([]);
 
   // useEffect(() => {
   //   fetchData();
@@ -19,7 +19,7 @@ function TrainingProgram() {
       method: 'GET',
       mode: 'cors',
       headers: {
-        'Authorization': 'Bearer ' + localStorage.getItem("token"),
+        'Accept': 'application/json',
         'Content-Type': 'application/json'
       }
     })
@@ -39,13 +39,15 @@ function TrainingProgram() {
 
   // Send POST request to the API endpoint
   const postData = () => {
-
     const email = localStorage.getItem('email');
+    // const name = data.find(item => item.traningProgramID === parseInt(selectedProgram.toString()) ).name;
+
     const payload = {
 
       email: email,
       favoriteTraningProgramsID : 0,
-      traningProgramID: 6,
+      traningProgramID: parseInt(selectedProgram.toString()),
+      Name : "Hello"
 
     };
     fetch('https://localhost:7221/api/FavoriteTraningPrograms', {
@@ -54,7 +56,7 @@ function TrainingProgram() {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(payload )
+      body: JSON.stringify(payload)
     })
       .then((response) => response.json())
       .then((data) => {
@@ -68,6 +70,7 @@ function TrainingProgram() {
   useEffect(() => {
     if (selectedProgram.length > 0) {
       postData();
+      window.location.reload();
     }
   }, [selectedProgram]);
 

@@ -42,7 +42,7 @@ namespace WebApi.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<UserDto>> Register(UserRegisterDto register)
         {
-            if (!_accountServices.IsVaildEmail(register.Email))
+            if (!_accountServices.IsValidEmail(register.Email))
             {
                 return BadRequest("Email is not valid");
             }
@@ -57,7 +57,6 @@ namespace WebApi.Controllers
                 Email = register.Email,
                 FirstName = register.FirstName,
                 LastName = register.LastName,
-                //Gender = register.Gender,
                 PasswordHash = passwordHash,
                 Salt = passwordSalt
             };

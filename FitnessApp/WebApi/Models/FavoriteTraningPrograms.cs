@@ -14,7 +14,7 @@ namespace WebApi.Models
     {
 
         public int FavoriteTraningProgramsID { get; set; }
-        public string Name { get; set; }
+        public string ? Name { get; set; }
         
         public int TraningProgramID { get; set; } 
         public TraningPrograms TraningProgram { get; set; }
@@ -22,5 +22,6 @@ namespace WebApi.Models
         public string Email { get; set; }
         public User User { get; set; }
         public ICollection<TraningPrograms> TraningPrograms { get; set; }
+
     }
 }
