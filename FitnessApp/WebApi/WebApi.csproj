@@ -40,7 +40,6 @@
   <ItemGroup>
     <Folder Include="Areas\Identity\" />
     <Folder Include="Migrations\" />
-    <Folder Include="Models\" />
   </ItemGroup>
 
 </Project>

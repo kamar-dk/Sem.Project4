@@ -15,7 +15,7 @@ namespace WebApi.Data
         // Main Tables
         public DbSet<User> users { get; set; }
         public DbSet<UserData> userDatas { get; set; }
-        public DbSet<TraningData> traningData { get; set; }
+        public DbSet<TrainingData> traningData { get; set; }
         public DbSet<FavoriteTraningPrograms> favoriteTraningPrograms { get; set; }
         public DbSet<TraningPrograms> traningPrograms { get; set; }
         public DbSet<UserWeight> UserWeights { get; set; }
@@ -63,9 +63,9 @@ namespace WebApi.Data
                 .WithMany(uw => uw.UserWeights);
 
             // Define TraningData
-            modelBuilder.Entity<TraningData>()
+            modelBuilder.Entity<TrainingData>()
                 .HasKey(td => td.Id);
-            modelBuilder.Entity<TraningData>()
+            modelBuilder.Entity<TrainingData>()
                 .HasOne(u => u.User)
                 .WithMany(td => td.TraningDatas)
                 .HasForeignKey(td => td.UserId);

@@ -9,7 +9,7 @@ namespace WebApi.Models
     {
         public User()
         {
-            TraningDatas = new HashSet<TraningData>();
+            TraningDatas = new HashSet<TrainingData>();
         }
 
         public string? Email { get; set; }
@@ -24,6 +24,6 @@ namespace WebApi.Models
         public UserData UserData { get; set; }
         public ICollection<FavoriteTraningPrograms> FavoriteTraningPrograms { get; set; }
 
-        public virtual ICollection<TraningData> TraningDatas { get; set; } = new List<TraningData>();
+        public virtual ICollection<TrainingData> TraningDatas { get; set; } = new List<TrainingData>();
     }
 }

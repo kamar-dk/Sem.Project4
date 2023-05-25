@@ -145,7 +145,7 @@ namespace WebApi.Controllers
             return user;
         }
 
-        [HttpGet("{id}/TraningData")]
+        [HttpGet("{id}/TrainingData")]
         public async Task<ActionResult<UserDto>> GetTrainingsData(string id)
         {
             var trainingData = await _context.users.FindAsync(id);
@@ -160,7 +160,7 @@ namespace WebApi.Controllers
 
             foreach (var data in trainingData.TraningDatas) 
             {
-                var training = new TraningDatasDto
+                var training = new TrainingDatasDto
                 {
                     Id = data.Id,
                     UserId = data.UserId,

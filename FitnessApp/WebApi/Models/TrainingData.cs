@@ -9,7 +9,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebApi.Models
 {
-    public class TraningData
+    public class TrainingData
     {
         public long Id { get; set; }
         public string TrainingType { get; set; } = "";

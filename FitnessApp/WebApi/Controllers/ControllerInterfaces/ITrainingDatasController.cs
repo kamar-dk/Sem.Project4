@@ -10,16 +10,16 @@ using WebApi.Models;
 
 namespace WebApi.Controllers.ControllerInterfaces
 {
-    public interface ITraningDatasController
+    public interface ITrainingDatasController
     {
 
         // GET: api/TraningDatas
         [HttpGet]
-        public Task<ActionResult<IEnumerable<TraningData>>> GettrantingData();
+        public Task<ActionResult<IEnumerable<TrainingData>>> GetTrainingData();
 
         // GET: api/TraningDatas/5
         [HttpGet("{id}")]
-        public Task<ActionResult<TraningData>> GetTraningData(long id);
+        public Task<ActionResult<TrainingData>> GetTrainingData(long id);
 
         // Get: api/TraningDatas/Email
         //[HttpGet("{Userid}")]
@@ -29,11 +29,11 @@ namespace WebApi.Controllers.ControllerInterfaces
         // POST: api/TraningDatas
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public Task<ActionResult<TraningData>> PostTraningData(TraningDatasDto traningData);
+        public Task<ActionResult<TrainingData>> PostTrainingData(TrainingDatasDto traningData);
 
         // DELETE: api/TraningDatas/5
         [HttpDelete("{id}")]
-        public Task<IActionResult> DeleteTraningData(string id);
+        public Task<IActionResult> DeleteTrainingData(long id);
                 
 
     }

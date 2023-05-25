@@ -6,7 +6,7 @@ using Castle.Components.DictionaryAdapter;
 
 namespace WebApi.DTO
 {
-    public class TraningDatasDto
+    public class TrainingDatasDto
     {        
         public long Id { get; set; }
 

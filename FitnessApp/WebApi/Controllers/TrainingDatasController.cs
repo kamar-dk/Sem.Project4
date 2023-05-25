@@ -16,11 +16,11 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TraningDatasController : ControllerBase, ITraningDatasController
+    public class TrainingDatasController : ControllerBase, ITrainingDatasController
     {
         private readonly DataContext _context;
 
-        public TraningDatasController(DataContext context)
+        public TrainingDatasController(DataContext context)
         {
             _context = context;
         }
@@ -31,7 +31,7 @@ namespace WebApi.Controllers
         /// <returns>An ActionResult containing a list of TraningData.</returns>
         // GET: api/TraningDatas
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TraningData>>> GettrantingData()
+        public async Task<ActionResult<IEnumerable<TrainingData>>> GetTrainingData()
         {
           if (_context.traningData == null)
           {
@@ -47,7 +47,7 @@ namespace WebApi.Controllers
         /// <returns>An ActionResult containing the requested TraningData.</returns>
         // GET: api/TraningDatas/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<TraningData>> GetTraningData(long id)
+        public async Task<ActionResult<TrainingData>> GetTrainingData(long id)
         {
             if (_context.traningData == null)
             {
@@ -117,15 +117,15 @@ namespace WebApi.Controllers
         /// <returns>An ActionResult containing the created TraningData.</returns>
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<TraningData>> PostTraningData(TraningDatasDto traningData)
+        public async Task<ActionResult<TrainingData>> PostTrainingData(TrainingDatasDto traningData)
         {
           if (_context.traningData == null)
           {
               return Problem("Entity set 'DataContext.trainingData'  is null.");
           }
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<TraningDatasDto, TraningData>());
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<TrainingDatasDto, TrainingData>());
             var mapper = new Mapper(config);
-            var user_ = mapper.Map<TraningData>(traningData);
+            var user_ = mapper.Map<TrainingData>(traningData);
             var us = _context.users.Where(u => u.Email == traningData.UserId).FirstOrDefault();
             user_.User = us;
 
@@ -136,7 +136,7 @@ namespace WebApi.Controllers
             }
             catch (DbUpdateException)
             {
-                if (TraningDataExists(traningData.Id))
+                if (TrainingDataExists(traningData.Id))
                 {
                     return Conflict();
                 }
@@ -156,7 +156,7 @@ namespace WebApi.Controllers
         /// <returns>An IActionResult indicating the result of the deletion operation.</returns>
         // DELETE: api/TraningDatas/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTraningData(string id)
+        public async Task<IActionResult> DeleteTrainingData(long id)
         {
             if (_context.traningData == null)
             {
@@ -174,7 +174,7 @@ namespace WebApi.Controllers
             return NoContent();
         }
 
-        private bool TraningDataExists(long id)
+        private bool TrainingDataExists(long id)
         {
             return (_context.traningData?.Any(e => e.Id == id)).GetValueOrDefault();
         }
