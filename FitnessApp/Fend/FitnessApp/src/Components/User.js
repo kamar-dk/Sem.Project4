@@ -45,11 +45,10 @@ function User() {
     try {
       const response = await fetch(url, {
         method: 'GET',
-        mode: 'cors',
         headers: {
-          'Authorization': 'Bearer ' + localStorage.getItem("token"),
-          'Content-Type': 'application/json'
-        }
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
       });
 
       if (response.ok) {
@@ -65,44 +64,6 @@ function User() {
     setLoading(false);
   };
 
-  //fetching user data using Users controller
-  // const fetchUserData = async () => {
-
-  //   const email = localStorage.getItem("email");
-  //   const url = `https://localhost:7221/api/Users/${email}`;
-
-  //   try {
-  //     const response = await fetch(url, {
-  //       method: 'GET',
-  //       mode: 'cors',
-  //       headers: {
-  //         'Accept': 'application/json',
-  //         'Content-Type': 'application/json'
-  //       }
-  //     });
-
-  //     if (response.ok) {
-  //       const UserData = await response.json();
-  //       const { firstName, lastName, userData: UserDetails} = UserData;
-
-  //       if (UserDetails) {
-  //         const { gender, height, weight } = UserDetails;
-  //         setGender(gender);
-  //         setHeight(height);
-  //         setWeight(weight);
-  //       }
-
-  //       setFirstName(firstName);
-  //       setLastName(lastName);
-  //     } else {
-  //       console.error('Error fetching user data:', response.statusText);
-  //     }
-  //   } catch (error) {
-  //     console.error('Error fetching user data:', error);
-  //   }
-
-  //   setLoading(false);
-  // };
 
 
   useEffect(() => {
@@ -120,14 +81,13 @@ function User() {
       fetch(deleteUserUrl, {
         method: 'DELETE',
         headers: {
-          'Authorization': 'Bearer ' + localStorage.getItem("token"),
-          'Content-Type': 'application/json'
+          "Accept": "application/json",
+          "Content-Type": "application/json",
         }
       })
         .then(response => {
           if (response.ok) {
             alert("User deleted");
-            localStorage.removeItem("token");
             localStorage.removeItem("user");
             localStorage.removeItem("email");
             window.location.href = "/Login";
@@ -148,8 +108,8 @@ function User() {
       fetch(`https://localhost:7221/api/FavoriteTraningPrograms/${userData.email}/${id}`, {
         method: 'DELETE',
         headers: {
-          'Authorization': 'Bearer ' + localStorage.getItem("token"),
-          'Content-Type': 'application/json'
+          "Accept": "application/json",
+          "Content-Type": "application/json",
         }
       })
         .then(response => {
@@ -197,47 +157,6 @@ function User() {
       });
   };
 
-  //Updating User to get firstName and lastName gives error in token
-  // const saveUserData = () => {
-  //   const email = localStorage.getItem("email");
-
-  //   const url = `https://localhost:7221/api/Users/${email}`;
-  //   const updatedUserData = {
-  //     ...userData,
-  //     firstName,
-  //     lastName,
-  //     userData: {
-  //       ...userData.userData,
-  //       gender,
-  //       height,
-  //       weight
-  //     }
-  //   };
-  //   fetch(url, {
-  //     method: 'PUT',
-  //     headers: {
-  //       'Authorization': 'Bearer ' + localStorage.getItem("token"),
-  //       'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify(updatedUserData)
-  //   })
-  //     .then(response => {
-  //       if (response.ok) {
-  //         alert("User data saved");
-  //         setUserData(updatedUserData); // Update the state with the new user data
-  //       } else {
-  //         alert("Failed to save user data");
-  //       }
-  //     })
-  //     .catch(error => {
-  //       console.error(error);
-  //       alert("An error occurred while saving user data");
-  //     });
-  // };
-
-
-
-
   if (loading) {
     return <p>Loading user data...</p>;
   }
@@ -259,22 +178,6 @@ function User() {
               </h1>
 
               <div style={{ display: "flex", flexDirection: "column" }}>
-                {/* <TextField
-                  label="First Name"
-                  value={userData.firstName || ""}
-                  variant="outlined"
-                  fullWidth
-                  margin="normal"
-                  onChange={(e) => handleInputChange(e, 'firstName')}
-                />
-                <TextField
-                  label="Last Name"
-                  value={userData.lastName || ""}
-                  variant="outlined"
-                  fullWidth
-                  margin="normal"
-                  onChange={(e) => handleInputChange(e, 'lastName')}
-                /> */}
                 <TextField
                   label="Email"
                   value={userData.email || ""}

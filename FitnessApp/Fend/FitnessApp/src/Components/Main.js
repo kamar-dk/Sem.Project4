@@ -1,7 +1,6 @@
 import React from "react";
 import { Parallax } from "react-parallax";
 import "../App.css";
-import { useTrail, animated } from 'react-spring';
 
 function Main() {
 
@@ -46,7 +45,7 @@ function Main() {
           
           <h1>Why Our FitnessApp?</h1>
           
-              <h3 >Add you daily/Weekly sessions</h3>
+              <h3>Add you daily/Weekly sessions</h3>
               <h3>Keep track of all Your activities</h3>
 
         </div>

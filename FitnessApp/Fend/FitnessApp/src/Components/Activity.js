@@ -1,6 +1,5 @@
 import React from 'react';
 import { useState } from 'react';
-import Dropdown from './Dropdown';
 import { Grid, Paper, Typography } from "@material-ui/core";
 function Activity(){
     return(
@@ -33,7 +32,7 @@ function Activity(){
               <h1  align="center" style={{backgroundColor: "lightblue"}}>How to add an activity</h1>
               <Typography variant="body1" style={{ whiteSpace: "pre-line" }}>
                 {/* General information about Training programs and activity*/}
-                he he hæ hæ hæ hø hø hø
+                Here you can log your activity done on any given day and then a combination of your activities under the tracking tab.
               </Typography>
             </div>
           </Paper>          
@@ -86,13 +85,6 @@ function PutActivity(event){
     .catch(error => alert('Something bad happened: ' + error));
 }
 
-const options = [
-    { value: "1", label: "Running" },
-    { value: "2", label: "Swimming" },
-    { value: "3", label: "Bike" },
-    { value: "4", label: "Walking" },
-];
-
 
 function ActivityForm() {
     const [selectedActivity, setSelectedActivity] = useState("");
@@ -111,13 +103,13 @@ function ActivityForm() {
     return (
       <div style={{ padding: 20 }}>
       <form onSubmit={PutActivity}>
-        <label>Enter Activity:
-          <input
-           type="text"
-           value={selectedActivity}
-            onChange={(e) => setSelectedActivity(e.target.value)}
-          />
-        </label>
+        <label>Select Activity:
+          <select value ={selectedActivity} onChange={(e) => setSelectedActivity(e.target.value)} >
+           <option value="Running">Running</option>
+           <option value="Cycling">Cycling</option>
+           <option value="Swimming">Swimming</option>
+           </select>
+  </label>
         <br></br>
         <label>Enter Date:
           <input

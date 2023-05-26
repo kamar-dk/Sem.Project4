@@ -1,12 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
-import {
-  TextField,
-  Button,
-  Container,
-  Typography, MenuItem,
-} from "@material-ui/core";
+import {TextField, Button, Container, Typography, MenuItem} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 
@@ -43,9 +38,6 @@ export default function SignUp() {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  //const [age, setAge] = useState("");
-  // const [height, setHeight] = useState("");
-  // const [weight, setWeight] = useState("");
   const [gender, setGender] = useState("");
   const [dob, setDob] = useState("");
 
@@ -56,9 +48,6 @@ export default function SignUp() {
       lastName: lastName,
       email: email,
       password: password,
-     // age: age,
-      // height: height,
-      // weight: weight,
       gender:gender,
     };
 

@@ -9,15 +9,10 @@ function TrainingProgram() {
   const [selectedProgram, setSelectedProgram] = useState([]);
   const [name, setName] = useState([]);
 
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
-
   const fetchData = () => {
     var url = "https://localhost:7221/api/TraningPrograms";
     return fetch(url, {
       method: 'GET',
-      mode: 'cors',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -36,7 +31,10 @@ function TrainingProgram() {
     });
   };
 
-
+  useEffect(() => {
+    fetchData();
+  }, []);
+  
   // Send POST request to the API endpoint
   const postData = () => {
     const email = localStorage.getItem('email');
@@ -80,9 +78,6 @@ function TrainingProgram() {
       <Grid ms={6} style={{ padding: 10 }}>
         <Typography variant="h3" component="h3" style={{ color: 'white', align: 'center' }}>TrainingProgram</Typography>
         <Grid container justifyContent="center" alignItems="center">
-          <Button variant="contained" color="primary" onClick={fetchData} >
-            Get Programs
-          </Button>
         </Grid>
 
       </Grid>

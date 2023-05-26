@@ -50,9 +50,6 @@ export default function Login() {
        alert("Please fill out all fields");
        return;
      }
- 
- 
- 
    fetch('https://localhost:7221/api/Users/login', {
    method: 'POST',
    headers: {
@@ -69,6 +66,8 @@ export default function Login() {
      }
    })
    .then((token) => {
+    console.log(token);
+     localStorage.setItem("token", token);
      localStorage.setItem("email", email);
      localStorage.setItem("user", "user");
  
