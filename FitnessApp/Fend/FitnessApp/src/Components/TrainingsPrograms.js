@@ -7,7 +7,7 @@ function TrainingProgram() {
   const [data, setData] = useState([]);
   //const [programId, setId] = useState([]);
   const [selectedProgram, setSelectedProgram] = useState([]);
-  const [name, setName] = useState([]);
+
 
   const fetchData = () => {
     var url = "https://localhost:7221/api/TraningPrograms";

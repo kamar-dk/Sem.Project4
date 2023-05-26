@@ -249,16 +249,7 @@ function User() {
           </Paper>
         </Grid>
 
-        {/* Last Activity */}
-        <Grid item xs={12} md={12}>
-          <Paper style={{ padding: 20 }}>
-            <Box display="flex" flexDirection="row" alignItems="center" marginBottom={4}>
-              <h1 align="center" style={{ width: "100", backgroundColor: "lightblue" }}>
-                Last Activity:
-              </h1>
-            </Box>
-          </Paper>
-        </Grid>
+    
       </Grid>
     </div>
   );
