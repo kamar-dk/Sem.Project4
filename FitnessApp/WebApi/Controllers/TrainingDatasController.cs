@@ -9,14 +9,14 @@ using AutoMapper;
 using WebApi.DTO;
 using WebApi.Models;
 using WebApi.Data;
-using WebApi.Controllers.ControllerInterfaces;
+using WebApi.Controllers;
 using Mapster;
 
 namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TrainingDatasController : ControllerBase, ITrainingDatasController
+    public class TrainingDatasController : ControllerBase
     {
         private readonly DataContext _context;
 

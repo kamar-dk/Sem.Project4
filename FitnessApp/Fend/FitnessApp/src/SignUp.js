@@ -40,7 +40,8 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   const [gender, setGender] = useState("");
   const [dob, setDob] = useState("");
-
+  const [confirmPassword, setConfirmPassword] = useState("");
+  
   const handleSignUp = (event) => {
     event.preventDefault();
     const payload = {
@@ -55,6 +56,12 @@ export default function SignUp() {
       alert("Please enter all fields");
       return;
     }
+
+    // Check if passwords match
+  if (password !== confirmPassword) {
+    alert("Passwords do not match");
+    return;
+  }
   
       fetch("https://localhost:7221/api/Users/register", {
         method: "POST",
@@ -126,6 +133,14 @@ export default function SignUp() {
             className={classes.input}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+          />
+          <TextField
+            label="Confirm Password"
+            type="password"
+            variant="outlined"
+            className={classes.input}
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
           />
 
           <TextField
