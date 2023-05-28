@@ -3,10 +3,18 @@ import { useState } from "react";
 import "../App.css";
 import {
   Grid, Paper, Typography, Button,
-  Select, FormControl, InputLabel, Box
+  Select, FormControl, InputLabel, Box, Card, CardMedia, CardContent
 } from "@material-ui/core";
 import { lightBlue } from "@material-ui/core/colors";
 import { OutlinedInput } from "@material-ui/core";
+import bananaImage from "./calories/banana.jpg";
+import tomatoImage from "./calories/tomato.jpg";
+import celeryImage from "./calories/celery.jpg";
+import broccoliImage from "./calories/broccoli.jpg";
+import riceImage from "./calories/Rice.jpg";
+import meatImage from "./calories/meat.jpg";
+import chickenImage from "./calories/chicken.jpg";
+
 
 function Calories() {
   const [result, setResult] = useState(null);
@@ -89,138 +97,82 @@ function Calories() {
           <Paper
             style={{
               padding: 50,
-              maxHeight: "100vh",
-              width: "80vh",
+              width: "80%",
+              height: "76%",
               overflow: "auto",
-              display: "flex",
-              alignItems: "center",
-              backgroundSize: "cover",
-              backgroundRepeat: "no-repeat",
-
             }}
           >
-            <div className="right-Container">
-              <h1 align="center" style={{ backgroundColor: "lightblue" }}>Understand Calories</h1>
-              <Typography variant="body1" style={{ whiteSpace: "pre-line" }}>
-                {/* Add your general information about calories here */}
-                Calories are a unit of measurement used to quantify the amount
-                of energy that is obtained from food or expended through
-                physical activity. The more calories a food contains, the more
-                energy it provides to the body. However, consuming too many
-                calories without burning them off through physical activity can
-                lead to weight gain and other health problems. The number of
-                calories a person needs each day depends on various factors such
-                as age, gender, height, weight, and activity level. In general,
-                the average adult needs around 2000-2500 calories per day to
-                maintain their weight. However, this can vary depending on
-                individual circumstances. To lose weight, a person must consume
-                fewer calories than their body burns through physical activity
-                and daily functions. On the other hand, to gain weight, a person
-                must consume more calories than their body burns. It's important
-                to note that not all calories are created equal. The source of
-                calories (such as from whole foods versus processed foods) can
-                impact their effect on the body. It's also important to focus on
-                a balanced diet that includes a variety of nutrients, rather
-                than solely counting calories.
-              </Typography>
-            </div>
+            <h1 align="center" style={{ backgroundColor: "lightblue", marginTop: "0" }}>
+              Understand Calories
+            </h1>
+            <Box display="flex" justifyContent="center" flexWrap="wrap">
+              {/* ...adding code... */}
+              <div style={{ display: "flex", alignItems: "center", margin: 10 }}>
+                <Card style={{ maxWidth: 120, maxHeight: 60 }}>
+                  <CardMedia component="img" style={{ maxHeight: 50 }} image={bananaImage} alt="Banana" />
+                </Card>
+                <Typography variant="body2" color="textSecondary" component="p" style={{ marginLeft: 10 }}>
+                  100 grams of banana: 89 calories
+                </Typography>
+              </div>
+              <div style={{ display: "flex", alignItems: "center", margin: 10 }}>
+                <Card style={{ maxWidth: 120, maxHeight: 60 }}>
+                  <CardMedia component="img" style={{ maxHeight: 50 }} image={tomatoImage} alt="Tomato" />
+                </Card>
+                <Typography variant="body2" color="textSecondary" component="p" style={{ marginLeft: 10 }}>
+                  100 grams of tomatoes: 18 calories
+                </Typography>
+              </div>
+              <div style={{ display: "flex", alignItems: "center", margin: 10 }}>
+                <Card style={{ maxWidth: 120, maxHeight: 60 }}>
+                  <CardMedia component="img" style={{ maxHeight: 50 }} image={broccoliImage} alt="Broccoli" />
+                </Card>
+                <Typography variant="body2" color="textSecondary" component="p" style={{ marginLeft: 10 }}>
+                  100 grams of broccoli: 34 calories
+                </Typography>
+              </div>
+              <div style={{ display: "flex", alignItems: "center", margin: 10 }}>
+                <Card style={{ maxWidth: 120, maxHeight: 60 }}>
+                  <CardMedia component="img" style={{ maxHeight: 50 }} image={celeryImage} alt="Celery" />
+                </Card>
+                <Typography variant="body2" color="textSecondary" component="p" style={{ marginLeft: 10 }}>
+                  100 grams of celery: 16 calories
+                </Typography>
+              </div>
+              <div style={{ display: "flex", alignItems: "center", margin: 10 }}>
+                <Card style={{ maxWidth: 120, maxHeight: 60 }}>
+                  <CardMedia component="img" style={{ maxHeight: 50 }} image={riceImage} alt="Rice" />
+                </Card>
+                <Typography variant="body2" color="textSecondary" component="p" style={{ marginLeft: 10 }}>
+                  100 grams of rice: 130 calories
+                </Typography>
+              </div>
+              <div style={{ display: "flex", alignItems: "center", margin: 10 }}>
+                <Card style={{ maxWidth: 120, maxHeight: 60 }}>
+                  <CardMedia component="img" style={{ maxHeight: 50 }} image={meatImage} alt="Meat" />
+                </Card>
+                <Typography variant="body2" color="textSecondary" component="p" style={{ marginLeft: 10 }}>
+                  100 grams of beef: 250 calories
+                </Typography>
+              </div>
+              <div style={{ display: "flex", alignItems: "center", margin: 10 }}>
+                <Card style={{ maxWidth: 120, maxHeight: 60 }}>
+                  <CardMedia component="img" style={{ maxHeight: 50 }} image={chickenImage} alt="chicken" />
+                </Card>
+                <Typography variant="body2" color="textSecondary" component="p" style={{ marginLeft: 10 }}>
+                  100 grams of chicken breast: 165 calories
+                </Typography>
+              </div>
+
+            </Box>
           </Paper>
-
-
         </Grid>
+
       </Grid>
     </div>
   );
 }
 
-// need to be adjusted to be added to the database
-// function GetSessionsCalories(event) {
-//   event.preventDefault();
-//   console.log(event.target[0].value);
-//   console.log(new Date(event.target[1].value).toISOString());
-//   console.log(event.target[2].value);
-//   console.log(event.target[3].value);
-//   console.log(event.target[4].value);
 
-//   const payload = {
-//     customer: event.target[0].value,
-//     startDate: new Date(event.target[1].value).toISOString(),
-//     days: parseInt(event.target[2].value),
-//     location: event.target[3].value,
-//     comments: event.target[4].value,
-//   };
-//   fetch("https://localhost:7181/api/Traningsdata", {
-//     method: "POST",
-//     headers: {
-//       Accept: "application/json",
-//       Authorization: "Bearer " + localStorage.getItem("token"),
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify(payload),
-//   })
-//     .then((res) => res.json())
-//     .catch((error) => alert("Something bad happened: " + error));
-// }
-
-// function MyForm() {
-//   const [customer, setCustomer] = useState("");
-//   const [startDate, setStartDate] = useState(new Date());
-//   const [days, setDays] = useState("");
-//   const [location, setLocation] = useState("");
-//   const [comments, setComments] = useState("");
-
-//   return (
-//     <form onSubmit={PutJobs}>
-//       <label>
-//         Enter Customer:
-//         <input
-//           type="text"
-//           value={customer}
-//           onChange={(e) => setCustomer(e.target.value)}
-//         />
-//       </label>
-//       <br></br>
-//       <label>
-//         Enter Startdate:
-//         <input
-//           type={Date}
-//           value={startDate}
-//           onChange={(e) => setStartDate(e.target.value)}
-//         />
-//         <br></br>
-//       </label>
-//       <label>
-//         Enter Days:
-//         <input
-//           type="text"
-//           value={days}
-//           onChange={(e) => setDays(e.target.value)}
-//         />
-//       </label>
-//       <br></br>
-//       <label>
-//         Enter Location:
-//         <input
-//           type="text"
-//           value={location}
-//           onChange={(e) => setLocation(e.target.value)}
-//         />
-//       </label>
-//       <br></br>
-//       <label>
-//         Enter comments:
-//         <input
-//           type="text"
-//           value={comments}
-//           onChange={(e) => setComments(e.target.value)}
-//         />
-//       </label>
-
-//       <div>
-//         <button type="submit">Submit</button>
-//       </div>
-//     </form>
-//   );
-// }
 
 export default Calories;

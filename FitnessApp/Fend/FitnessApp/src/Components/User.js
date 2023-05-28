@@ -97,31 +97,7 @@ function User() {
     setLoading(false);
   };
 
-  // const fetchUserName = async () => {
-  //   const email = localStorage.getItem("email");
-  //   const url = `https://localhost:7221/api/Users/${email}`;
-  
-  //   try {
-  //     const response = await fetch(url, {
-  //       method: 'GET',
-  //       headers: {
-  //         'Accept': 'application/json',
-  //         'Content-Type': 'application/json'
-  //       }
-  //     });
-  
-  //     if (response.ok) {
-  //       const data = await response.json();
-  //       setUserData(data);
-  //     } else {
-  //       throw new Error('Error fetching user name:', response.statusText);
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //     alert('Error fetching user name');
-  //   }
-  // };
-
+ 
   useEffect(() => {
     fetchUserData();
     getFavoriteTrainingPrograms();
@@ -244,21 +220,7 @@ function User() {
               <h1 align="center" style={{ backgroundColor: "lightblue" }}>
                 {userData?.user?.firstName} {userData?.user?.lastName}
               </h1>
-              <TextField
-                label="firstName"
-                value={userData?.user?.firstName || ""}
-                variant="outlined"
-                margin="normal"
-                onChange={(e) => handleInputChange(e, 'firstName')}
-              />
-               <TextField
-                label="lastName"
-                value={userData?.user?.lastName || ""}
-                variant="outlined"
-              
-                margin="normal"
-                onChange={(e) => handleInputChange(e, 'lastName')}
-              />
+          
 
               <div style={{ display: "flex", flexDirection: "column" }}>
                 <TextField
