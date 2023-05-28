@@ -3,6 +3,7 @@ import {
   Grid, Paper, Typography, Button,
   TextField, Box, Card, CardContent,
 } from "@material-ui/core";
+import { TextFields } from '@material-ui/icons';
 
 
 function User() {
@@ -37,11 +38,36 @@ function User() {
     }
   };
 
-  //fetching user data using UserDatas controller
+  // //fetching user data using UserDatas controller
+  // const fetchUserData = async () => {
+  //   const email = localStorage.getItem("email");
+  //   const url = `https://localhost:7221/api/UserDatas/${email}`;
+
+  //   try {
+  //     const response = await fetch(url, {
+  //       method: 'GET',
+  //       headers: {
+  //         'Accept': 'application/json',
+  //         'Content-Type': 'application/json',
+  //       },
+  //     });
+
+  //     if (response.ok) {
+  //       const data = await response.json();
+  //       setUserData(data);
+  //     } else {
+  //       console.error('Error fetching user data:', response.statusText);
+  //     }
+  //   } catch (error) {
+  //     console.error('Error fetching user data:', error);
+  //   }
+
+  //   setLoading(false);
+  // };
   const fetchUserData = async () => {
     const email = localStorage.getItem("email");
     const url = `https://localhost:7221/api/UserDatas/${email}`;
-
+  
     try {
       const response = await fetch(url, {
         method: 'GET',
@@ -50,25 +76,57 @@ function User() {
           'Content-Type': 'application/json',
         },
       });
-
+  
       if (response.ok) {
         const data = await response.json();
-        setUserData(data);
+        const userResponse = await fetch(`https://localhost:7221/api/Users/${email}`);
+        if (userResponse.ok) {
+          const userData = await userResponse.json();
+          data.user = userData;
+          setUserData(data);
+        } else {
+          throw new Error('Error fetching user:', userResponse.statusText);
+        }
       } else {
         console.error('Error fetching user data:', response.statusText);
       }
     } catch (error) {
       console.error('Error fetching user data:', error);
     }
-
+  
     setLoading(false);
   };
 
-
+  // const fetchUserName = async () => {
+  //   const email = localStorage.getItem("email");
+  //   const url = `https://localhost:7221/api/Users/${email}`;
+  
+  //   try {
+  //     const response = await fetch(url, {
+  //       method: 'GET',
+  //       headers: {
+  //         'Accept': 'application/json',
+  //         'Content-Type': 'application/json'
+  //       }
+  //     });
+  
+  //     if (response.ok) {
+  //       const data = await response.json();
+  //       setUserData(data);
+  //     } else {
+  //       throw new Error('Error fetching user name:', response.statusText);
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //     alert('Error fetching user name');
+  //   }
+  // };
 
   useEffect(() => {
     fetchUserData();
     getFavoriteTrainingPrograms();
+
+
   }, []);
 
   const deleteUser = () => {
@@ -130,19 +188,28 @@ function User() {
 
   const handleInputChange = (event, field) => {
     const updatedUserData = { ...userData };
-    updatedUserData[field] = event.target.value;
+  
+    if (field === 'firstName' || field === 'lastName') {
+      updatedUserData.user[field] = event.target.value;
+    } else {
+      updatedUserData[field] = event.target.value;
+    }
+  
     setUserData(updatedUserData);
   };
+  
 
   //updating userData but no firstname and lastname
   const saveUserData = () => {
-    fetch(`https://localhost:7221/api/Userdatas/${userData.email}`, {
+   
+    const updatedUserData = { ...userData };
+    fetch(`https://localhost:7221/api/UserDatas/${userData.email}`, {
       method: 'PUT',
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify(userData)
+      body: JSON.stringify(updatedUserData),
     })
       .then(response => {
         if (response.ok) {
@@ -156,6 +223,7 @@ function User() {
         alert("An error occurred while saving user data");
       });
   };
+  
 
   if (loading) {
     return <p>Loading user data...</p>;
@@ -174,8 +242,23 @@ function User() {
           <Paper style={{ padding: 20 }}>
             <Box display="flex" flexDirection="column" alignItems="center" marginBottom={4}>
               <h1 align="center" style={{ backgroundColor: "lightblue" }}>
-                UserData (to be deleted)
+                {userData?.user?.firstName} {userData?.user?.lastName}
               </h1>
+              <TextField
+                label="firstName"
+                value={userData?.user?.firstName || ""}
+                variant="outlined"
+                margin="normal"
+                onChange={(e) => handleInputChange(e, 'firstName')}
+              />
+               <TextField
+                label="lastName"
+                value={userData?.user?.lastName || ""}
+                variant="outlined"
+              
+                margin="normal"
+                onChange={(e) => handleInputChange(e, 'lastName')}
+              />
 
               <div style={{ display: "flex", flexDirection: "column" }}>
                 <TextField
@@ -231,7 +314,7 @@ function User() {
                 Favorite Training Programs
               </h1>
               {favoriteTrainingPrograms.map(program => (
-                <Card key={program.favoriteTraningProgramsID}>
+                <Card key={program.favoriteTraningProgramsID} style={{ backgroundImage: `url(${program.imageUrl})`, backgroundSize: 'cover' }}>
                   <CardContent style={{ textAlign: 'center' }}>
                     <Typography variant="h5" component="h2">
                       {program.name}

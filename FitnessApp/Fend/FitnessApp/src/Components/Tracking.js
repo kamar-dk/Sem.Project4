@@ -21,7 +21,7 @@ function Tracking() {
   const fetchData = async() => {
     console.log("FetchData called");
    const email = localStorage.getItem("email"); //gets the user email for a comparison later
-    const url = `https://localhost:7221/api/TraningDatas`;
+    const url = `https://localhost:7221/api/TrainingDatas`;
     return fetch(url, {
       method: "GET",
       mode: "cors",

@@ -73,7 +73,7 @@ function PutActivity(event){
         "AvgHeartRate": event.target[9].value,
         "vo2Max": event.target[10].value,
     }
-    fetch('https://localhost:7221/api/TraningDatas', {
+    fetch('https://localhost:7221/api/TrainingDatas', {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
