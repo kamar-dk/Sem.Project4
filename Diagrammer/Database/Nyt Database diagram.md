@@ -34,7 +34,6 @@ erDiagram
         string Email pk
         string FirstName
         string LastName
-        string Gender
         byte PasswordHash
         byte Salt
     }
@@ -45,9 +44,9 @@ erDiagram
 
     UserData {
         string Email pk
+        string Gender
         float Height
         float Weight
-        string Gender
         Date DOB
     }
 
@@ -60,9 +59,10 @@ erDiagram
     UserData }|--o{ UserWeight : has
     
     TraningData {
-        int Id pk
+        long Id pk
         string TraningType
         date SessionDate
+        float Distance
         int SessionHourTime
         int SessionMinitTime
         int SessionSecondTime
@@ -82,9 +82,8 @@ erDiagram
 
     FavoriteTraningPrograms {
         int FavoritTraningProgramID pk
+        string Name
         int TraningProgramID fk
         string Email fk
-
     }
-
 ```
