@@ -67,7 +67,7 @@ function User() {
   const fetchUserData = async () => {
     const email = localStorage.getItem("email");
     const url = `https://localhost:7221/api/UserDatas/${email}`;
-  
+
     try {
       const response = await fetch(url, {
         method: 'GET',
@@ -76,7 +76,7 @@ function User() {
           'Content-Type': 'application/json',
         },
       });
-  
+
       if (response.ok) {
         const data = await response.json();
         const userResponse = await fetch(`https://localhost:7221/api/Users/${email}`);
@@ -93,11 +93,11 @@ function User() {
     } catch (error) {
       console.error('Error fetching user data:', error);
     }
-  
+
     setLoading(false);
   };
 
- 
+
   useEffect(() => {
     fetchUserData();
     getFavoriteTrainingPrograms();
@@ -164,20 +164,20 @@ function User() {
 
   const handleInputChange = (event, field) => {
     const updatedUserData = { ...userData };
-  
+
     if (field === 'firstName' || field === 'lastName') {
       updatedUserData.user[field] = event.target.value;
     } else {
       updatedUserData[field] = event.target.value;
     }
-  
+
     setUserData(updatedUserData);
   };
-  
+
 
   //updating userData but no firstname and lastname
   const saveUserData = () => {
-   
+
     const updatedUserData = { ...userData };
     fetch(`https://localhost:7221/api/UserDatas/${userData.email}`, {
       method: 'PUT',
@@ -199,7 +199,7 @@ function User() {
         alert("An error occurred while saving user data");
       });
   };
-  
+
 
   if (loading) {
     return <p>Loading user data...</p>;
@@ -212,7 +212,7 @@ function User() {
   return (
     <div className="gradient-background">
       <Grid container spacing={2}>
-        
+
         {/* Left Container */}
         <Grid item xs={12} md={6}>
           <Paper style={{ padding: 20 }}>
@@ -220,7 +220,7 @@ function User() {
               <h1 align="center" style={{ backgroundColor: "lightblue" }}>
                 {userData?.user?.firstName} {userData?.user?.lastName}
               </h1>
-          
+
 
               <div style={{ display: "flex", flexDirection: "column" }}>
                 <TextField
@@ -294,7 +294,7 @@ function User() {
           </Paper>
         </Grid>
 
-    
+
       </Grid>
     </div>
   );
